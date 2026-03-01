@@ -101,6 +101,8 @@ public class BirdAppearanceUI : MonoBehaviour
 
         data.SetColor(selectedPart, currentColor, currentPreset);
         data.OnAppearanceChanged?.Invoke();
+
+        Debug.Log(currentColor);
     }
 
     public void SelectPart(int index)
