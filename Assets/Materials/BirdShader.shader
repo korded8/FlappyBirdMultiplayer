@@ -55,19 +55,19 @@ Shader "Custom/BirdShader"
                 fixed4 baseCol = tex2D(_MainTex, i.uv);
                 fixed4 mask = tex2D(_MaskTex, i.uv);
 
-                // Mieszamy kolory maski z bazow¹ tekstur¹
                 fixed3 maskColor = _RedColor.rgb * mask.r +
                                    _GreenColor.rgb * mask.g +
                                    _BlueColor.rgb * mask.b;
 
-                // Waga maski dla mieszania z bazow¹ tekstur¹
                 fixed maskWeight = saturate(mask.r + mask.g + mask.b);
 
-                // Finalny kolor: mieszanka bazowej tekstury i kolorów z maski
                 fixed3 finalColor = lerp(baseCol.rgb, maskColor, maskWeight);
 
-                // Zachowujemy alpha z bazowej tekstury
-                return fixed4(finalColor, baseCol.a);
+                if (mask.a == 0 || baseCol.a == 0)
+                {
+                    discard;
+                }
+                return fixed4(finalColor, 1);
             }
             ENDCG
         }
