@@ -39,6 +39,7 @@ public class BirdAppearanceData : ScriptableObject
 
     public void ApplyPreset(int index)
     {
+
         if (index < 0 || index >= presets.Count) return;
 
         bodyColor = presets[index].bodyColor;
@@ -57,7 +58,7 @@ public class BirdAppearanceData : ScriptableObject
             featherColor = feather,
             presetName = presetName
         };
-
+        
         presets.Add(newPreset);
     }
 
@@ -79,7 +80,6 @@ public class BirdAppearanceData : ScriptableObject
                 case BirdAppearanceUI.BirdPart.wings: p.wingColor = color; break;
                 case BirdAppearanceUI.BirdPart.feather: p.featherColor = color; break;
             }
-            presets[presetIndex] = p;
         }
 
         OnAppearanceChanged?.Invoke();

@@ -72,7 +72,6 @@ public class BirdAppearanceUI : MonoBehaviour
         foreach (var p in data.presets)
         {
             optionsList.Add(p.presetName);
-            Debug.Log(p.presetName);
         }
         presetsDropdown.AddOptions(optionsList);
         presetsDropdown.value = currentPreset;
@@ -82,7 +81,7 @@ public class BirdAppearanceUI : MonoBehaviour
     private void RefreshSlidersWithoutNotify()
     {
         Color currentColor = data.GetColor(selectedPart);
-        //Debug.Log(currentColor);
+
         redSlider.SetValueWithoutNotify(currentColor.r);
         greenSlider.SetValueWithoutNotify(currentColor.g);
         blueSlider.SetValueWithoutNotify(currentColor.b);
@@ -133,28 +132,6 @@ public class BirdAppearanceUI : MonoBehaviour
         Color bodyColor = data.bodyColor;
         Color wingColor = data.wingColor;
         Color featherColor = data.featherColor;
-
-        //for (int i = 0; i < 3; i++)
-        //{
-        //    switch (i)
-        //    {
-        //        case 0:
-        //            selectedPart = (BirdPart)i;
-        //            RefreshSlidersWithoutNotify();
-        //            bodyColor = new Color(redSlider.value, greenSlider.value, blueSlider.value, 1);
-        //            break;
-        //        case 1:
-        //            selectedPart = (BirdPart)i;
-        //            RefreshSlidersWithoutNotify();
-        //            wingColor = new Color(redSlider.value, greenSlider.value, blueSlider.value, 1);
-        //            break;
-        //        case 2:
-        //            selectedPart = (BirdPart)i;
-        //            RefreshSlidersWithoutNotify();
-        //            featherColor = new Color(redSlider.value, greenSlider.value, blueSlider.value, 1);
-        //            break;
-        //    }
-        //}
 
         data.AddPreset(bodyColor, wingColor, featherColor, newPresetName);
         currentPreset = data.presets.Count - 1;
