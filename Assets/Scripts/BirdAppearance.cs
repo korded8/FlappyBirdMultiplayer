@@ -11,7 +11,6 @@ public class BirdAppearance : MonoBehaviour
     public BirdAppearanceData data;
 
     [Header("Preview Settings")]
-    public int currentPreset = 0;
 
     private SpriteRenderer spriteRenderer;
 
@@ -34,7 +33,7 @@ public class BirdAppearance : MonoBehaviour
             data.OnAppearanceChanged += ApplyColors;
         }
 
-        ApplyPreset(currentPreset);
+        ApplyColors();
     }
 
     private void OnEnable()
@@ -50,14 +49,6 @@ public class BirdAppearance : MonoBehaviour
     {
         if (data != null)
             data.OnAppearanceChanged -= ApplyColors;
-    }
-
-    public void ApplyPreset(int presetIndex)
-    {
-        if (data == null) return;
-        currentPreset = presetIndex;
-        data.ApplyPreset(presetIndex);
-        ApplyColors();
     }
 
     public void ApplyColors()

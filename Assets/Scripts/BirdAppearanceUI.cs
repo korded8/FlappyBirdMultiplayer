@@ -44,6 +44,8 @@ public class BirdAppearanceUI : MonoBehaviour
         greenSlider.onValueChanged.AddListener(OnSliderChanged);
         blueSlider.onValueChanged.AddListener(OnSliderChanged);
 
+        presetsDropdown.onValueChanged.AddListener(OnDropdownChanged);
+
         if (data.presets.Count > 0)
         {
             currentPreset = 0;
@@ -60,6 +62,7 @@ public class BirdAppearanceUI : MonoBehaviour
         redSlider.onValueChanged.RemoveListener(OnSliderChanged);
         greenSlider.onValueChanged.RemoveListener(OnSliderChanged);
         blueSlider.onValueChanged.RemoveListener(OnSliderChanged);
+        presetsDropdown.onValueChanged.RemoveListener(OnDropdownChanged);
     }
 
     public void UpdatePresetsDropdown()
@@ -67,7 +70,10 @@ public class BirdAppearanceUI : MonoBehaviour
         presetsDropdown.ClearOptions();
         List<string> optionsList = new List<string>();
         foreach (var p in data.presets)
+        {
             optionsList.Add(p.presetName);
+            Debug.Log(p.presetName);
+        }
         presetsDropdown.AddOptions(optionsList);
         presetsDropdown.value = currentPreset;
         presetsDropdown.RefreshShownValue();
@@ -75,8 +81,8 @@ public class BirdAppearanceUI : MonoBehaviour
 
     private void RefreshSlidersWithoutNotify()
     {
-        Color currentColor = data.GetColor(selectedPart, currentPreset);
-        Debug.Log(currentColor);
+        Color currentColor = data.GetColor(selectedPart);
+        //Debug.Log(currentColor);
         redSlider.SetValueWithoutNotify(currentColor.r);
         greenSlider.SetValueWithoutNotify(currentColor.g);
         blueSlider.SetValueWithoutNotify(currentColor.b);
@@ -165,7 +171,7 @@ public class BirdAppearanceUI : MonoBehaviour
 
         currentPreset = index;
         data.ApplyPreset(currentPreset);
-        birdAppearance.ApplyPreset(currentPreset);
+        birdAppearance.ApplyColors();
 
         presetNameInput.text = data.presets[currentPreset].presetName;
 
