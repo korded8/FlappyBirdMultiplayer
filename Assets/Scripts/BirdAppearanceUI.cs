@@ -12,9 +12,9 @@ public class BirdAppearanceUI : MonoBehaviour
     public Slider blueSlider;
 
     [Header("Color texts")]
-    public TMP_Text redColorText;
-    public TMP_Text greenColorText;
-    public TMP_Text blueColorText;
+    public TMP_InputField redColorInput;
+    public TMP_InputField greenColorInput;
+    public TMP_InputField blueColorInput;
 
     [Header("Appearance Scripts")]
     public BirdAppearanceData data;
@@ -40,9 +40,15 @@ public class BirdAppearanceUI : MonoBehaviour
         emptyPresetNameWarning.enabled = false;
         duplicatePresetNameWarning.enabled = false;
 
+        presetNameInput.characterLimit = 8;
+
         redSlider.onValueChanged.AddListener(OnSliderChanged);
         greenSlider.onValueChanged.AddListener(OnSliderChanged);
         blueSlider.onValueChanged.AddListener(OnSliderChanged);
+
+        redColorInput.onValueChanged.AddListener(OnInputFieldChanged);
+        greenColorInput.onValueChanged.AddListener(OnInputFieldChanged);
+        blueColorInput.onValueChanged.AddListener(OnInputFieldChanged);
 
         presetsDropdown.onValueChanged.AddListener(OnDropdownChanged);
 
@@ -73,6 +79,7 @@ public class BirdAppearanceUI : MonoBehaviour
         {
             optionsList.Add(p.presetName);
         }
+        optionsList.Add("Add preset");
         presetsDropdown.AddOptions(optionsList);
         presetsDropdown.value = currentPreset;
         presetsDropdown.RefreshShownValue();
@@ -86,23 +93,26 @@ public class BirdAppearanceUI : MonoBehaviour
         greenSlider.SetValueWithoutNotify(currentColor.g);
         blueSlider.SetValueWithoutNotify(currentColor.b);
 
-        redColorText.text = Math.Round(redSlider.value * 255).ToString();
-        greenColorText.text = Math.Round(greenSlider.value * 255).ToString();
-        blueColorText.text = Math.Round(blueSlider.value * 255).ToString();
+        redColorInput.text = Math.Round(redSlider.value * 255).ToString();
+        greenColorInput.text = Math.Round(greenSlider.value * 255).ToString();
+        blueColorInput.text = Math.Round(blueSlider.value * 255).ToString();
     }
 
     public void OnSliderChanged(float value)
     {
         Color currentColor = new Color(redSlider.value, greenSlider.value, blueSlider.value);
 
-        redColorText.text = Math.Round(redSlider.value * 255).ToString();
-        greenColorText.text = Math.Round(greenSlider.value * 255).ToString();
-        blueColorText.text = Math.Round(blueSlider.value * 255).ToString();
+        redColorInput.text = Math.Round(redSlider.value * 255).ToString();
+        greenColorInput.text = Math.Round(greenSlider.value * 255).ToString();
+        blueColorInput.text = Math.Round(blueSlider.value * 255).ToString();
 
         data.SetColor(selectedPart, currentColor, currentPreset);
         data.OnAppearanceChanged?.Invoke();
+    }
 
-        Debug.Log(currentColor);
+    public void OnInputFieldChanged(string value)
+    {
+        //Color currentColor = new Color(redColorInput.text, greenColorInput.text, blueColorInput.text)
     }
 
     public void SelectPart(int index)
@@ -117,6 +127,7 @@ public class BirdAppearanceUI : MonoBehaviour
         if (string.IsNullOrEmpty(newPresetName))
         {
             emptyPresetNameWarning.enabled = true;
+            presetsDropdown.value = currentPreset;
             return;
         }
         emptyPresetNameWarning.enabled = false;
@@ -126,6 +137,7 @@ public class BirdAppearanceUI : MonoBehaviour
             if (p.presetName == newPresetName)
             {
                 duplicatePresetNameWarning.enabled = true;
+                presetsDropdown.value = currentPreset;
                 return;
             }
         }
@@ -144,9 +156,28 @@ public class BirdAppearanceUI : MonoBehaviour
         data.OnAppearanceChanged?.Invoke();
     }
 
+    public void UpdatePreset()
+    {
+        Color bodyColor = data.bodyColor;
+        Color wingColor = data.wingColor;
+        Color featherColor = data.featherColor;
+
+        data.UpdatePreset(bodyColor, wingColor, featherColor, currentPreset);
+        data.ApplyPreset(currentPreset);
+
+        RefreshSlidersWithoutNotify();
+        data.OnAppearanceChanged?.Invoke();
+    }
+
     public void OnDropdownChanged(int index)
     {
-        if (index < 0 || index >= data.presets.Count) return;
+        if (index < 0 || index > data.presets.Count || index == currentPreset) return;
+
+        if (index == data.presets.Count)
+        {
+            AddPreset();
+            return;
+        }
 
         currentPreset = index;
         data.ApplyPreset(currentPreset);

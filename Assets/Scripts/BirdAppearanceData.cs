@@ -62,6 +62,15 @@ public class BirdAppearanceData : ScriptableObject
         presets.Add(newPreset);
     }
 
+    public void UpdatePreset(Color body, Color wing, Color feather, int index)
+    {
+        Preset p = presets[index];
+        p.bodyColor = body;
+        p.wingColor = wing;
+        p.featherColor = featherColor;
+        presets[index] = p;
+    }
+
     public void SetColor(BirdAppearanceUI.BirdPart part, Color color, int presetIndex)
     {
         switch (part)
