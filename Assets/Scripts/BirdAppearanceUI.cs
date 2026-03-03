@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Photon.Pun;
+using ExitGames.Client.Photon;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,6 +37,13 @@ public class BirdAppearanceUI : MonoBehaviour
     private BirdPart selectedPart = BirdPart.body;
     private int currentPreset = 0;
 
+    private const string BodyColorPrefKey = "BirdColorBody";
+    private const string WingColorPrefKey = "BirdColorWing";
+    private const string FeatherColorPrefKey = "BirdColorFeather";
+    private const string BodyColorNetKey = "birdBodyColor";
+    private const string WingColorNetKey = "birdWingColor";
+    private const string FeatherColorNetKey = "birdFeatherColor";
+
     private void Start()
     {
         emptyPresetNameWarning.enabled = false;
@@ -48,7 +57,11 @@ public class BirdAppearanceUI : MonoBehaviour
 
         presetsDropdown.onValueChanged.AddListener(OnDropdownChanged);
 
-        if (data.presets.Count > 0)
+        if (LoadColorsFromPrefs())
+        {
+            currentPreset = -1;
+        }
+        else if (data.presets.Count > 0)
         {
             currentPreset = 0;
             data.ApplyPreset(currentPreset);
@@ -56,6 +69,7 @@ public class BirdAppearanceUI : MonoBehaviour
 
         UpdatePresetsDropdown();
         RefreshSlidersWithoutNotify();
+        SaveAndSyncColors();
         data.OnAppearanceChanged?.Invoke();
     }
 
@@ -77,7 +91,8 @@ public class BirdAppearanceUI : MonoBehaviour
         }
         optionsList.Add("Add preset");
         presetsDropdown.AddOptions(optionsList);
-        presetsDropdown.value = currentPreset;
+        int selectedIndex = Mathf.Clamp(currentPreset, 0, Mathf.Max(0, optionsList.Count - 1));
+        presetsDropdown.value = selectedIndex;
         presetsDropdown.RefreshShownValue();
     }
 
@@ -103,6 +118,7 @@ public class BirdAppearanceUI : MonoBehaviour
         blueColorInput.text = Math.Round(blueSlider.value * 255).ToString();
 
         data.SetColor(selectedPart, currentColor, currentPreset);
+        SaveAndSyncColors();
         data.OnAppearanceChanged?.Invoke();
     }
 
@@ -119,6 +135,9 @@ public class BirdAppearanceUI : MonoBehaviour
         redSlider.SetValueWithoutNotify(r);
         greenSlider.SetValueWithoutNotify(g);
         blueSlider.SetValueWithoutNotify(b);
+
+        SaveAndSyncColors();
+        data.OnAppearanceChanged?.Invoke();
     }
 
     private float ParseInputToFloat(string text)
@@ -144,7 +163,7 @@ public class BirdAppearanceUI : MonoBehaviour
         if (string.IsNullOrEmpty(newPresetName))
         {
             emptyPresetNameWarning.enabled = true;
-            presetsDropdown.value = currentPreset;
+            presetsDropdown.value = Mathf.Clamp(currentPreset, 0, Mathf.Max(0, data.presets.Count));
             return;
         }
         emptyPresetNameWarning.enabled = false;
@@ -154,7 +173,7 @@ public class BirdAppearanceUI : MonoBehaviour
             if (p.presetName == newPresetName)
             {
                 duplicatePresetNameWarning.enabled = true;
-                presetsDropdown.value = currentPreset;
+                presetsDropdown.value = Mathf.Clamp(currentPreset, 0, Mathf.Max(0, data.presets.Count));
                 return;
             }
         }
@@ -170,6 +189,7 @@ public class BirdAppearanceUI : MonoBehaviour
 
         UpdatePresetsDropdown();
         RefreshSlidersWithoutNotify();
+        SaveAndSyncColors();
         data.OnAppearanceChanged?.Invoke();
     }
 
@@ -183,6 +203,7 @@ public class BirdAppearanceUI : MonoBehaviour
         data.ApplyPreset(currentPreset);
 
         RefreshSlidersWithoutNotify();
+        SaveAndSyncColors();
         data.OnAppearanceChanged?.Invoke();
     }
 
@@ -203,6 +224,58 @@ public class BirdAppearanceUI : MonoBehaviour
         presetNameInput.text = data.presets[currentPreset].presetName;
 
         RefreshSlidersWithoutNotify();
+        SaveAndSyncColors();
         data.OnAppearanceChanged?.Invoke();
+    }
+
+    private bool LoadColorsFromPrefs()
+    {
+        if (!PlayerPrefs.HasKey(BodyColorPrefKey) || !PlayerPrefs.HasKey(WingColorPrefKey) || !PlayerPrefs.HasKey(FeatherColorPrefKey))
+        {
+            return false;
+        }
+
+        if (!TryParseHtmlColor(PlayerPrefs.GetString(BodyColorPrefKey), out Color body)) return false;
+        if (!TryParseHtmlColor(PlayerPrefs.GetString(WingColorPrefKey), out Color wing)) return false;
+        if (!TryParseHtmlColor(PlayerPrefs.GetString(FeatherColorPrefKey), out Color feather)) return false;
+
+        data.bodyColor = body;
+        data.wingColor = wing;
+        data.featherColor = feather;
+        return true;
+    }
+
+    private void SaveAndSyncColors()
+    {
+        PlayerPrefs.SetString(BodyColorPrefKey, ColorUtility.ToHtmlStringRGB(data.bodyColor));
+        PlayerPrefs.SetString(WingColorPrefKey, ColorUtility.ToHtmlStringRGB(data.wingColor));
+        PlayerPrefs.SetString(FeatherColorPrefKey, ColorUtility.ToHtmlStringRGB(data.featherColor));
+        PlayerPrefs.Save();
+
+        if (!PhotonNetwork.IsConnected || PhotonNetwork.LocalPlayer == null)
+        {
+            return;
+        }
+
+        var customProperties = new Hashtable
+        {
+            { BodyColorNetKey, ColorUtility.ToHtmlStringRGB(data.bodyColor) },
+            { WingColorNetKey, ColorUtility.ToHtmlStringRGB(data.wingColor) },
+            { FeatherColorNetKey, ColorUtility.ToHtmlStringRGB(data.featherColor) }
+        };
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(customProperties);
+    }
+
+    private bool TryParseHtmlColor(string htmlColor, out Color color)
+    {
+        if (string.IsNullOrWhiteSpace(htmlColor))
+        {
+            color = Color.white;
+            return false;
+        }
+
+        string formatted = htmlColor.StartsWith("#") ? htmlColor : $"#{htmlColor}";
+        return ColorUtility.TryParseHtmlString(formatted, out color);
     }
 }

@@ -13,6 +13,9 @@ public class BirdAppearance : MonoBehaviour
     [Header("Preview Settings")]
 
     private SpriteRenderer spriteRenderer;
+    private Color bodyColor = Color.white;
+    private Color wingColor = Color.white;
+    private Color featherColor = Color.white;
 
     private void Awake()
     {
@@ -53,10 +56,21 @@ public class BirdAppearance : MonoBehaviour
 
     public void ApplyColors()
     {
-        if (spriteRenderer == null || materialInstance == null || data == null) return;
+        if (data == null) return;
 
-        materialInstance.SetColor("_RedColor", data.bodyColor);
-        materialInstance.SetColor("_GreenColor", data.wingColor);
-        materialInstance.SetColor("_BlueColor", data.featherColor);
+        ApplyColors(data.bodyColor, data.wingColor, data.featherColor);
+    }
+
+    public void ApplyColors(Color body, Color wing, Color feather)
+    {
+        bodyColor = body;
+        wingColor = wing;
+        featherColor = feather;
+
+        if (spriteRenderer == null || materialInstance == null) return;
+
+        materialInstance.SetColor("_RedColor", bodyColor);
+        materialInstance.SetColor("_GreenColor", wingColor);
+        materialInstance.SetColor("_BlueColor", featherColor);
     }
 }
