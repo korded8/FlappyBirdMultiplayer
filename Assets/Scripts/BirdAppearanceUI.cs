@@ -46,10 +46,6 @@ public class BirdAppearanceUI : MonoBehaviour
         greenSlider.onValueChanged.AddListener(OnSliderChanged);
         blueSlider.onValueChanged.AddListener(OnSliderChanged);
 
-        redColorInput.onValueChanged.AddListener(OnInputFieldChanged);
-        greenColorInput.onValueChanged.AddListener(OnInputFieldChanged);
-        blueColorInput.onValueChanged.AddListener(OnInputFieldChanged);
-
         presetsDropdown.onValueChanged.AddListener(OnDropdownChanged);
 
         if (data.presets.Count > 0)
@@ -93,9 +89,9 @@ public class BirdAppearanceUI : MonoBehaviour
         greenSlider.SetValueWithoutNotify(currentColor.g);
         blueSlider.SetValueWithoutNotify(currentColor.b);
 
-        redColorInput.text = Math.Round(redSlider.value * 255).ToString();
-        greenColorInput.text = Math.Round(greenSlider.value * 255).ToString();
-        blueColorInput.text = Math.Round(blueSlider.value * 255).ToString();
+        redColorInput.SetTextWithoutNotify(Math.Round(redSlider.value * 255).ToString());
+        greenColorInput.SetTextWithoutNotify(Math.Round(greenSlider.value * 255).ToString());
+        blueColorInput.SetTextWithoutNotify(Math.Round(blueSlider.value * 255).ToString());
     }
 
     public void OnSliderChanged(float value)
@@ -110,9 +106,30 @@ public class BirdAppearanceUI : MonoBehaviour
         data.OnAppearanceChanged?.Invoke();
     }
 
-    public void OnInputFieldChanged(string value)
+    public void OnRGBInputChanged()
     {
-        //Color currentColor = new Color(redColorInput.text, greenColorInput.text, blueColorInput.text)
+        float r = ParseInputToFloat(redColorInput.text);
+        float g = ParseInputToFloat(greenColorInput.text);
+        float b = ParseInputToFloat(blueColorInput.text);
+
+        Color newColor = new Color(r, g, b, 1f);
+
+        data.SetColor(selectedPart, newColor, currentPreset);
+
+        redSlider.SetValueWithoutNotify(r);
+        greenSlider.SetValueWithoutNotify(g);
+        blueSlider.SetValueWithoutNotify(b);
+    }
+
+    private float ParseInputToFloat(string text)
+    {
+        if (int.TryParse(text, out int result))
+        {
+            result = Mathf.Clamp(result, 0, 255);
+            return result / 255f;
+        }
+
+        return 0f;
     }
 
     public void SelectPart(int index)

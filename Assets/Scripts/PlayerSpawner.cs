@@ -37,6 +37,5 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         Vector3 spawnPos = spawnPoints[index].position;
 
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
-        Debug.Log("Spawn gracza: " + player.name + " na pozycji: " + spawnPos);
     }
 }

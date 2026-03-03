@@ -6,12 +6,6 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "BirdAppearanceData", menuName = "Bird/BirdAppearanceData")]
 public class BirdAppearanceData : ScriptableObject
 {
-    /*
-    [Header("Sliders")]
-    public Slider redSlider;
-    public Slider greenSlider;
-    public Slider blueSlider;*/
-
     [System.Serializable]
     public struct Preset
     {
@@ -51,6 +45,7 @@ public class BirdAppearanceData : ScriptableObject
 
     public void AddPreset(Color body, Color wing, Color feather, string presetName)
     {
+        if (presets.Count == 6) return;
         Preset newPreset = new Preset
         {
             bodyColor = body,

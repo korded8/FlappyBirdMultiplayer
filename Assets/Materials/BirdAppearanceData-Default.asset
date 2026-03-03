@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0f3e4ed59dc9740a9732f27551a68b, type: 3}
   m_Name: BirdAppearanceData-Default
   m_EditorClassIdentifier: Assembly-CSharp::BirdAppearanceData
-  bodyColor: {r: 0, g: 0.9215687, b: 1, a: 1}
+  bodyColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
   wingColor: {r: 1, g: 1, b: 1, a: 1}
   featherColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
   presets:
@@ -20,3 +20,27 @@ MonoBehaviour:
     wingColor: {r: 1, g: 1, b: 1, a: 1}
     featherColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
     presetName: Classic
+  - bodyColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    wingColor: {r: 1, g: 1, b: 1, a: 1}
+    featherColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    presetName: q
+  - bodyColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    wingColor: {r: 1, g: 1, b: 1, a: 1}
+    featherColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    presetName: w
+  - bodyColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    wingColor: {r: 1, g: 1, b: 1, a: 1}
+    featherColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    presetName: e
+  - bodyColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    wingColor: {r: 1, g: 1, b: 1, a: 1}
+    featherColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    presetName: r
+  - bodyColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    wingColor: {r: 1, g: 1, b: 1, a: 1}
+    featherColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    presetName: t
+  - bodyColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    wingColor: {r: 1, g: 1, b: 1, a: 1}
+    featherColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
+    presetName: s
