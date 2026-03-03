@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using NUnit.Framework;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "BirdAppearanceData", menuName = "Bird/BirdAppearanceData")]
@@ -23,13 +22,6 @@ public class BirdAppearanceData : ScriptableObject
     public List<Preset> presets = new List<Preset>();
 
     public Action OnAppearanceChanged;
-
-    private void OnEnable()
-    {
-        bodyColor = Color.white;
-        wingColor = Color.white;
-        featherColor = Color.white;
-    }
 
     public void ApplyPreset(int index)
     {
@@ -62,7 +54,7 @@ public class BirdAppearanceData : ScriptableObject
         Preset p = presets[index];
         p.bodyColor = body;
         p.wingColor = wing;
-        p.featherColor = featherColor;
+        p.featherColor = feather;
         presets[index] = p;
     }
 
