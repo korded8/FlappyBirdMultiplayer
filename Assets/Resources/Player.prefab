@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 1929174116292616046}
   - component: {fileID: 7405981102368525423}
   - component: {fileID: -5477457633631842027}
-  - component: {fileID: 6080673690703150872}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -294,18 +293,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d60da9cb51e6ec4980c2f2d38432c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSetup
---- !u!114 &6080673690703150872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3332251408567357732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92886d29b790c4f40819326f28ff74f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BirdAppearance
-  materialInstance: {fileID: 0}
-  maskTexture: {fileID: 2800000, guid: 3997343fd2c09524b8ceac7e1db2e3d3, type: 3}
-  data: {fileID: 11400000, guid: ca9831060571d9d4dade4d7166e059a5, type: 2}
+  birdRenderer: {fileID: 7902207015526318345}

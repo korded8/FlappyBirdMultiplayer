@@ -2,6 +2,8 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using System.Collections;
+using ExitGames.Client.Photon;
 
 public class LobbyMenu : MonoBehaviourPunCallbacks
 {
@@ -10,6 +12,9 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private GameObject createRoomButton;
     [SerializeField] private GameObject joinRoomButton;
+
+    [Header("Bird appearance data")]
+    public BirdAppearanceData data;
 
     private bool joinedLobby = false;
 
@@ -41,9 +46,33 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
             roomCodeInput.text = value.Substring(0, 8);
     }
 
+    public void SavePlayerColors(Color body, Color wing, Color feather)
+    {
+        byte[] colors = new byte[]
+        {
+        (byte)(body.r * 255),
+        (byte)(body.g * 255),
+        (byte)(body.b * 255),
+
+        (byte)(wing.r * 255),
+        (byte)(wing.g * 255),
+        (byte)(wing.b * 255),
+
+        (byte)(feather.r * 255),
+        (byte)(feather.g * 255),
+        (byte)(feather.b * 255),
+        };
+
+        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
+        props["colors"] = colors;
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+    }
+
     public void CreateRoom()
     {
         if (!joinedLobby) return;
+        SavePlayerColors(data.bodyColor, data.wingColor, data.featherColor);
 
         string code = GetRoomCode();
         if (string.IsNullOrEmpty(code)) return;
@@ -61,6 +90,7 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
     public void JoinRoom()
     {
         if (!joinedLobby) return;
+        SavePlayerColors(data.bodyColor, data.wingColor, data.featherColor);
 
         string code = GetRoomCode();
         if (string.IsNullOrEmpty(code)) return;

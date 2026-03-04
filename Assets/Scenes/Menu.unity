@@ -719,7 +719,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6080673690703150872, guid: 73bf9f487544fc144b69302ea9e02025, type: 3}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearance, Assembly-CSharp
         m_MethodName: RandomizeAppearance
         m_Mode: 1
@@ -1329,7 +1329,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -10, y: 0}
-  m_SizeDelta: {x: 100, y: 25}
+  m_SizeDelta: {x: 200, y: 25}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &184499727
 MonoBehaviour:
@@ -7596,6 +7596,7 @@ MonoBehaviour:
   statusText: {fileID: 184499727}
   createRoomButton: {fileID: 14859685}
   joinRoomButton: {fileID: 80966097}
+  data: {fileID: 11400000, guid: ca9831060571d9d4dade4d7166e059a5, type: 2}
 --- !u!4 &1845757823
 Transform:
   m_ObjectHideFlags: 0
