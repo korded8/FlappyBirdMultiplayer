@@ -58,24 +58,13 @@ public class BirdAppearanceData : ScriptableObject
         presets[index] = p;
     }
 
-    public void SetColor(BirdAppearanceUI.BirdPart part, Color color, int presetIndex)
+    public void SetColor(BirdAppearanceUI.BirdPart part, Color color)
     {
         switch (part)
         {
             case BirdAppearanceUI.BirdPart.body: bodyColor = color; break;
             case BirdAppearanceUI.BirdPart.wings: wingColor = color; break;
             case BirdAppearanceUI.BirdPart.feather: featherColor = color; break;
-        }
-
-        if (presetIndex >= 0 && presetIndex < presets.Count)
-        {
-            Preset p = presets[presetIndex];
-            switch (part)
-            {
-                case BirdAppearanceUI.BirdPart.body: p.bodyColor = color; break;
-                case BirdAppearanceUI.BirdPart.wings: p.wingColor = color; break;
-                case BirdAppearanceUI.BirdPart.feather: p.featherColor = color; break;
-            }
         }
 
         OnAppearanceChanged?.Invoke();

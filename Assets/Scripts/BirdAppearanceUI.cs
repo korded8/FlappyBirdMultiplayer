@@ -102,7 +102,7 @@ public class BirdAppearanceUI : MonoBehaviour
         greenColorInput.text = Math.Round(greenSlider.value * 255).ToString();
         blueColorInput.text = Math.Round(blueSlider.value * 255).ToString();
 
-        data.SetColor(selectedPart, currentColor, currentPreset);
+        data.SetColor(selectedPart, currentColor);
         data.OnAppearanceChanged?.Invoke();
     }
 
@@ -114,7 +114,7 @@ public class BirdAppearanceUI : MonoBehaviour
 
         Color newColor = new Color(r, g, b, 1f);
 
-        data.SetColor(selectedPart, newColor, currentPreset);
+        data.SetColor(selectedPart, newColor);
 
         redSlider.SetValueWithoutNotify(r);
         greenSlider.SetValueWithoutNotify(g);
@@ -130,6 +130,25 @@ public class BirdAppearanceUI : MonoBehaviour
         }
 
         return 0f;
+    }
+
+    public void RandomizeColors()
+    {
+        Randomize(BirdPart.body);
+        Randomize(BirdPart.wings);
+        Randomize(BirdPart.feather);
+
+        RefreshSlidersWithoutNotify();
+    }
+
+    public void Randomize(BirdPart birdPart)
+    {
+        float r = UnityEngine.Random.Range(0, 255) / 255f;
+        float g = UnityEngine.Random.Range(0, 255) / 255f;
+        float b = UnityEngine.Random.Range(0, 255) / 255f;
+        Color newColor = new Color(r, g, b);
+
+        data.SetColor(birdPart, newColor);
     }
 
     public void SelectPart(int index)

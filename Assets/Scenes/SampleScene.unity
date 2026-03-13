@@ -1857,18 +1857,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SegmentSpawner
   segmentPrefabs:
-  - {fileID: 2906356701044063794, guid: 08ab727ff3b6d2f4bb1b91c2e85bbac1, type: 3}
-  - {fileID: 198870111308351752, guid: 743692f1d1bbac948830f25dd852d102, type: 3}
-  - {fileID: 59841870626381395, guid: 0afccf8a6576f614bb02f479a6b53e6d, type: 3}
-  - {fileID: 9088217546691732927, guid: d6b1294d85e861d4993f5072716e31a8, type: 3}
-  - {fileID: 4315584316601480345, guid: 1104918626b721e41b89a4c8edf1ddcc, type: 3}
-  - {fileID: 4451288196027927518, guid: 32044876e0f2d204897eecb2bc48c3d2, type: 3}
-  - {fileID: 6158867509573504373, guid: 95f329efee76c63429f3b237d4d7f497, type: 3}
-  - {fileID: 6036106634899587021, guid: b73ff340354a9ec44ade1837ed39f542, type: 3}
+  - {fileID: 2582042078010800316, guid: 2b5a5d2101be7cc4db7b28e1cb42c2d0, type: 3}
+  - {fileID: 8122767503541752425, guid: 9949fd2a4f7830a4a93f99a5df5e0799, type: 3}
   poolSize: 5
-  spawnInterval: 5
+  spawnInterval: 3
   spawnX: 10
-  cleanupX: -20
+  cleanupX: -15
   moveSpeed: 2
   gameController: {fileID: 2077214052}
 --- !u!1 &2102859877
