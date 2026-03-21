@@ -8,17 +8,21 @@ public class SegmentController : MonoBehaviourPun
 {
     [Header("Segment Settings")]
     [SerializeField] private GameObject[] segmentPrefabs;
-    [SerializeField] private int poolSize = 5;
-    [SerializeField] private float spawnInterval = 3f;
-    [SerializeField] private float spawnX = 10f;
-    [SerializeField] private float cleanupX = -15f;
-    [SerializeField] private float moveSpeed = 2f;
+
+    private float spawnX = 20f;
+    private float cleanupX = -20f;
+    private float moveSpeed = 2f;
 
     [Header("GameController Reference")]
     [SerializeField] private GameController gameController;
 
-    private float timer = 0f;
+    private bool isFirstSegment;
     private List<GameObject> segmentPool = new List<GameObject>();
+
+    private void Start()
+    {
+        isFirstSegment = true;
+    }
 
     private void Update()
     {
@@ -38,26 +42,34 @@ public class SegmentController : MonoBehaviourPun
 
     private void SpawnSegments()
     {
-        for (int i = 0; i < segmentPrefabs.Length; i++)
+        GameObject segmentToSpawn;
+
+        if (isFirstSegment)
         {
-            if (i == 0)
-            {
-                GameObject firstSegment = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
+            segmentToSpawn = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
+            isFirstSegment = false;
+        }
+        else
+        {
+            float xLast = segmentPool[segmentPool.Count - 1].transform.position.x;
+            float scaleLast = segmentPool[segmentPool.Count - 1].transform.localScale.x / 2;
 
-                PhotonNetwork.Instantiate(firstSegment.name, new Vector3(spawnX, 0), Quaternion.identity);
-                segmentPool.Add(firstSegment);
-            }
-            else
-            {
-                float xScale = segmentPool[i - 1].transform.localScale.x / 2;
-                float x = segmentPool[i - 1].transform.position.x;
-                GameObject segment = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
+            segmentToSpawn = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
 
-                if (segment.transform.position.x - x >= segment.transform.localScale.x / 2 + xScale)
-                {
-                    PhotonNetwork.Instantiate(segment.name, new Vector3(spawnX, 0), Quaternion.identity);
-                    segmentPool.Add(segment);
-                }
+            float distance = spawnX - xLast;
+            if (distance <= scaleLast + segmentToSpawn.transform.localScale.x)
+                return;
+        }
+
+        GameObject segmentInstance = PhotonNetwork.Instantiate(segmentToSpawn.name, new Vector3(spawnX, 0), Quaternion.identity);
+        segmentPool.Add(segmentInstance);
+
+        GhostObstacle[] obstacles = segmentInstance.GetComponentsInChildren<GhostObstacle>();
+        foreach (GhostObstacle obstacle in obstacles)
+        {
+            if (obstacle != null)
+            {
+                gameController.AssignPlayerToGhostObstacle(obstacle);
             }
         }
     }
@@ -72,12 +84,14 @@ public class SegmentController : MonoBehaviourPun
 
     private void DestroySegments()
     {
-        foreach (GameObject s in segmentPool)
+        for (int i = segmentPool.Count - 1; i >= 0; i--)
         {
-            if (s.transform.position == new Vector3(cleanupX, 0))
+            GameObject s = segmentPool[i];
+
+            if (s.transform.position.x <= cleanupX)
             {
-                segmentPool.Remove(s);
-                Destroy(s);
+                PhotonNetwork.Destroy(s);
+                segmentPool.RemoveAt(i);
             }
         }
     }

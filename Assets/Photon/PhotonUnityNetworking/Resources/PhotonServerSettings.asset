@@ -43,6 +43,10 @@ MonoBehaviour:
   - ShowVictory
   - EnablePhysicsRPC
   - ShowVictoryRPC
+  - MoveObstacle
+  - SyncPlayers
+  - SyncPlayer
+  - Move
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

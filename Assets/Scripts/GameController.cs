@@ -1,9 +1,10 @@
-using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using TMPro;
-using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
@@ -16,6 +17,8 @@ public class GameController : MonoBehaviourPunCallbacks
     private bool gameStarted = false;
     private bool victoryShown = false;
 
+    private Queue<Photon.Realtime.Player> deadPlayersQueue = new Queue<Photon.Realtime.Player>();
+    public bool localPlayerIsDead = false;
 
     public bool IsGameStarted()
     {
@@ -129,12 +132,36 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void LocalPlayerDied()
     {
-        StartCoroutine(LeaveRoomCoroutine());
+        AddDeadPlayer(PhotonNetwork.LocalPlayer);
+        localPlayerIsDead = true;
+        //StartCoroutine(LeaveRoomCoroutine());
+    }
+
+    public void AddDeadPlayer(Photon.Realtime.Player player)
+    {
+        if (!deadPlayersQueue.Contains(player))
+            deadPlayersQueue.Enqueue(player);
+    }
+
+
+    public void AssignPlayerToGhostObstacle(GhostObstacle obstacle)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        Photon.Realtime.Player player = deadPlayersQueue.Count > 0 ? deadPlayersQueue.Dequeue() : null;
+
+        if (player != null)
+        {
+            obstacle.AssignPlayer(player);
+        }
+        else
+        {
+            obstacle.AssignNoPlayer();
+        }
     }
 
     private System.Collections.IEnumerator LeaveRoomCoroutine()
     {
-        // czekamy 1 klatkê (Photon koñczy Destroy)
         yield return null;
 
         if (PhotonNetwork.InRoom)

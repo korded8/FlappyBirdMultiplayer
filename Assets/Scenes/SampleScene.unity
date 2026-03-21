@@ -1807,6 +1807,7 @@ MonoBehaviour:
   playersText: {fileID: 1337331008}
   victoryText: {fileID: 1007355537}
   victoryDelay: 3
+  localPlayerIsDead: 0
 --- !u!4 &2077214053
 Transform:
   m_ObjectHideFlags: 0
@@ -1857,13 +1858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SegmentSpawner
   segmentPrefabs:
-  - {fileID: 2582042078010800316, guid: 2b5a5d2101be7cc4db7b28e1cb42c2d0, type: 3}
-  - {fileID: 8122767503541752425, guid: 9949fd2a4f7830a4a93f99a5df5e0799, type: 3}
-  poolSize: 5
-  spawnInterval: 3
-  spawnX: 10
-  cleanupX: -15
-  moveSpeed: 2
+  - {fileID: 873811141386560378, guid: 2b5a5d2101be7cc4db7b28e1cb42c2d0, type: 3}
   gameController: {fileID: 2077214052}
 --- !u!1 &2102859877
 GameObject:

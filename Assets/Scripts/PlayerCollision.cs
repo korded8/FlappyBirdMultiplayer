@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using System;
 
 public class PlayerCollision : MonoBehaviourPun
 {
@@ -14,14 +15,12 @@ public class PlayerCollision : MonoBehaviourPun
         {
             isDead = true;
 
-            // informujemy GameController
             GameController gc = FindObjectOfType<GameController>();
             if (gc != null)
             {
                 gc.LocalPlayerDied();
             }
 
-            // niszczymy gracza
             PhotonNetwork.Destroy(gameObject);
         }
     }
