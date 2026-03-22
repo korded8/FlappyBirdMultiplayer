@@ -16,13 +16,13 @@ public class MovingObstacle : MonoBehaviourPun
 
         direction = Random.value > 0.5f ? Vector3.up : Vector3.down;
     }
+
     private void Update()
     {
         if (!photonView.IsMine) return;
-        photonView.RPC(nameof(Move), RpcTarget.All);
+        Move();
     }
 
-    [PunRPC]
     private void Move()
     {
         if (transform.position.y > maxY)
@@ -33,6 +33,7 @@ public class MovingObstacle : MonoBehaviourPun
         {
             direction = Vector3.up;
         }
+
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 
