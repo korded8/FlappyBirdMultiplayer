@@ -20,3 +20,4 @@ MonoBehaviour:
     wingColor: {r: 1, g: 1, b: 1, a: 1}
     featherColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
     presetName: Classic
+  currentPresetIndex: 0

@@ -25,6 +25,10 @@ public class BirdAppearanceUI : MonoBehaviour
     public TMP_InputField presetNameInput;
     public TMP_Text emptyPresetNameWarning;
     public TMP_Text duplicatePresetNameWarning;
+    public TMP_Text deletingClassicPresetWarning;
+
+    [Header("Highscore text")]
+    public TMP_Text highscoreText;
 
     public enum BirdPart
     {
@@ -39,6 +43,7 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         emptyPresetNameWarning.enabled = false;
         duplicatePresetNameWarning.enabled = false;
+        deletingClassicPresetWarning.enabled = false;
 
         presetNameInput.characterLimit = 8;
 
@@ -48,11 +53,11 @@ public class BirdAppearanceUI : MonoBehaviour
 
         presetsDropdown.onValueChanged.AddListener(OnDropdownChanged);
 
-        if (data.presets.Count > 0)
-        {
-            currentPreset = 0;
-            data.ApplyPreset(currentPreset);
-        }
+        int highscore = PlayerPrefs.GetInt("Highscore", 0);
+        highscoreText.text = "Highscore: " + highscore.ToString();
+
+        data.LoadPresets();
+        currentPreset = data.currentPresetIndex;
 
         UpdatePresetsDropdown();
         RefreshSlidersWithoutNotify();
@@ -205,9 +210,31 @@ public class BirdAppearanceUI : MonoBehaviour
         data.OnAppearanceChanged?.Invoke();
     }
 
+    public void DeletePreset()
+    {
+        if (currentPreset == 0)
+        {
+            deletingClassicPresetWarning.enabled = true;
+            return;
+        }
+        else
+        {
+            deletingClassicPresetWarning.enabled = false;
+        }
+        data.DeletePreset(currentPreset);
+        currentPreset = 0;
+        presetNameInput.text = null;
+
+        UpdatePresetsDropdown();
+        RefreshSlidersWithoutNotify();
+        data.OnAppearanceChanged?.Invoke();
+    }
+
     public void OnDropdownChanged(int index)
     {
         if (index < 0 || index > data.presets.Count || index == currentPreset) return;
+
+        deletingClassicPresetWarning.enabled = false;
 
         if (index == data.presets.Count)
         {

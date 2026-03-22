@@ -79,8 +79,6 @@ public class GhostObstacle : MonoBehaviourPun
         if (player != null && myID == player.ActorNumber && !obstacleUsed)
         {
             photonView.RPC(nameof(MoveObstacle), RpcTarget.All);
-            //upArrow.SetActive(false);
-            //downArrow.SetActive(false);
         }
     }
 
@@ -90,5 +88,16 @@ public class GhostObstacle : MonoBehaviourPun
         transform.position += direction * moveDistance;
         obstacleUsed = true;
         gameController.AddDeadPlayer(player);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+
+        Vector3 maxPoint = new Vector3(transform.position.x, transform.position.y + moveDistance);
+        Vector3 minPoint = new Vector3(transform.position.x, transform.position.y - moveDistance);
+
+        Gizmos.DrawSphere(maxPoint, 0.2f);
+        Gizmos.DrawSphere(minPoint, 0.2f);
     }
 }

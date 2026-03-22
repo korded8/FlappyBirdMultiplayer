@@ -119,7 +119,6 @@ public class GameController : MonoBehaviourPunCallbacks
         }
     }
 
-
     private void ReturnToMenu()
     {
         if (PhotonNetwork.InRoom)
@@ -135,8 +134,8 @@ public class GameController : MonoBehaviourPunCallbacks
     public void LocalPlayerDied()
     {
         AddDeadPlayer(PhotonNetwork.LocalPlayer);
+        FindObjectOfType<UI>()?.OnPlayerDied();
         localPlayerIsDead = true;
-        //StartCoroutine(LeaveRoomCoroutine());
     }
 
     public void AddDeadPlayer(Photon.Realtime.Player player)
@@ -162,7 +161,7 @@ public class GameController : MonoBehaviourPunCallbacks
         }
     }
 
-    private System.Collections.IEnumerator LeaveRoomCoroutine()
+    public System.Collections.IEnumerator LeaveRoomCoroutine()
     {
         yield return null;
 

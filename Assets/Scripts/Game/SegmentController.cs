@@ -9,9 +9,9 @@ public class SegmentController : MonoBehaviourPun
     [Header("Segment Settings")]
     [SerializeField] private GameObject[] segmentPrefabs;
 
+    public float moveSpeed = 2f;
     private float spawnX = 20f;
     private float cleanupX = -20f;
-    private float moveSpeed = 2f;
 
     [Header("GameController Reference")]
     [SerializeField] private GameController gameController;

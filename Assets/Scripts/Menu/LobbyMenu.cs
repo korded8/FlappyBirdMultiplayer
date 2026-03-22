@@ -108,7 +108,7 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel(1);
+        PhotonNetwork.LoadLevel(2);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
