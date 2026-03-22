@@ -27,6 +27,8 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        PhotonNetwork.SerializationRate = 200;
+
         victoryText.gameObject.SetActive(false);
 
         if (!PhotonNetwork.IsMasterClient)
@@ -42,7 +44,7 @@ public class GameController : MonoBehaviourPunCallbacks
         gameStarted = true;
         startButton.SetActive(false);
 
-        photonView.RPC(nameof(EnablePhysicsRPC), RpcTarget.AllBuffered);
+        photonView.RPC(nameof(EnablePhysicsRPC), RpcTarget.All);
     }
 
     [PunRPC]
