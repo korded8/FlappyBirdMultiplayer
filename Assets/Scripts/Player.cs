@@ -19,7 +19,7 @@ public class Player : MonoBehaviourPun
     {
         if (!photonView.IsMine)
         {
-            rb.simulated = false;
+            rb.isKinematic = true;
         }
     }
 
