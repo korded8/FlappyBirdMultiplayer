@@ -29,7 +29,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
         if (spawnPoints == null || spawnPoints.Length == 0)
         {
-            Debug.LogError("Brak spawn pointów w PlayerSpawner!");
+            Debug.LogError("Brak spawn pointÃ³w w PlayerSpawner!");
             return;
         }
 

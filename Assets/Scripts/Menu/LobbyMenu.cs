@@ -23,7 +23,7 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
         roomCodeInput.characterLimit = 8;
         createRoomButton.SetActive(false);
         joinRoomButton.SetActive(false);
-        statusText.text = "£πczenie z Photon...";
+        statusText.text = "≈ÅƒÖczenie z Photon...";
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -37,7 +37,7 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
         joinedLobby = true;
         createRoomButton.SetActive(true);
         joinRoomButton.SetActive(true);
-        statusText.text = "Po≥πczono z lobby";
+        statusText.text = "Po≈ÇƒÖczono z lobby";
     }
 
     public void OnRoomCodeChanged(string value)
@@ -113,11 +113,11 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        statusText.text = "Nie moøna do≥πczyÊ do pokoju";
+        statusText.text = "Nie mo≈ºna do≈ÇƒÖczyƒá¬†do pokoju: " + message;
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        statusText.text = "Nie moøna stworzyÊ pokoju";
+        statusText.text = "Nie mo≈ºna stworzyƒá¬†pokoju: " + message;
     }
 }
