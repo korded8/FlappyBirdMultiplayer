@@ -27,7 +27,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.SerializationRate = 200;
+        PhotonNetwork.SerializationRate = 20;
 
         victoryText.gameObject.SetActive(false);
 
