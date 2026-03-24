@@ -1,6 +1,5 @@
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerSetup : MonoBehaviourPunCallbacks
@@ -9,6 +8,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     private Rigidbody2D rb;
     Material materialInstance;
 
+    [System.Obsolete]
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

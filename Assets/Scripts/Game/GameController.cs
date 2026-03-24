@@ -1,10 +1,8 @@
 using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
@@ -17,7 +15,7 @@ public class GameController : MonoBehaviourPunCallbacks
     private bool gameStarted = false;
     private bool victoryShown = false;
 
-    private Queue<Photon.Realtime.Player> deadPlayersQueue = new Queue<Photon.Realtime.Player>();
+    private readonly Queue<Photon.Realtime.Player> deadPlayersQueue = new();
     public bool localPlayerIsDead = false;
 
     public bool IsGameStarted()
@@ -48,6 +46,7 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    [System.Obsolete]
     private void EnablePhysicsRPC()
     {
         Rigidbody2D[] bodies = FindObjectsOfType<Rigidbody2D>();
@@ -131,9 +130,11 @@ public class GameController : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
+    [System.Obsolete]
     public void LocalPlayerDied()
     {
         AddDeadPlayer(PhotonNetwork.LocalPlayer);
+        // FIXME:Unity objects should not use null propagation
         FindObjectOfType<UI>()?.OnPlayerDied();
         localPlayerIsDead = true;
     }
@@ -161,7 +162,7 @@ public class GameController : MonoBehaviourPunCallbacks
         }
     }
 
-    public System.Collections.IEnumerator LeaveRoomCoroutine()
+    public IEnumerator LeaveRoomCoroutine()
     {
         yield return null;
 

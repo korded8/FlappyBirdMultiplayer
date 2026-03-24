@@ -4,6 +4,7 @@
 EditorSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 15
+  m_GenerateAllProjectFiles: 1
   m_SerializationMode: 2
   m_LineEndingsForNewScripts: 0
   m_DefaultBehaviorMode: 1

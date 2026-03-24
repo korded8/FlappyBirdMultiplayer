@@ -1,8 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEngine.Rendering;
 
 public class SegmentController : MonoBehaviourPun
 {
@@ -10,20 +8,21 @@ public class SegmentController : MonoBehaviourPun
     [SerializeField] private GameObject[] segmentPrefabs;
 
     public float moveSpeed = 2f;
-    private float spawnX = 20f;
-    private float cleanupX = -20f;
+    private readonly float spawnX = 20f;
+    private readonly float cleanupX = -20f;
 
     [Header("GameController Reference")]
     [SerializeField] private GameController gameController;
 
     private bool isFirstSegment;
-    private List<GameObject> segmentPool = new List<GameObject>();
+    private readonly List<GameObject> segmentPool = new();
 
     private void Start()
     {
         isFirstSegment = true;
     }
 
+    [System.Obsolete]
     private void Update()
     {
         if (!PhotonNetwork.IsMasterClient) return;
@@ -51,8 +50,8 @@ public class SegmentController : MonoBehaviourPun
         }
         else
         {
-            float xLast = segmentPool[segmentPool.Count - 1].transform.position.x;
-            float scaleLast = segmentPool[segmentPool.Count - 1].transform.localScale.x / 2;
+            float xLast = segmentPool[^1].transform.position.x;
+            float scaleLast = segmentPool[^1].transform.localScale.x / 2;
 
             segmentToSpawn = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
 
@@ -78,7 +77,7 @@ public class SegmentController : MonoBehaviourPun
     {
         foreach (GameObject s in segmentPool)
         {
-            s.transform.position += Vector3.left * moveSpeed * Time.deltaTime;
+            s.transform.position += moveSpeed * Time.deltaTime * Vector3.left;
         }
     }
 

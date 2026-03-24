@@ -1,6 +1,5 @@
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine.InputSystem;
 
 public class GhostObstacle : MonoBehaviourPun
@@ -23,7 +22,7 @@ public class GhostObstacle : MonoBehaviourPun
 
     public void AssignNoPlayer()
     {
-        player = null;      
+        player = null;
         obstacleUsed = true;
     }
 
@@ -34,6 +33,7 @@ public class GhostObstacle : MonoBehaviourPun
         obstacleUsed = false;
     }
 
+    [System.Obsolete]
     private void Awake()
     {
         gameController = FindObjectOfType<GameController>();
@@ -94,8 +94,8 @@ public class GhostObstacle : MonoBehaviourPun
     {
         Gizmos.color = Color.green;
 
-        Vector3 maxPoint = new Vector3(transform.position.x, transform.position.y + moveDistance);
-        Vector3 minPoint = new Vector3(transform.position.x, transform.position.y - moveDistance);
+        Vector3 maxPoint = new(transform.position.x, transform.position.y + moveDistance);
+        Vector3 minPoint = new(transform.position.x, transform.position.y - moveDistance);
 
         Gizmos.DrawSphere(maxPoint, 0.2f);
         Gizmos.DrawSphere(minPoint, 0.2f);

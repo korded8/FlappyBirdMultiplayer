@@ -5,8 +5,8 @@ public class MovingObstacle : MonoBehaviourPun
 {
     private float maxY;
     private float minY;
-    private float moveSpeed = 3f;
-    private float distance = 2f;
+    private readonly float moveSpeed = 3f;
+    private readonly float distance = 2f;
     private Vector3 direction;
 
     private void Start()
@@ -34,17 +34,17 @@ public class MovingObstacle : MonoBehaviourPun
             direction = Vector3.up;
         }
 
-        transform.position += direction * moveSpeed * Time.deltaTime;
+        transform.position += moveSpeed * Time.deltaTime * direction;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
 
-        Vector3 maxPoint = new Vector3(transform.position.x, transform.position.y + distance);
+        Vector3 maxPoint = new(transform.position.x, transform.position.y + distance);
         Gizmos.DrawSphere(maxPoint, 0.2f);
 
-        Vector3 minPoint = new Vector3(transform.position.x, transform.position.y - distance);
+        Vector3 minPoint = new(transform.position.x, transform.position.y - distance);
         Gizmos.DrawSphere(minPoint, 0.2f);
 
         Gizmos.DrawLine(minPoint, maxPoint);

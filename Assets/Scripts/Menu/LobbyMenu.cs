@@ -2,8 +2,6 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
-using System.Collections;
-using ExitGames.Client.Photon;
 
 public class LobbyMenu : MonoBehaviourPunCallbacks
 {
@@ -20,6 +18,7 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        Debug.Log("Test omg it works");
         roomCodeInput.characterLimit = 8;
         createRoomButton.SetActive(false);
         joinRoomButton.SetActive(false);
@@ -43,7 +42,7 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
     public void OnRoomCodeChanged(string value)
     {
         if (value.Length > 8)
-            roomCodeInput.text = value.Substring(0, 8);
+            roomCodeInput.text = value[..8];
     }
 
     public void SavePlayerColors(Color body, Color wing, Color feather)
@@ -63,8 +62,10 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
         (byte)(feather.b * 255),
         };
 
-        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
-        props["colors"] = colors;
+        ExitGames.Client.Photon.Hashtable props = new()
+        {
+            ["colors"] = colors
+        };
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
@@ -77,7 +78,7 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
         string code = GetRoomCode();
         if (string.IsNullOrEmpty(code)) return;
 
-        RoomOptions options = new RoomOptions
+        RoomOptions options = new()
         {
             MaxPlayers = 16,
             IsOpen = true,
@@ -102,7 +103,7 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
     {
         string code = roomCodeInput.text.Trim().ToUpper();
         if (code.Length > 8)
-            code = code.Substring(0, 8);
+            code = code[..8];
         return code;
     }
 

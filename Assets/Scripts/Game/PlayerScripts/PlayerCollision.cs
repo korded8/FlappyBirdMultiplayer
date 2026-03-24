@@ -1,11 +1,11 @@
 using UnityEngine;
 using Photon.Pun;
-using System;
 
 public class PlayerCollision : MonoBehaviourPun
 {
     private bool isDead = false;
 
+    [System.Obsolete]
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (isDead) return;

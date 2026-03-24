@@ -19,7 +19,7 @@ public class Player : MonoBehaviourPun
     {
         if (!photonView.IsMine)
         {
-            rb.isKinematic = true;
+            rb.bodyType = RigidbodyType2D.Kinematic;
         }
     }
 

@@ -7,7 +7,6 @@ public class LoadingScreen : MonoBehaviour
     private string sceneToLoad = "Menu";
 
     public Animator logoAnimator;
-    private string animationStateName = "LogoAnimation";
 
     private void Start()
     {

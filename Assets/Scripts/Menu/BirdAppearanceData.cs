@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BirdAppearanceData", menuName = "Bird/BirdAppearanceData")]
 public class BirdAppearanceData : ScriptableObject
 {
-    [System.Serializable]
+    [Serializable]
     public struct Preset
     {
         public Color bodyColor;
@@ -20,7 +20,7 @@ public class BirdAppearanceData : ScriptableObject
     public Color featherColor = Color.white;
 
     [Header("Presets")]
-    public List<Preset> presets = new List<Preset>();
+    public List<Preset> presets = new();
     public int currentPresetIndex = 0;
 
     public Action OnAppearanceChanged;
@@ -42,14 +42,14 @@ public class BirdAppearanceData : ScriptableObject
     public void AddPreset(Color body, Color wing, Color feather, string presetName)
     {
         if (presets.Count == 6) return;
-        Preset newPreset = new Preset
+        Preset newPreset = new()
         {
             bodyColor = body,
             wingColor = wing,
             featherColor = feather,
             presetName = presetName
         };
-        
+
         presets.Add(newPreset);
         SavePresets();
     }
@@ -85,13 +85,13 @@ public class BirdAppearanceData : ScriptableObject
     }
     public Color GetColor(BirdAppearanceUI.BirdPart part)
     {
-        switch (part)
+        return part switch
         {
-            case BirdAppearanceUI.BirdPart.body: return bodyColor;
-            case BirdAppearanceUI.BirdPart.wings: return wingColor;
-            case BirdAppearanceUI.BirdPart.feather: return featherColor;
-            default: return Color.white;
-        }
+            BirdAppearanceUI.BirdPart.body => bodyColor,
+            BirdAppearanceUI.BirdPart.wings => wingColor,
+            BirdAppearanceUI.BirdPart.feather => featherColor,
+            _ => Color.white,
+        };
     }
 
     public void Randomize()
@@ -103,7 +103,7 @@ public class BirdAppearanceData : ScriptableObject
         OnAppearanceChanged?.Invoke();
     }
 
-    [System.Serializable]
+    [Serializable]
     private class SaveData
     {
         public List<Preset> presets;
@@ -117,7 +117,7 @@ public class BirdAppearanceData : ScriptableObject
 
     public void SavePresets()
     {
-        SaveData data = new SaveData
+        SaveData data = new()
         {
             presets = presets,
             presetIndex = currentPresetIndex

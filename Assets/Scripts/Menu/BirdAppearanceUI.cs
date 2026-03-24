@@ -75,7 +75,7 @@ public class BirdAppearanceUI : MonoBehaviour
     public void UpdatePresetsDropdown()
     {
         presetsDropdown.ClearOptions();
-        List<string> optionsList = new List<string>();
+        List<string> optionsList = new();
         foreach (var p in data.presets)
         {
             optionsList.Add(p.presetName);
@@ -101,7 +101,7 @@ public class BirdAppearanceUI : MonoBehaviour
 
     public void OnSliderChanged(float value)
     {
-        Color currentColor = new Color(redSlider.value, greenSlider.value, blueSlider.value);
+        Color currentColor = new(redSlider.value, greenSlider.value, blueSlider.value);
 
         redColorInput.text = Math.Round(redSlider.value * 255).ToString();
         greenColorInput.text = Math.Round(greenSlider.value * 255).ToString();
@@ -117,7 +117,7 @@ public class BirdAppearanceUI : MonoBehaviour
         float g = ParseInputToFloat(greenColorInput.text);
         float b = ParseInputToFloat(blueColorInput.text);
 
-        Color newColor = new Color(r, g, b, 1f);
+        Color newColor = new(r, g, b, 1f);
 
         data.SetColor(selectedPart, newColor);
 
@@ -151,7 +151,7 @@ public class BirdAppearanceUI : MonoBehaviour
         float r = UnityEngine.Random.Range(0, 255) / 255f;
         float g = UnityEngine.Random.Range(0, 255) / 255f;
         float b = UnityEngine.Random.Range(0, 255) / 255f;
-        Color newColor = new Color(r, g, b);
+        Color newColor = new(r, g, b);
 
         data.SetColor(birdPart, newColor);
     }
