@@ -1,17 +1,17 @@
 # TODO
-- [ ] Ogarnąć kolory ptaka
-- [ ] Naprawić przycisk Randomize
-- [ ] Rework spawnowania segmentów
+- [x] Ogarnąć kolory ptaka
+- [x] Naprawić przycisk Randomize
+- [x] Rework spawnowania segmentów
 - [ ] Różne przeszkody: duchowe, fake’owe, ruszające się i zmieniające kolor
-- [ ] duchowe
-- [ ] fake’owe
-- [ ] ruszające się
-- [ ] zmieniające kolor
+    - [ ] duchowe
+    - [x] fake’owe
+    - [x] ruszające się
+    - [x] zmieniające kolor
 - [ ] Pokazywanie wyniku
-- [ ] Obserwowanie gry po śmierci, powrót do menu i wyjście z gry
-- [ ] Zapisywanie presetów do pliku
-- [ ] przycisk usuwania presetów
-- [ ] ekran ładowania
+- [x] Obserwowanie gry po śmierci, powrót do menu i wyjście z gry
+- [x] Zapisywanie presetów do pliku
+- [x] przycisk usuwania presetów
+- [x] ekran ładowania
 - [ ] Dodać skiny
 - [ ] Twitter
 - [ ] Piggy bank
