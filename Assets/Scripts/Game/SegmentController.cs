@@ -57,7 +57,7 @@ public class SegmentController : MonoBehaviourPun
             segmentToSpawn = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
 
             float distance = spawnX - xLast;
-            if (distance <= scaleLast + segmentToSpawn.transform.localScale.x)
+            if (distance <= scaleLast + segmentToSpawn.transform.localScale.x/2)
                 return;
         }
 
