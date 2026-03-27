@@ -1,0 +1,33 @@
+# TODO
+- [ ] Ogarnąć kolory ptaka
+- [ ] Naprawić przycisk Randomize
+- [ ] Rework spawnowania segmentów
+- [ ] Różne przeszkody: duchowe, fake’owe, ruszające się i zmieniające kolor
+- [ ] duchowe
+- [ ] fake’owe
+- [ ] ruszające się
+- [ ] zmieniające kolor
+- [ ] Pokazywanie wyniku
+- [ ] Obserwowanie gry po śmierci, powrót do menu i wyjście z gry
+- [ ] Zapisywanie presetów do pliku
+- [ ] przycisk usuwania presetów
+- [ ] ekran ładowania
+- [ ] Dodać skiny
+- [ ] Twitter
+- [ ] Piggy bank
+- [ ] Phoenix
+- [ ] William/The Eye
+- [ ] Animacje dla skinów
+- [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
+- [ ] odliczanie przed startem i animacja lotu
+- [ ] W menu w tle poruszające się przeszkody
+- [ ] Grafiki
+- [ ] Donacje
+
+# Random ideas
+- [ ] Jajko
+- [ ] Robaki
+- [ ] Matchmaking
+- [ ] Wzmocnienia w zależności od skina
+- [ ] Język polski, angielski
+- [ ] 
