@@ -7,7 +7,7 @@
     - [x] fake’owe
     - [x] ruszające się
     - [x] zmieniające kolor
-- [ ] Pokazywanie wyniku
+- [x] Pokazywanie wyniku
 - [x] Obserwowanie gry po śmierci, powrót do menu i wyjście z gry
 - [x] Zapisywanie presetów do pliku
 - [x] przycisk usuwania presetów
