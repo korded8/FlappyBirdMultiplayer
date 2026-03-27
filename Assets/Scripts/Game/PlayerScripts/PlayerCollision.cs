@@ -6,12 +6,11 @@ public class PlayerCollision : MonoBehaviourPun
     private bool isDead = false;
 
     [System.Obsolete]
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("HELLO WORLD!");
         if (isDead || !photonView.IsMine) return;
 
-        if (collision.collider.CompareTag("Obstacle"))
+        if (collider.CompareTag("Obstacle"))
         {
             isDead = true;
 
