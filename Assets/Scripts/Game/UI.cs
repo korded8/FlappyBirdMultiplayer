@@ -11,14 +11,11 @@ public class UI : MonoBehaviour
     public SegmentController sc;
     public GameController gc;
 
-    private double startTime;
-    private double pausedTime = 0;
-    private double pauseStartTime = 0;
-
     private bool isAlive = true;
     private bool timerStarted = false;
     private bool isEscapePanelActive = false;
     private bool isLeavingGame = false;
+    private float scoreTimer = 0;
 
     public void Start()
     {
@@ -35,10 +32,10 @@ public class UI : MonoBehaviour
 
         if (!timerStarted)
         {
-            startTime = PhotonNetwork.Time;
             timerStarted = true;
         }
 
+        UpdateScore();
         UpdateUI();
 
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -47,16 +44,19 @@ public class UI : MonoBehaviour
         }
     }
 
-    void UpdateUI()
+    private void UpdateScore()
     {
-        int score = GetScore();
-        scoreText.text = "Score: " + score.ToString();
+        if ((scoreTimer += Time.deltaTime) >= 1)
+        {
+            PlayerPrefs.SetInt("Highscore", PlayerPrefs.GetInt("Highscore") + 1);
+            scoreTimer = 0;
+        }
     }
 
-    int GetScore()
+    void UpdateUI()
     {
-        double elapsedTime = PhotonNetwork.Time - startTime - pausedTime;
-        return Mathf.FloorToInt((float)elapsedTime) * (int)sc.moveSpeed;
+        int score = PlayerPrefs.GetInt("Highscore");
+        scoreText.text = "Score: " + score.ToString();
     }
 
     public void OnPlayerDied()
@@ -65,12 +65,12 @@ public class UI : MonoBehaviour
 
         isAlive = false;
 
-        SetFinalScore();
+        UpdateHighscore();
     }
 
-    private void SetFinalScore()
+    private void UpdateHighscore()
     {
-        int finalScore = GetScore();
+        int finalScore = PlayerPrefs.GetInt("Highscore");
 
         int highscore = PlayerPrefs.GetInt("Highscore", 0);
 
@@ -92,19 +92,17 @@ public class UI : MonoBehaviour
             if (isEscapePanelActive)
             {
                 Time.timeScale = 0f;
-                pauseStartTime = PhotonNetwork.Time;
             }
             else
             {
                 Time.timeScale = 1f;
-                pausedTime += PhotonNetwork.Time - pauseStartTime;
             }
         }
     }
 
     public void LeaveGame()
     {
-        SetFinalScore();
+        UpdateHighscore();
         isLeavingGame = true;
         ToggleEscapePanel();
         StartCoroutine(gc.LeaveRoomCoroutine());
