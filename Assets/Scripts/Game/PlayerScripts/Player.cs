@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviourPun
@@ -9,6 +10,7 @@ public class Player : MonoBehaviourPun
     [SerializeField] private float jumpForce = 5f;
 
     private Rigidbody2D rb;
+    private readonly float maxRotation = 90f;
 
     private void Awake()
     {
@@ -25,6 +27,7 @@ public class Player : MonoBehaviourPun
 
     private void Update()
     {
+        transform.eulerAngles = new Vector3(0, 0, Math.Clamp(rb.linearVelocity.y / 5f * maxRotation, -maxRotation, maxRotation));
         if (!photonView.IsMine) return;
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
