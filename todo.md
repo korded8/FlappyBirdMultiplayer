@@ -21,7 +21,7 @@
     - [ ] Animacje dla skinów
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
 - [ ] Odliczanie przed startem
-- [ ] Animacja lotu
+- [x] Animacja lotu
 - [ ] W menu w tle poruszające się przeszkody
 - [ ] Grafiki
 - [ ] Donacje
