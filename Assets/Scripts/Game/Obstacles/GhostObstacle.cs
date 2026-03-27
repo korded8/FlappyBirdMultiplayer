@@ -55,7 +55,7 @@ public class GhostObstacle : MonoBehaviourPun
             TryMove();
         }
 
-        if (gameController.localPlayerIsDead && player == PhotonNetwork.LocalPlayer && !obstacleUsed && gameController.localPlayerIsDead)
+        if (gameController.localPlayerIsDead && player == PhotonNetwork.LocalPlayer && !obstacleUsed)
         {
             if (direction == Vector3.up)
             {
@@ -79,7 +79,7 @@ public class GhostObstacle : MonoBehaviourPun
     {
         int myID = PhotonNetwork.LocalPlayer.ActorNumber;
 
-        if (player != null && myID == player.ActorNumber && !obstacleUsed)
+        if (player != null && myID == player.ActorNumber && !obstacleUsed && gameController.localPlayerIsDead)
         {
             photonView.RPC(nameof(MoveObstacle), RpcTarget.All);
         }
