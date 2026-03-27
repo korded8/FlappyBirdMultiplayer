@@ -20,7 +20,7 @@ public class GameController : MonoBehaviourPunCallbacks
     private readonly HashSet<Photon.Realtime.Player> deadPlayersHashSet = new();
     public bool localPlayerIsDead = false;
 
-    private int secondsUntilStart = 5;
+    private int secondsUntilStart = 3;
 
     public bool IsGameStarted()
     {
