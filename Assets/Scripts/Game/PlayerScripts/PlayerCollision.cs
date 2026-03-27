@@ -6,20 +6,19 @@ public class PlayerCollision : MonoBehaviourPun
     private bool isDead = false;
 
     [System.Obsolete]
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isDead) return;
-        if (!photonView.IsMine) return;
+        Debug.Log("HELLO WORLD!");
+        if (isDead || !photonView.IsMine) return;
 
-        if (collision.CompareTag("Obstacle"))
+        if (collision.collider.CompareTag("Obstacle"))
         {
             isDead = true;
 
             GameController gc = FindObjectOfType<GameController>();
+
             if (gc != null)
-            {
                 gc.LocalPlayerDied();
-            }
 
             PhotonNetwork.Destroy(gameObject);
         }

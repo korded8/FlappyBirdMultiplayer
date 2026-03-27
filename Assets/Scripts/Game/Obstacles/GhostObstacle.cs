@@ -40,6 +40,9 @@ public class GhostObstacle : MonoBehaviourPun
         upArrow = transform.Find("UpArrow").gameObject;
         downArrow = transform.Find("DownArrow").gameObject;
 
+        upArrow.SetActive(false);
+        downArrow.SetActive(false);
+
         direction = Random.value < 0.5f ? Vector3.up : Vector3.down;
     }
 
@@ -52,7 +55,7 @@ public class GhostObstacle : MonoBehaviourPun
             TryMove();
         }
 
-        if (gameController.localPlayerIsDead && player == PhotonNetwork.LocalPlayer && !obstacleUsed)
+        if (gameController.localPlayerIsDead && player == PhotonNetwork.LocalPlayer && !obstacleUsed && gameController.localPlayerIsDead)
         {
             if (direction == Vector3.up)
             {
