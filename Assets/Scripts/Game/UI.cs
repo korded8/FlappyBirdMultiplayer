@@ -27,10 +27,12 @@ public class UI : MonoBehaviour
 
     private void Update()
     {
-        if (!isAlive) return;
-        if (!gc.IsGameStarted()) return;
-        if (isLeavingGame) return;
-        if (PhotonNetwork.PlayerList.Length == 1 && isEscapePanelActive) return;
+        if (!isAlive
+                || !gc.IsGameStarted()
+                || isLeavingGame
+                || (PhotonNetwork.PlayerList.Length == 1 && isEscapePanelActive))
+            return;
+
         if (!timerStarted)
         {
             startTime = PhotonNetwork.Time;

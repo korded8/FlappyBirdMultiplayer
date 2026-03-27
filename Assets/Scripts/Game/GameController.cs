@@ -63,13 +63,7 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         UpdatePlayerCount();
 
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
-        if (!gameStarted)
-            return;
-
-        if (victoryShown)
+        if (!PhotonNetwork.IsMasterClient || !gameStarted || victoryShown)
             return;
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
