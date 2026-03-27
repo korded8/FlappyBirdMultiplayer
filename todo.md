@@ -13,13 +13,13 @@
 - [x] przycisk usuwania presetów
 - [x] ekran ładowania
 - [ ] Dodać skiny
-- [ ] Twitter
-- [ ] Piggy bank
-- [ ] Phoenix
-- [ ] William/The Eye
-- [ ] Animacje dla skinów
+    - [ ] Twitter
+    - [ ] Piggy bank
+    - [ ] Phoenix
+    - [ ] William/The Eye
+    - [ ] Animacje dla skinów
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
-- [ ] odliczanie przed startem i animacja lotu
+- [ ] Odliczanie przed startem i animacja lotu
 - [ ] W menu w tle poruszające się przeszkody
 - [ ] Grafiki
 - [ ] Donacje
@@ -30,4 +30,3 @@
 - [ ] Matchmaking
 - [ ] Wzmocnienia w zależności od skina
 - [ ] Język polski, angielski
-- [ ] 
