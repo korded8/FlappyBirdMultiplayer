@@ -2,8 +2,8 @@
 - [x] Ogarnąć kolory ptaka
 - [x] Naprawić przycisk Randomize
 - [x] Rework spawnowania segmentów
-- [ ] Różne przeszkody: duchowe, fake’owe, ruszające się i zmieniające kolor
-    - [ ] duchowe
+- [x] Różne przeszkody: duchowe, fake’owe, ruszające się i zmieniające kolor
+    - [x] duchowe
     - [x] fake’owe
     - [x] ruszające się
     - [x] zmieniające kolor
@@ -12,6 +12,7 @@
 - [x] Zapisywanie presetów do pliku
 - [x] przycisk usuwania presetów
 - [x] ekran ładowania
+- [ ] naprawić ekran ładowania
 - [ ] Dodać skiny
     - [ ] Twitter
     - [ ] Piggy bank
