@@ -142,7 +142,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void AssignPlayerToGhostObstacle(GhostObstacle obstacle)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (!PhotonNetwork.IsMasterClient && deadPlayersHashSet.First() == null) return;
         
         Photon.Realtime.Player player = deadPlayersHashSet.First();
         deadPlayersHashSet.Remove(player);
@@ -159,7 +159,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void GhostObstacleDestroyed(Photon.Realtime.Player player)
     {
-        deadPlayersHashSet.Remove(player);
+        deadPlayersHashSet.Add(player);
     }
 
     public IEnumerator LeaveRoomCoroutine()

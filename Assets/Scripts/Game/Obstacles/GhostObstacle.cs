@@ -93,7 +93,6 @@ public class GhostObstacle : MonoBehaviourPun
     {
         transform.position += direction * moveDistance;
         obstacleUsed = true;
-        gameController.AddDeadPlayer(player);
     }
 
     private void OnDrawGizmos()
