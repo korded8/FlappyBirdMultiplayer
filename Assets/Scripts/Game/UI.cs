@@ -16,6 +16,7 @@ public class UI : MonoBehaviour
     private bool isEscapePanelActive = false;
     private bool isLeavingGame = false;
     private float scoreTimer = 0;
+    private int score;
 
     public void Start()
     {
@@ -48,14 +49,13 @@ public class UI : MonoBehaviour
     {
         if ((scoreTimer += Time.deltaTime) >= 1)
         {
-            PlayerPrefs.SetInt("Highscore", PlayerPrefs.GetInt("Highscore") + 1);
+            score++;
             scoreTimer = 0;
         }
     }
 
     void UpdateUI()
     {
-        int score = PlayerPrefs.GetInt("Highscore");
         scoreText.text = "Score: " + score.ToString();
     }
 
@@ -70,13 +70,11 @@ public class UI : MonoBehaviour
 
     private void UpdateHighscore()
     {
-        int finalScore = PlayerPrefs.GetInt("Highscore");
-
         int highscore = PlayerPrefs.GetInt("Highscore", 0);
 
-        if (finalScore > highscore)
+        if (score > highscore)
         {
-            PlayerPrefs.SetInt("Highscore", finalScore);
+            PlayerPrefs.SetInt("Highscore", score);
             PlayerPrefs.Save();
         }
     }
