@@ -11,6 +11,7 @@ public class GameController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject startButton;
     [SerializeField] private TMP_Text playersText;
     [SerializeField] private TMP_Text victoryText;
+    [SerializeField] private TMP_Text countdownText;
     [SerializeField] private float victoryDelay = 3f;
 
     private bool gameStarted = false;
@@ -18,6 +19,8 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private readonly HashSet<Photon.Realtime.Player> deadPlayersHashSet = new();
     public bool localPlayerIsDead = false;
+
+    private int secondsUntilStart = 5;
 
     public bool IsGameStarted()
     {
@@ -29,6 +32,7 @@ public class GameController : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 20;
 
         victoryText.gameObject.SetActive(false);
+        countdownText.gameObject.SetActive(false);
 
         if (!PhotonNetwork.IsMasterClient)
             startButton.SetActive(false);
@@ -36,14 +40,44 @@ public class GameController : MonoBehaviourPunCallbacks
         UpdatePlayerCount();
     }
 
+    [PunRPC]
+    public void SetCountdown(int secondsUntilStart)
+    {
+        if (!photonView.IsMine) return;
+
+        countdownText.gameObject.SetActive(true);
+        if (secondsUntilStart > 0)
+            countdownText.text = secondsUntilStart.ToString();
+        else
+            countdownText.text = "GO!";
+    }
+
     public void StartGame()
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        gameStarted = true;
+        startButton.SetActive(false);
+        StartCoroutine(Countdown());
+    }
+
+    IEnumerator Countdown()
+    {
         startButton.SetActive(false);
 
+        while (secondsUntilStart >= 0)
+        {
+            photonView.RPC(nameof(SetCountdown), RpcTarget.All, secondsUntilStart);
+            secondsUntilStart--;
+
+            WaitForSeconds wait = new(1);
+            yield return wait;
+        }
+
+        gameStarted = true;
+
+        countdownText.gameObject.SetActive(false);
         photonView.RPC(nameof(EnablePhysicsRPC), RpcTarget.All);
+        yield return null;
     }
 
     [PunRPC]
@@ -79,7 +113,7 @@ public class GameController : MonoBehaviourPunCallbacks
             }
 
             photonView.RPC(
-                "ShowVictoryRPC",
+                nameof(ShowVictoryRPC),
                 RpcTarget.AllBuffered,
                 winnerActorNumber
             );
@@ -89,18 +123,6 @@ public class GameController : MonoBehaviourPunCallbacks
     private void UpdatePlayerCount()
     {
         playersText.text = $"Gracze: {PhotonNetwork.CurrentRoom.PlayerCount}/{PhotonNetwork.CurrentRoom.MaxPlayers}";
-    }
-
-    private void CheckVictory()
-    {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-
-        if (players.Length == 1 && PhotonNetwork.PlayerList.Length > 1)
-        {
-            victoryShown = true;
-            PhotonView pv = players[0].GetComponent<PhotonView>();
-            pv.RPC(nameof(ShowVictoryRPC), pv.Owner);
-        }
     }
 
     [PunRPC]
@@ -113,11 +135,6 @@ public class GameController : MonoBehaviourPunCallbacks
         }
     }
 
-    private void ReturnToMenu()
-    {
-        if (PhotonNetwork.InRoom)
-            PhotonNetwork.LeaveRoom();
-    }
     private IEnumerator ReturnToMenuAfterWin()
     {
         yield return new WaitForSeconds(victoryDelay);
