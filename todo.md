@@ -20,7 +20,8 @@
     - [ ] William/The Eye
     - [ ] Animacje dla skinów
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
-- [ ] Odliczanie przed startem i animacja lotu
+- [ ] Odliczanie przed startem
+- [ ] Animacja lotu
 - [ ] W menu w tle poruszające się przeszkody
 - [ ] Grafiki
 - [ ] Donacje
