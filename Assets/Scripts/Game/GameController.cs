@@ -159,7 +159,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
         if (player != null)
         {
-            photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber, true);
+            photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, player.ActorNumber, true);
             obstacle.AssignPlayer(player);
         }
         else
@@ -168,7 +168,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void GhostObstacleDestroyed(Photon.Realtime.Player player)
     {
-        photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber, false);
+        photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, player.ActorNumber, false);
     }
 
     public IEnumerator LeaveRoomCoroutine()
