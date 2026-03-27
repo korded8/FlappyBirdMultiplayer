@@ -143,18 +143,14 @@ public class GameController : MonoBehaviourPunCallbacks
     public void AssignPlayerToGhostObstacle(GhostObstacle obstacle)
     {
         if (!PhotonNetwork.IsMasterClient && deadPlayersHashSet.First() == null) return;
-        
+
         Photon.Realtime.Player player = deadPlayersHashSet.First();
         deadPlayersHashSet.Remove(player);
-        
+
         if (player != null)
-        {
             obstacle.AssignPlayer(player);
-        }
         else
-        {
             obstacle.AssignPlayer();
-        }
     }
 
     public void GhostObstacleDestroyed(Photon.Realtime.Player player)
@@ -167,13 +163,9 @@ public class GameController : MonoBehaviourPunCallbacks
         yield return null;
 
         if (PhotonNetwork.InRoom)
-        {
             PhotonNetwork.LeaveRoom();
-        }
         else
-        {
             UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
-        }
     }
 
     public override void OnLeftRoom()
