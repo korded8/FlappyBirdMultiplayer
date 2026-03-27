@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ public class GameController : MonoBehaviourPunCallbacks
     private bool gameStarted = false;
     private bool victoryShown = false;
 
-    private readonly Queue<Photon.Realtime.Player> deadPlayersQueue = new();
+    private readonly HashSet<Photon.Realtime.Player> deadPlayersHashSet = new();
     public bool localPlayerIsDead = false;
 
     public bool IsGameStarted()
@@ -135,25 +136,30 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void AddDeadPlayer(Photon.Realtime.Player player)
     {
-        if (!deadPlayersQueue.Contains(player))
-            deadPlayersQueue.Enqueue(player);
+        deadPlayersHashSet.Add(player);
     }
 
 
     public void AssignPlayerToGhostObstacle(GhostObstacle obstacle)
     {
         if (!PhotonNetwork.IsMasterClient) return;
-
-        Photon.Realtime.Player player = deadPlayersQueue.Count > 0 ? deadPlayersQueue.Dequeue() : null;
-
+        
+        Photon.Realtime.Player player = deadPlayersHashSet.First();
+        deadPlayersHashSet.Remove(player);
+        
         if (player != null)
         {
             obstacle.AssignPlayer(player);
         }
         else
         {
-            obstacle.AssignNoPlayer();
+            obstacle.AssignPlayer();
         }
+    }
+
+    public void GhostObstacleDestroyed(Photon.Realtime.Player player)
+    {
+        deadPlayersHashSet.Remove(player);
     }
 
     public IEnumerator LeaveRoomCoroutine()

@@ -15,12 +15,10 @@ public class GhostObstacle : MonoBehaviourPun
 
     public void AssignPlayer(Photon.Realtime.Player p)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-
         photonView.RPC(nameof(SyncPlayer), RpcTarget.All, p.ActorNumber);
     }
 
-    public void AssignNoPlayer()
+    public void AssignPlayer()
     {
         player = null;
         obstacleUsed = true;
@@ -46,6 +44,11 @@ public class GhostObstacle : MonoBehaviourPun
         direction = Random.value < 0.5f ? Vector3.up : Vector3.down;
     }
 
+    private void OnDestroy()
+    {
+        gameController.GhostObstacleDestroyed(player);
+    }
+
     private void Update()
     {
         if (!photonView.IsMine) return;
@@ -55,7 +58,7 @@ public class GhostObstacle : MonoBehaviourPun
             TryMove();
         }
 
-        if (gameController.localPlayerIsDead && player == PhotonNetwork.LocalPlayer && !obstacleUsed && gameController.localPlayerIsDead)
+        if (gameController.localPlayerIsDead && player == PhotonNetwork.LocalPlayer && !obstacleUsed)
         {
             if (direction == Vector3.up)
             {
@@ -79,7 +82,7 @@ public class GhostObstacle : MonoBehaviourPun
     {
         int myID = PhotonNetwork.LocalPlayer.ActorNumber;
 
-        if (player != null && myID == player.ActorNumber && !obstacleUsed)
+        if (player != null && myID == player.ActorNumber && !obstacleUsed && gameController.localPlayerIsDead)
         {
             photonView.RPC(nameof(MoveObstacle), RpcTarget.All);
         }
