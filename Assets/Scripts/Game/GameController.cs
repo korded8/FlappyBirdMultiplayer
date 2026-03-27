@@ -134,8 +134,8 @@ public class GameController : MonoBehaviourPunCallbacks
     public void LocalPlayerDied()
     {
         AddDeadPlayer(PhotonNetwork.LocalPlayer);
-        // FIXME: Unity objects should not use null propagation
-        FindObjectOfType<UI>()?.OnPlayerDied();
+        if (FindObjectOfType<UI>() != null)
+            FindObjectOfType<UI>().OnPlayerDied();
         localPlayerIsDead = true;
     }
 

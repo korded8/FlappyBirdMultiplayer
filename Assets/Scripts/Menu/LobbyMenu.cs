@@ -18,7 +18,6 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        Debug.Log("Test omg it works");
         roomCodeInput.characterLimit = 8;
         createRoomButton.SetActive(false);
         joinRoomButton.SetActive(false);
