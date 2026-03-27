@@ -7,6 +7,7 @@
     - [x] fake’owe
     - [x] ruszające się
     - [x] zmieniające kolor
+- [ ] Animacja duchowych przeszkód
 - [x] Pokazywanie wyniku
 - [x] Obserwowanie gry po śmierci, powrót do menu i wyjście z gry
 - [x] Zapisywanie presetów do pliku
@@ -14,14 +15,14 @@
 - [x] ekran ładowania
 - [ ] naprawić ekran ładowania
 - [ ] Dodać skiny
-    - [ ] Twitter
-    - [ ] Piggy bank
-    - [ ] Phoenix
+    - [x] Twitter
+    - [x] Piggy bank
+    - [x] Phoenix
     - [ ] William/The Eye
     - [ ] Animacje dla skinów
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
 - [ ] Odliczanie przed startem
-- [ ] Animacja lotu
+- [x] Animacja lotu
 - [ ] W menu w tle poruszające się przeszkody
 - [ ] Grafiki
 - [ ] Donacje
