@@ -26,6 +26,7 @@ public class Player : MonoBehaviourPun
     private void Update()
     {
         if (!photonView.IsMine) return;
+
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             Jump();

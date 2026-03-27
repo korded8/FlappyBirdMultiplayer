@@ -15,7 +15,8 @@ public class GhostObstacle : MonoBehaviourPun
 
     public void AssignPlayer(Photon.Realtime.Player p)
     {
-        photonView.RPC(nameof(SyncPlayer), RpcTarget.All, p.ActorNumber);
+        Vector3 dir = new(0, Random.value < 0.5f ? 1f : -1f);
+        photonView.RPC(nameof(SyncObstacle), RpcTarget.All, p.ActorNumber, dir);
     }
 
     public void AssignPlayer()
@@ -25,9 +26,10 @@ public class GhostObstacle : MonoBehaviourPun
     }
 
     [PunRPC]
-    void SyncPlayer(int actorNumber)
+    void SyncObstacle(int actorNumber, Vector3 dir)
     {
         player = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
+        direction = dir;
         obstacleUsed = false;
     }
 
@@ -40,8 +42,6 @@ public class GhostObstacle : MonoBehaviourPun
 
         upArrow.SetActive(false);
         downArrow.SetActive(false);
-
-        direction = Random.value < 0.5f ? Vector3.up : Vector3.down;
     }
 
     private void OnDestroy()
@@ -51,8 +51,6 @@ public class GhostObstacle : MonoBehaviourPun
 
     private void Update()
     {
-        if (!photonView.IsMine) return;
-
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             TryMove();
