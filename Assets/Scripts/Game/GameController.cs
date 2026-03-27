@@ -128,24 +128,19 @@ public class GameController : MonoBehaviourPunCallbacks
     [System.Obsolete]
     public void LocalPlayerDied()
     {
-        photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber, false);
+        photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
         if (FindObjectOfType<UI>() != null)
             FindObjectOfType<UI>().OnPlayerDied();
         localPlayerIsDead = true;
     }
 
     [PunRPC]
-    private void SyncDeadPlayersHashSet(int actorNumber, bool removing)
+    private void SyncDeadPlayersHashSet(int actorNumber)
     {
         Photon.Realtime.Player player = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
 
         if (player != null)
         {
-            if (removing)
-            {
-                deadPlayersHashSet.Remove(player);
-                return;
-            }
             deadPlayersHashSet.Add(player);
         }
     }
@@ -155,11 +150,10 @@ public class GameController : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient) return;
 
         Photon.Realtime.Player player = deadPlayersHashSet.FirstOrDefault();
-        Debug.Log(player);
 
         if (player != null)
         {
-            photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, player.ActorNumber, true);
+            deadPlayersHashSet.Remove(player);
             obstacle.AssignPlayer(player);
         }
         else
@@ -168,7 +162,8 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void GhostObstacleDestroyed(Photon.Realtime.Player player)
     {
-        photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, player.ActorNumber, false);
+        if (player == null) return;
+        photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, player.ActorNumber);
     }
 
     public IEnumerator LeaveRoomCoroutine()
