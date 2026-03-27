@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class SegmentController : MonoBehaviourPun
 {
     [Header("Segment Settings")]
-    [SerializeField] private GameObject[] segmentPrefabs;
+    private GameObject[] segmentPrefabs;
 
     public float moveSpeed = 2f;
     private readonly float spawnX = 20f;
@@ -19,6 +19,7 @@ public class SegmentController : MonoBehaviourPun
 
     private void Start()
     {
+        segmentPrefabs = Resources.LoadAll<GameObject>("Segments");
         isFirstSegment = true;
     }
 
@@ -60,7 +61,7 @@ public class SegmentController : MonoBehaviourPun
                 return;
         }
 
-        GameObject segmentInstance = PhotonNetwork.Instantiate(segmentToSpawn.name, new Vector3(spawnX, 0), Quaternion.identity);
+        GameObject segmentInstance = PhotonNetwork.Instantiate($"Segments/{segmentToSpawn.name}", new Vector3(spawnX, 0), Quaternion.identity);
         segmentPool.Add(segmentInstance);
 
         GhostObstacle[] obstacles = segmentInstance.GetComponentsInChildren<GhostObstacle>();

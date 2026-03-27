@@ -28,7 +28,6 @@ public class Player : MonoBehaviourPun
     private void Update()
     {
         transform.eulerAngles = new Vector3(0, 0, Math.Clamp(rb.linearVelocity.y / 5f * maxRotation, -maxRotation, maxRotation));
-        if (!photonView.IsMine) return;
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
