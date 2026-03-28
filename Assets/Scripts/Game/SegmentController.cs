@@ -8,7 +8,7 @@ public class SegmentController : MonoBehaviourPun
     private GameObject[] segmentPrefabs;
 
     public float moveSpeed = 2f;
-    private readonly float spawnX = 10f;
+    private readonly float spawnX = 20f;
     private readonly float cleanupX = -20f;
     private readonly int MAX_SEGMENTS = 4;
 
