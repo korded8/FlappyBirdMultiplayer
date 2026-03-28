@@ -62,8 +62,8 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 4
-    InterpolateMoveTowardsSpeed: 1
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 5
     InterpolateLerpSpeed: 10
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1

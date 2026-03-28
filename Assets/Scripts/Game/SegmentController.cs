@@ -53,7 +53,7 @@ public class SegmentController : MonoBehaviourPun
         if (lastSegment != null)
             nextSegmentPosition = lastSegment.transform.position.x + (lastSegment.transform.localScale.x + nextSegment.transform.localScale.x) / 2;
 
-        GameObject segmentInstance = PhotonNetwork.Instantiate($"Segments/{nextSegment.name}", new Vector2(nextSegmentPosition, 0), Quaternion.identity);
+        GameObject segmentInstance = PhotonNetwork.Instantiate($"Segments/{nextSegment.name}", new Vector3(nextSegmentPosition, 0, 0), Quaternion.identity);
         segmentPool.Add(segmentInstance);
 
         lastSegment = segmentInstance;
