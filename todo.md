@@ -16,25 +16,25 @@
     - [x] Twitter
     - [x] Piggy bank
     - [x] Phoenix
-    - [ ] William/The Eye
+    - [x] William/The Eye
     - [ ] Animacje dla skinów
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
-- [ ] Odliczanie przed startem i animacja lotu podczas odliczania
+- [x] Odliczanie przed startem
 - [x] Animacja lotu
-- [ ] zmienić layout menu
+- [ ] Zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody
 - [ ] Grafiki
 - [ ] Animacja duchowych przeszkód
-- [x] w jakiś sposób ułatwić rozpoznawanie fake obstacle
-- [ ] muzyka, dźwięki
-- [ ] język polski, angielski
-- [ ] matchmaking
+- [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
+- [ ] Muzyka, dźwięki
+- [ ] Język polski, angielski
+- [ ] Matchmaking
 - [ ] Donacje
 
 # Known bugs
-- [ ] dołączenie do gry po starcie
+- [ ] Dołączenie do gry po starcie
 - [ ] RPC zwycięstwa
-- [ ] synchronizacja graczy
+- [ ] Synchronizacja graczy
 
 # Random ideas
 - [ ] Jajko
