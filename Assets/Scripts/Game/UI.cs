@@ -103,6 +103,6 @@ public class UI : MonoBehaviour
         UpdateHighscore();
         isLeavingGame = true;
         ToggleEscapePanel();
-        StartCoroutine(gc.LeaveRoomCoroutine());
+        gc.LeaveRoom();
     }
 }

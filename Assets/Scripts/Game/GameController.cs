@@ -183,14 +183,12 @@ public class GameController : MonoBehaviourPunCallbacks
         photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, player.ActorNumber);
     }
 
-    public IEnumerator LeaveRoomCoroutine()
+    public void LeaveRoom()
     {
-        yield return null;
-
         if (PhotonNetwork.InRoom)
             PhotonNetwork.LeaveRoom();
-        else
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 
     public override void OnLeftRoom()

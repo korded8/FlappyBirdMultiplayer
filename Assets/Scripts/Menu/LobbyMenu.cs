@@ -22,7 +22,8 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
         createRoomButton.SetActive(false);
         joinRoomButton.SetActive(false);
         statusText.text = "Łączenie z Photon...";
-        PhotonNetwork.ConnectUsingSettings();
+        if (!PhotonNetwork.IsConnected)
+            PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
