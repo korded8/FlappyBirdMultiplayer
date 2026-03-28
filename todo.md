@@ -21,10 +21,6 @@
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
 - [ ] Odliczanie przed startem i animacja lotu podczas odliczania
 - [x] Animacja lotu
-- [ ] naprawić bugi:
-    - [ ] dołączenie do gry po starcie
-    - [ ] RPC zwycięstwa
-    - [ ] synchronizacja graczy
 - [ ] zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody
 - [ ] Grafiki
@@ -34,6 +30,11 @@
 - [ ] język polski, angielski
 - [ ] matchmaking
 - [ ] Donacje
+
+# Known bugs
+- [ ] dołączenie do gry po starcie
+- [ ] RPC zwycięstwa
+- [ ] synchronizacja graczy
 
 # Random ideas
 - [ ] Jajko
