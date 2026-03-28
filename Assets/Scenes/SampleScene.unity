@@ -2711,8 +2711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ff92c5387af6c43b5eb36ccbcc9b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SegmentSpawner
-  segmentPrefabs:
-  - {fileID: 3875861085831282708, guid: 2b5a5d2101be7cc4db7b28e1cb42c2d0, type: 3}
   moveSpeed: 2
   gameController: {fileID: 2077214052}
 --- !u!1 &2102859877
