@@ -47,19 +47,19 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
 
     public void SavePlayerColors(Color body, Color wing, Color feather)
     {
-        byte[] colors = new byte[]
+        byte[] colors =
         {
-        (byte)(body.r * 255),
-        (byte)(body.g * 255),
-        (byte)(body.b * 255),
+            (byte)(body.r * 255),
+            (byte)(body.g * 255),
+            (byte)(body.b * 255),
 
-        (byte)(wing.r * 255),
-        (byte)(wing.g * 255),
-        (byte)(wing.b * 255),
+            (byte)(wing.r * 255),
+            (byte)(wing.g * 255),
+            (byte)(wing.b * 255),
 
-        (byte)(feather.r * 255),
-        (byte)(feather.g * 255),
-        (byte)(feather.b * 255),
+            (byte)(feather.r * 255),
+            (byte)(feather.g * 255),
+            (byte)(feather.b * 255),
         };
 
         ExitGames.Client.Photon.Hashtable props = new()
