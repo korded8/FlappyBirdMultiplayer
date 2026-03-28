@@ -5,10 +5,10 @@ using Photon.Pun;
 public class FadingObstacle : MonoBehaviourPun
 {
     [Header("Fade settings")]
-    private float fadeSpeed = 2f;
-    private float minAlpha = 0f;
-    private float maxAlpha = 1f;
-    private float waitTime = 4f;
+    private readonly float fadeSpeed = 1f;
+    private readonly float minAlpha = 0.01f;
+    private readonly float maxAlpha = 1f;
+    private readonly float waitTime = 4f;
 
     private SpriteRenderer sr;
 
