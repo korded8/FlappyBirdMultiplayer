@@ -17,6 +17,7 @@
     - [x] Piggy bank
     - [x] Phoenix
     - [x] William/The Eye
+    - [ ] złoty znicz
     - [ ] Animacje dla skinów
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
 - [x] Odliczanie przed startem
@@ -35,6 +36,7 @@
 - [ ] Dołączenie do gry po starcie
 - [ ] RPC zwycięstwa
 - [ ] Synchronizacja graczy
+- [ ] opuszczanie gry
 
 # Random ideas
 - [ ] Jajko
