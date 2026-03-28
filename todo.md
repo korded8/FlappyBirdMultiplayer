@@ -29,7 +29,7 @@
 - [ ] W menu w tle poruszające się przeszkody
 - [ ] Grafiki
 - [ ] Animacja duchowych przeszkód
-- [ ] w jakiś sposób ułatwić rozpoznawanie fake obstacle
+- [x] w jakiś sposób ułatwić rozpoznawanie fake obstacle
 - [ ] muzyka, dźwięki
 - [ ] język polski, angielski
 - [ ] matchmaking
