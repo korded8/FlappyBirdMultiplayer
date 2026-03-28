@@ -7,13 +7,11 @@
     - [x] fake’owe
     - [x] ruszające się
     - [x] zmieniające kolor
-- [ ] Animacja duchowych przeszkód
 - [x] Pokazywanie wyniku
 - [x] Obserwowanie gry po śmierci, powrót do menu i wyjście z gry
 - [x] Zapisywanie presetów do pliku
 - [x] przycisk usuwania presetów
 - [x] ekran ładowania
-- [ ] naprawić ekran ładowania
 - [ ] Dodać skiny
     - [x] Twitter
     - [x] Piggy bank
@@ -21,15 +19,23 @@
     - [ ] William/The Eye
     - [ ] Animacje dla skinów
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
-- [ ] Odliczanie przed startem
+- [ ] Odliczanie przed startem i animacja lotu podczas odliczania
 - [x] Animacja lotu
+- [ ] naprawić bugi:
+    - [ ] dołączenie do gry po starcie
+    - [ ] RPC zwycięstwa
+    - [ ] synchronizacja graczy
+- [ ] zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody
 - [ ] Grafiki
+- [ ] Animacja duchowych przeszkód
+- [ ] w jakiś sposób ułatwić rozpoznawanie fake obstacle
+- [ ] muzyka, dźwięki
+- [ ] język polski, angielski
+- [ ] matchmaking
 - [ ] Donacje
 
 # Random ideas
 - [ ] Jajko
 - [ ] Robaki
-- [ ] Matchmaking
 - [ ] Wzmocnienia w zależności od skina
-- [ ] Język polski, angielski
