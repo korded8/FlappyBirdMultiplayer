@@ -2,7 +2,7 @@
 - [x] Ogarnąć kolory ptaka
 - [x] Naprawić przycisk Randomize
 - [x] Rework spawnowania segmentów
-- [x] Różne przeszkody: duchowe, fake’owe, ruszające się i zmieniające kolor
+- [x] Przeszkody:
     - [x] duchowe
     - [x] fake’owe
     - [x] ruszające się
@@ -10,14 +10,14 @@
 - [x] Pokazywanie wyniku
 - [x] Obserwowanie gry po śmierci, powrót do menu i wyjście z gry
 - [x] Zapisywanie presetów do pliku
-- [x] przycisk usuwania presetów
-- [x] ekran ładowania
+- [x] Przycisk usuwania presetów
+- [x] Ekran ładowania
 - [ ] Dodać skiny
     - [x] Twitter
     - [x] Piggy bank
     - [x] Phoenix
     - [x] William/The Eye
-    - [ ] złoty znicz
+    - [ ] Złoty znicz
     - [ ] Animacje dla skinów
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
 - [x] Odliczanie przed startem
@@ -35,8 +35,9 @@
 # Known bugs
 - [ ] Dołączenie do gry po starcie
 - [ ] RPC zwycięstwa
-- [ ] Synchronizacja graczy
-- [x] opuszczanie gry
+- [ ] Zmiana kolorów Classic
+- [x] Synchronizacja graczy
+- [x] Opuszczanie gry
 
 # Random ideas
 - [ ] Jajko
