@@ -11,6 +11,7 @@ public class GameController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject startButton;
     [SerializeField] private TMP_Text playersText;
     [SerializeField] private TMP_Text victoryText;
+    [SerializeField] private TMP_Text lossText;
     [SerializeField] private TMP_Text countdownText;
     [SerializeField] private float victoryDelay = 3f;
 
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 20;
 
         victoryText.gameObject.SetActive(false);
+        lossText.gameObject.SetActive(false);
         countdownText.gameObject.SetActive(false);
 
         if (!PhotonNetwork.IsMasterClient)
@@ -132,11 +134,14 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ShowVictoryRPC(int winnerActorNumber)
     {
+        victoryShown = true;
+
         if (PhotonNetwork.LocalPlayer.ActorNumber == winnerActorNumber)
-        {
             victoryText.gameObject.SetActive(true);
-            StartCoroutine(ReturnToMenuAfterWin());
-        }
+        else
+            lossText.gameObject.SetActive(true);
+
+        StartCoroutine(ReturnToMenuAfterWin());
     }
 
     private IEnumerator ReturnToMenuAfterWin()
@@ -149,21 +154,41 @@ public class GameController : MonoBehaviourPunCallbacks
     [System.Obsolete]
     public void LocalPlayerDied()
     {
-        photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
+        photonView.RPC(nameof(UpdateDeadPlayersRPC), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
         if (FindObjectOfType<UI>() != null)
             FindObjectOfType<UI>().OnPlayerDied();
         localPlayerIsDead = true;
     }
 
     [PunRPC]
-    private void SyncDeadPlayersHashSet(int actorNumber)
+    private void UpdateDeadPlayersRPC(int actorNumber)
     {
         Photon.Realtime.Player player = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
-
         if (player != null)
-        {
             deadPlayersHashSet.Add(player);
+
+        CheckForWinners();
+    }
+
+    private void CheckForWinners()
+    {
+        if (victoryShown) return;
+
+        Photon.Realtime.Player winner = null;
+        foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
+        {
+            if (!deadPlayersHashSet.Contains(player))
+            {
+                if (winner != null) return; // at least 2 players standing
+                winner = player;
+            }
         }
+
+        photonView.RPC(
+            nameof(ShowVictoryRPC),
+            RpcTarget.AllBuffered,
+            winner != null ? winner.ActorNumber : -1
+        );
     }
 
     public void AssignPlayerToGhostObstacle(GhostObstacle obstacle)
@@ -184,7 +209,7 @@ public class GameController : MonoBehaviourPunCallbacks
     public void GhostObstacleDestroyed(Photon.Realtime.Player player)
     {
         if (player == null) return;
-        photonView.RPC(nameof(SyncDeadPlayersHashSet), RpcTarget.MasterClient, player.ActorNumber);
+        photonView.RPC(nameof(UpdateDeadPlayersRPC), RpcTarget.MasterClient, player.ActorNumber);
     }
 
     public void LeaveRoom()
