@@ -34,8 +34,8 @@
 
 # Known bugs
 - [ ] RPC zwycięstwa
-- [ ] Countdown przed rozpoczęciem gry
 - [ ] MissingReferenceException dla GameController po zakończeniu gry
+- [x] Countdown przed rozpoczęciem gry
 - [x] Dołączenie do gry po starcie
 - [x] Zmiana kolorów Classic
 - [x] Synchronizacja graczy
