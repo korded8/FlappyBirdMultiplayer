@@ -33,8 +33,8 @@
 - [ ] Donacje
 
 # Known bugs
-- [ ] RPC zwycięstwa
 - [ ] MissingReferenceException dla GameController po zakończeniu gry
+- [x] RPC zwycięstwa
 - [x] Countdown przed rozpoczęciem gry
 - [x] Dołączenie do gry po starcie
 - [x] Zmiana kolorów Classic
