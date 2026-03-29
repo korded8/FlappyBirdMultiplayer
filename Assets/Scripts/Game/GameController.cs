@@ -41,10 +41,8 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void SetCountdown(int secondsUntilStart)
+    public void SetCountdownRPC(int secondsUntilStart)
     {
-        if (!photonView.IsMine) return;
-
         countdownText.gameObject.SetActive(true);
         if (secondsUntilStart > 0)
             countdownText.text = secondsUntilStart.ToString();
@@ -54,6 +52,8 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
+
         PhotonNetwork.CurrentRoom.IsOpen = false;
         startButton.SetActive(false);
         StartCoroutine(Countdown());
@@ -65,7 +65,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
         while (secondsUntilStart >= 0)
         {
-            photonView.RPC(nameof(SetCountdown), RpcTarget.All, secondsUntilStart);
+            photonView.RPC(nameof(SetCountdownRPC), RpcTarget.All, secondsUntilStart);
             secondsUntilStart--;
 
             WaitForSeconds wait = new(1);
@@ -75,15 +75,20 @@ public class GameController : MonoBehaviourPunCallbacks
         gameStarted = true;
 
         countdownText.gameObject.SetActive(false);
-        photonView.RPC(nameof(EnablePhysicsRPC), RpcTarget.All);
+        photonView.RPC(nameof(OnGameStartedRPC), RpcTarget.All);
         yield return null;
     }
 
     [PunRPC]
-    [System.Obsolete]
-    private void EnablePhysicsRPC()
+    private void OnGameStartedRPC()
     {
-        Rigidbody2D[] bodies = FindObjectsOfType<Rigidbody2D>();
+        EnablePhysics();
+        countdownText.enabled = false;
+    }
+
+    private void EnablePhysics()
+    {
+        Rigidbody2D[] bodies = FindObjectsByType<Rigidbody2D>();
         foreach (var rb in bodies)
             rb.simulated = true;
     }
