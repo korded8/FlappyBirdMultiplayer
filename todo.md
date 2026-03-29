@@ -35,7 +35,7 @@
 # Known bugs
 - [ ] Dołączenie do gry po starcie
 - [ ] RPC zwycięstwa
-- [ ] Zmiana kolorów Classic
+- [x] Zmiana kolorów Classic
 - [x] Synchronizacja graczy
 - [x] Opuszczanie gry
 
