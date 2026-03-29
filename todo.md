@@ -33,8 +33,8 @@
 - [ ] Donacje
 
 # Known bugs
-- [ ] Dołączenie do gry po starcie
 - [ ] RPC zwycięstwa
+- [x] Dołączenie do gry po starcie
 - [x] Zmiana kolorów Classic
 - [x] Synchronizacja graczy
 - [x] Opuszczanie gry
