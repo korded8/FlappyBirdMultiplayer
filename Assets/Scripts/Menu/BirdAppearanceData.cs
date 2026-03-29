@@ -63,8 +63,6 @@ public class BirdAppearanceData : ScriptableObject
 
     public void UpdatePreset(Color body, Color wing, Color feather, int index)
     {
-        if (index == 0) return;
-
         Preset p = presets[index];
         p.bodyColor = body;
         p.wingColor = wing;

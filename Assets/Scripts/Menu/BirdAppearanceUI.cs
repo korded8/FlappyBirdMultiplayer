@@ -26,6 +26,7 @@ public class BirdAppearanceUI : MonoBehaviour
     public TMP_Text emptyPresetNameWarning;
     public TMP_Text duplicatePresetNameWarning;
     public TMP_Text deletingClassicPresetWarning;
+    public TMP_Text classicEditWarning;
 
     [Header("Highscore text")]
     public TMP_Text highscoreText;
@@ -41,9 +42,7 @@ public class BirdAppearanceUI : MonoBehaviour
 
     private void Start()
     {
-        emptyPresetNameWarning.enabled = false;
-        duplicatePresetNameWarning.enabled = false;
-        deletingClassicPresetWarning.enabled = false;
+        ShowWarning(null);
 
         presetNameInput.characterLimit = 8;
 
@@ -76,10 +75,12 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         presetsDropdown.ClearOptions();
         List<string> optionsList = new();
+
         foreach (var p in data.presets)
         {
             optionsList.Add(p.presetName);
         }
+
         optionsList.Add("Add preset");
         presetsDropdown.AddOptions(optionsList);
         presetsDropdown.value = currentPreset;
@@ -148,9 +149,9 @@ public class BirdAppearanceUI : MonoBehaviour
 
     public void Randomize(BirdPart birdPart)
     {
-        float r = UnityEngine.Random.Range(0, 255) / 255f;
-        float g = UnityEngine.Random.Range(0, 255) / 255f;
-        float b = UnityEngine.Random.Range(0, 255) / 255f;
+        float r = UnityEngine.Random.Range(0, 1f);
+        float g = UnityEngine.Random.Range(0, 1f);
+        float b = UnityEngine.Random.Range(0, 1f);
         Color newColor = new(r, g, b);
 
         data.SetColor(birdPart, newColor);
@@ -167,7 +168,7 @@ public class BirdAppearanceUI : MonoBehaviour
         string newPresetName = presetNameInput.text.Trim();
         if (string.IsNullOrEmpty(newPresetName))
         {
-            emptyPresetNameWarning.enabled = true;
+            ShowWarning(emptyPresetNameWarning);
             presetsDropdown.value = currentPreset;
             return;
         }
@@ -177,7 +178,7 @@ public class BirdAppearanceUI : MonoBehaviour
         {
             if (p.presetName == newPresetName)
             {
-                duplicatePresetNameWarning.enabled = true;
+                ShowWarning(duplicatePresetNameWarning);
                 presetsDropdown.value = currentPreset;
                 return;
             }
@@ -199,6 +200,12 @@ public class BirdAppearanceUI : MonoBehaviour
 
     public void UpdatePreset()
     {
+        if (currentPreset == 0)
+        {
+            ShowWarning(classicEditWarning);
+            return;
+        }
+
         Color bodyColor = data.bodyColor;
         Color wingColor = data.wingColor;
         Color featherColor = data.featherColor;
@@ -214,13 +221,14 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         if (currentPreset == 0)
         {
-            deletingClassicPresetWarning.enabled = true;
+            ShowWarning(deletingClassicPresetWarning);
             return;
         }
         else
         {
-            deletingClassicPresetWarning.enabled = false;
+            ShowWarning(null);
         }
+
         data.DeletePreset(currentPreset);
         currentPreset = 0;
         presetNameInput.text = null;
@@ -234,7 +242,7 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         if (index < 0 || index > data.presets.Count || index == currentPreset) return;
 
-        deletingClassicPresetWarning.enabled = false;
+        ShowWarning(null);
 
         if (index == data.presets.Count)
         {
@@ -250,5 +258,15 @@ public class BirdAppearanceUI : MonoBehaviour
 
         RefreshSlidersWithoutNotify();
         data.OnAppearanceChanged?.Invoke();
+    }
+
+    private void ShowWarning(TMP_Text warning)
+    {
+        emptyPresetNameWarning.enabled = false;
+        duplicatePresetNameWarning.enabled = false;
+        deletingClassicPresetWarning.enabled = false;
+        classicEditWarning.enabled = false;
+
+        if (warning != null) warning.enabled = true;
     }
 }
