@@ -54,8 +54,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-
+        PhotonNetwork.CurrentRoom.IsOpen = false;
         startButton.SetActive(false);
         StartCoroutine(Countdown());
     }
