@@ -68,9 +68,7 @@ public class SegmentController : MonoBehaviourPun
     private void MoveSegments()
     {
         foreach (GameObject s in segmentPool)
-        {
             s.transform.position += moveSpeed * Time.deltaTime * Vector3.left;
-        }
     }
 
     private void DestroySegments()

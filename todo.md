@@ -36,7 +36,7 @@
 - [ ] Dołączenie do gry po starcie
 - [ ] RPC zwycięstwa
 - [ ] Synchronizacja graczy
-- [ ] opuszczanie gry
+- [x] opuszczanie gry
 
 # Random ideas
 - [ ] Jajko
