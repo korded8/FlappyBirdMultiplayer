@@ -17,7 +17,7 @@
     - [x] Piggy bank
     - [x] Phoenix
     - [x] William/The Eye
-    - [ ] Złoty znicz
+    - [x] Złoty znicz
     - [ ] Animacje dla skinów
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
 - [x] Odliczanie przed startem
@@ -27,7 +27,14 @@
 - [ ] Grafiki
 - [ ] Animacja duchowych przeszkód
 - [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
-- [ ] Muzyka, dźwięki
+- [ ] Muzyka, dźwięki:
+    - [ ] Lobby music
+    - [ ] Ingame music
+    - [ ] Last one standing theme
+    - [ ] SFX śmierci
+    - [ ] SFX skoku
+    - [ ] SFX wygranej
+    - [ ] SFX przegranej
 - [ ] Język polski, angielski
 - [ ] Matchmaking
 - [ ] Donacje
