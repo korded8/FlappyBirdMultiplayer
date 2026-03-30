@@ -28,7 +28,7 @@
 - [ ] Animacja duchowych przeszkód
 - [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
 - [ ] Muzyka, dźwięki:
-    - [ ] Lobby music
+    - [x] Lobby music
     - [ ] Ingame music
     - [ ] Last one standing theme
     - [ ] SFX śmierci
