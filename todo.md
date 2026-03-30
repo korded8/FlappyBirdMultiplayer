@@ -1,6 +1,5 @@
 # TODO
-- [x] Ogarnąć kolory ptaka
-- [x] Naprawić przycisk Randomize
+## Core
 - [x] Rework spawnowania segmentów
 - [x] Przeszkody:
     - [x] duchowe
@@ -12,22 +11,17 @@
 - [x] Zapisywanie presetów do pliku
 - [x] Przycisk usuwania presetów
 - [x] Ekran ładowania
-- [ ] Dodać skiny
-    - [x] Twitter
-    - [x] Piggy bank
-    - [x] Phoenix
-    - [x] William/The Eye
-    - [x] Złoty znicz
-    - [ ] Animacje dla skinów
-- [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
 - [x] Odliczanie przed startem
-- [x] Animacja lotu
+- [ ] Animacja duchowych przeszkód
+- [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
+
+## UI
+- [x] Ogarnąć kolory ptaka
+- [x] Naprawić przycisk Randomize
 - [ ] Zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody
-- [ ] Grafiki
-- [ ] Animacja duchowych przeszkód
-- [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
-- [ ] Muzyka, dźwięki:
+
+## Audio
     - [x] Lobby music
     - [ ] Ingame music
     - [ ] Last one standing theme
@@ -35,6 +29,21 @@
     - [ ] SFX skoku
     - [ ] SFX wygranej
     - [ ] SFX przegranej
+
+## Graphics
+- [ ] Skiny
+    - [x] Twitter
+    - [x] Piggy bank
+    - [x] Phoenix
+    - [x] William/The Eye
+    - [x] Złoty znicz
+    - [ ] Animacje dla skinów
+
+- [x] Animacja lotu
+- [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
+- [ ] Grafiki przeszkód
+
+## Misc
 - [ ] Język polski, angielski
 - [ ] Matchmaking
 - [ ] Donacje
@@ -50,4 +59,3 @@
 # Random ideas
 - [ ] Jajko
 - [ ] Robaki
-- [ ] Wzmocnienia w zależności od skina
