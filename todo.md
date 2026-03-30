@@ -12,14 +12,15 @@
 - [x] Przycisk usuwania presetów
 - [x] Ekran ładowania
 - [x] Odliczanie przed startem
-- [ ] Animacja duchowych przeszkód
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
 
 ## UI
 - [x] Ogarnąć kolory ptaka
 - [x] Naprawić przycisk Randomize
+- [ ] losować kolor przycisku Randomize
 - [ ] Zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody
+- [ ] zmienić system wybierania kolorów ?
 
 ## Audio
     - [x] Lobby music
@@ -37,11 +38,13 @@
     - [x] Phoenix
     - [x] William/The Eye
     - [x] Złoty znicz
+    - [ ] Skye
     - [ ] Animacje dla skinów
 
 - [x] Animacja lotu
 - [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
 - [ ] Grafiki przeszkód
+- [ ] Animacja duchowych przeszkód
 
 ## Misc
 - [ ] Język polski, angielski
