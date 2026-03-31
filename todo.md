@@ -23,13 +23,13 @@
 - [ ] zmienić system wybierania kolorów ?
 
 ## Audio
-    - [x] Lobby music
-    - [ ] Ingame music
-    - [ ] Last one standing theme
-    - [ ] SFX śmierci
-    - [ ] SFX skoku
-    - [ ] SFX wygranej
-    - [ ] SFX przegranej
+- [x] Lobby music
+- [ ] Ingame music
+- [ ] Last one standing theme
+- [ ] SFX śmierci
+- [ ] SFX skoku
+- [ ] SFX wygranej
+- [ ] SFX przegranej
 
 ## Graphics
 - [ ] Skiny
@@ -38,7 +38,6 @@
     - [x] Phoenix
     - [x] William/The Eye
     - [x] Złoty znicz
-    - [ ] Skye
     - [ ] Animacje dla skinów
 
 - [x] Animacja lotu
