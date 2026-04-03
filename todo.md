@@ -45,6 +45,8 @@
 - [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
 - [ ] Grafiki przeszkód
 - [ ] Animacja duchowych przeszkód
+- [ ] zmienić tło sceny Menu
+- [ ] dodać tło sceny InGame
 
 ## Misc
 - [ ] Język polski, angielski
