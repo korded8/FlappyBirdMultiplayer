@@ -24,6 +24,7 @@
 
 ## Audio
 - [x] Lobby music
+- [ ] SFX przycisków
 - [ ] Ingame music
 - [ ] Last one standing theme
 - [ ] SFX śmierci
