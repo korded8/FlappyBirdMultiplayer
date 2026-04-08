@@ -13,6 +13,7 @@
 - [x] Ekran ładowania
 - [x] Odliczanie przed startem
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
+- [ ] nerf dla ghost obstacle
 
 ## UI
 - [x] Ogarnąć kolory ptaka
