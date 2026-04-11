@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pixilart-sprite (2)_0
+  m_Name: WilliamSprite
   serializedVersion: 6
   m_AnimatorParameters: []
   m_AnimatorLayers:
