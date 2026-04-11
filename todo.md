@@ -61,7 +61,7 @@
 - [x] Zmiana kolorów Classic
 - [x] Synchronizacja graczy
 - [x] Opuszczanie gry
-- [ ] nie działają polskie znaki czcionki
+- [x] nie działają polskie znaki czcionki
 
 # Random ideas
 - [ ] Jajko
