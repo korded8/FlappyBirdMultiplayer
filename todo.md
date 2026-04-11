@@ -22,6 +22,7 @@
 - [ ] Zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody
 - [ ] zmienić system wybierania kolorów ?
+- [ ] dodać ustawienia
 
 ## Audio
 - [x] Lobby music
@@ -34,13 +35,14 @@
 - [ ] SFX przegranej
 
 ## Graphics
-- [ ] Skiny
+- [x] Skiny
     - [x] Twitter
     - [x] Piggy bank
     - [x] Phoenix
     - [x] William/The Eye
     - [x] Złoty znicz
-    - [ ] Animacje dla skinów
+    - [x] Amongusus
+    - [x] Animacje dla skinów
 
 - [x] Animacja lotu
 - [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
@@ -59,7 +61,8 @@
 - [x] Countdown przed rozpoczęciem gry
 - [x] Dołączenie do gry po starcie
 - [x] Zmiana kolorów Classic
-- [x] Synchronizacja graczy
+- [ ] synchronizacja graczy
+- [ ] synchronizacja przeszkód
 - [x] Opuszczanie gry
 - [x] nie działają polskie znaki czcionki
 
