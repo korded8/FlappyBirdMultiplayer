@@ -87,7 +87,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 5
     InterpolateLerpSpeed: 10
     ExtrapolateOption: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
     InterpolateLerpSpeed: 5
   m_ScaleModel:
     SynchronizeEnabled: 0
-    InterpolateOption: 0
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
 --- !u!114 &1976084794528786949
@@ -119,7 +119,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
