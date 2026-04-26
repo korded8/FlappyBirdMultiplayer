@@ -61,7 +61,7 @@ public class SegmentController : MonoBehaviourPun
                 return;
         }
 
-        GameObject segmentInstance = PhotonNetwork.Instantiate($"Segments/{nextSegment.name}", new Vector3(nextSegmentPosition, 0, 0), Quaternion.identity);
+        GameObject segmentInstance = PhotonNetwork.Instantiate($"Segments/{segmentToSpawn.name}", new Vector3(spawnX, 0, 0), Quaternion.identity);
         segmentPool.Add(segmentInstance);
 
         GhostObstacle[] obstacles = segmentInstance.GetComponentsInChildren<GhostObstacle>();
