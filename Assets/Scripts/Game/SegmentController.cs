@@ -42,6 +42,7 @@ public class SegmentController : MonoBehaviourPun
         }
 
         segmentPool.Add(segmentInstance);
+        segmentInstance = null;
         MoveSegments();
     }
 
