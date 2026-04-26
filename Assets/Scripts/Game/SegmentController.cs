@@ -10,17 +10,17 @@ public class SegmentController : MonoBehaviourPun
     public float moveSpeed = 2f;
     private readonly float spawnX = 20f;
     private readonly float cleanupX = -20f;
-    private readonly int MAX_SEGMENTS = 4;
 
     [Header("GameController Reference")]
     [SerializeField] private GameController gameController;
 
+    private bool isFirstSegment;
     private readonly List<GameObject> segmentPool = new();
-    private GameObject lastSegment = null;
 
     private void Start()
     {
         segmentPrefabs = Resources.LoadAll<GameObject>("Segments");
+        isFirstSegment = true;
     }
 
     [System.Obsolete]
@@ -42,27 +42,36 @@ public class SegmentController : MonoBehaviourPun
 
     private void SpawnSegments()
     {
-        int existingSegments = segmentPool.Count;
+        GameObject segmentToSpawn;
 
-        if (existingSegments >= MAX_SEGMENTS)
-            return;
+        if (isFirstSegment)
+        {
+            segmentToSpawn = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
+            isFirstSegment = false;
+        }
+        else
+        {
+            float xLast = segmentPool[^1].transform.position.x;
+            float scaleLast = segmentPool[^1].transform.localScale.x / 2;
 
-        GameObject nextSegment = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
-        float nextSegmentPosition = spawnX;
+            segmentToSpawn = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
 
-        if (lastSegment != null)
-            nextSegmentPosition = lastSegment.transform.position.x + (lastSegment.transform.localScale.x + nextSegment.transform.localScale.x) / 2;
+            float distance = spawnX - xLast;
+            if (distance <= scaleLast + segmentToSpawn.transform.localScale.x / 2)
+                return;
+        }
 
         GameObject segmentInstance = PhotonNetwork.Instantiate($"Segments/{nextSegment.name}", new Vector3(nextSegmentPosition, 0, 0), Quaternion.identity);
         segmentPool.Add(segmentInstance);
 
-        lastSegment = segmentInstance;
-
         GhostObstacle[] obstacles = segmentInstance.GetComponentsInChildren<GhostObstacle>();
         foreach (GhostObstacle obstacle in obstacles)
+        {
             if (obstacle != null)
+            {
                 gameController.AssignPlayerToGhostObstacle(obstacle);
-
+            }
+        }
     }
 
     private void MoveSegments()
