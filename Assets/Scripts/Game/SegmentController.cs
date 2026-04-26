@@ -26,6 +26,8 @@ public class SegmentController : MonoBehaviourPun
     [System.Obsolete]
     private void Update()
     {
+        MoveSegments();
+
         if (!PhotonNetwork.IsMasterClient) return;
 
         if (gameController == null)
@@ -36,7 +38,6 @@ public class SegmentController : MonoBehaviourPun
         if (!gameController.IsGameStarted()) return;
 
         SpawnSegments();
-        MoveSegments();
         DestroySegments();
     }
 
