@@ -27,8 +27,6 @@ public class SegmentController : MonoBehaviourPun
     [System.Obsolete]
     private void Update()
     {
-        MoveSegments();
-
         if (PhotonNetwork.IsMasterClient)
         {
             if (gameController == null)
@@ -43,6 +41,7 @@ public class SegmentController : MonoBehaviourPun
         }
 
         segmentPool.Add(segmentInstance);
+        MoveSegments();
     }
 
     private void SpawnSegments()
