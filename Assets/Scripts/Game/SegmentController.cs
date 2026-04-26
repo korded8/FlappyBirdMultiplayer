@@ -16,6 +16,7 @@ public class SegmentController : MonoBehaviourPun
 
     private bool isFirstSegment;
     private readonly List<GameObject> segmentPool = new();
+    GameObject segmentInstance;
 
     private void Start()
     {
@@ -28,17 +29,20 @@ public class SegmentController : MonoBehaviourPun
     {
         MoveSegments();
 
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        if (gameController == null)
+        if (PhotonNetwork.IsMasterClient)
         {
-            gameController = FindObjectOfType<GameController>();
-            if (gameController == null) return;
-        }
-        if (!gameController.IsGameStarted()) return;
+            if (gameController == null)
+            {
+                gameController = FindObjectOfType<GameController>();
+                if (gameController == null) return;
+            }
+            if (!gameController.IsGameStarted()) return;
 
-        SpawnSegments();
-        DestroySegments();
+            SpawnSegments();
+            DestroySegments();
+        }
+
+        segmentPool.Add(segmentInstance);
     }
 
     private void SpawnSegments()
@@ -62,8 +66,7 @@ public class SegmentController : MonoBehaviourPun
                 return;
         }
 
-        GameObject segmentInstance = PhotonNetwork.Instantiate($"Segments/{segmentToSpawn.name}", new Vector3(spawnX, 0, 0), Quaternion.identity);
-        segmentPool.Add(segmentInstance);
+        segmentInstance = PhotonNetwork.Instantiate($"Segments/{segmentToSpawn.name}", new Vector3(spawnX, 0, 0), Quaternion.identity);
 
         GhostObstacle[] obstacles = segmentInstance.GetComponentsInChildren<GhostObstacle>();
         foreach (GhostObstacle obstacle in obstacles)
