@@ -27,15 +27,16 @@ public class SegmentController : MonoBehaviourPun
     [System.Obsolete]
     private void Update()
     {
+        if (gameController == null)
+        {
+            gameController = FindObjectOfType<GameController>();
+            if (gameController == null) return;
+        }
+
+        if (!gameController.IsGameStarted()) return;
+
         if (PhotonNetwork.IsMasterClient)
         {
-            if (gameController == null)
-            {
-                gameController = FindObjectOfType<GameController>();
-                if (gameController == null) return;
-            }
-            if (!gameController.IsGameStarted()) return;
-
             SpawnSegments();
             DestroySegments();
         }
