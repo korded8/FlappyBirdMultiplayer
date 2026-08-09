@@ -26,7 +26,6 @@ public class SegmentController : MonoBehaviourPun
     [System.Obsolete]
     private void Update()
     {
-        //MoveSegments();
         if (!PhotonNetwork.IsMasterClient) return;
 
         if (gameController == null)
@@ -35,7 +34,7 @@ public class SegmentController : MonoBehaviourPun
             if (gameController == null) return;
         }
         if (!gameController.IsGameStarted()) return;
-
+        
         SpawnSegments();
         DestroySegments();
     }
@@ -81,12 +80,6 @@ public class SegmentController : MonoBehaviourPun
                 gameController.AssignPlayerToGhostObstacle(obstacle);
             }
         }
-    }
-
-    private void MoveSegments()
-    {
-        foreach (GameObject s in segmentPool)
-            s.transform.position += moveSpeed * Time.deltaTime * Vector3.left;
     }
 
     private void DestroySegments()
