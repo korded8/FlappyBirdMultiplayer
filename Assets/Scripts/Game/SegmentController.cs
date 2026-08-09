@@ -26,6 +26,7 @@ public class SegmentController : MonoBehaviourPun
     [System.Obsolete]
     private void Update()
     {
+        //MoveSegments();
         if (!PhotonNetwork.IsMasterClient) return;
 
         if (gameController == null)
@@ -36,7 +37,6 @@ public class SegmentController : MonoBehaviourPun
         if (!gameController.IsGameStarted()) return;
 
         SpawnSegments();
-        MoveSegments();
         DestroySegments();
     }
 
@@ -61,7 +61,16 @@ public class SegmentController : MonoBehaviourPun
                 return;
         }
 
-        GameObject segmentInstance = PhotonNetwork.Instantiate($"Segments/{segmentToSpawn.name}", new Vector3(spawnX, 0, 0), Quaternion.identity);
+        double spawnTime = PhotonNetwork.Time;
+
+        GameObject segmentInstance = PhotonNetwork.Instantiate(
+            $"Segments/{segmentToSpawn.name}",
+            new Vector3(spawnX, 0, 0),
+            Quaternion.identity,
+            0,
+            new object[] { moveSpeed, spawnTime }
+        );
+
         segmentPool.Add(segmentInstance);
 
         GhostObstacle[] obstacles = segmentInstance.GetComponentsInChildren<GhostObstacle>();
