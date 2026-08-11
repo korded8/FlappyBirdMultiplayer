@@ -60,6 +60,7 @@ public class BirdAppearanceUI : MonoBehaviour
 
         data.LoadPresets();
         currentPreset = data.currentPresetIndex;
+        birdAppearance.ChangeSkin();
 
         UpdatePresetsDropdown();
         RefreshSlidersWithoutNotify();
