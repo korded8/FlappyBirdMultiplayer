@@ -23,6 +23,10 @@ public class BirdAppearanceData : ScriptableObject
     public List<Preset> presets = new();
     public int currentPresetIndex = 0;
 
+    [Header("Skins")]
+    public List<GameObject> skins = new();
+    public int currentSkinIndex;
+
     public Action OnAppearanceChanged;
 
     public void ApplyPreset(int index, bool save = true)

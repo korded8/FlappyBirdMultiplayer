@@ -21,3 +21,11 @@ MonoBehaviour:
     featherColor: {r: 1, g: 0.9215687, b: 0.23137257, a: 1}
     presetName: Classic
   currentPresetIndex: 0
+  skins:
+  - {fileID: 1258515444004148251, guid: 70494c562c524e848b34ecc979a8e9d5, type: 3}
+  - {fileID: 8787915167545858310, guid: e63acd8c7da389b48874f21d76ea83fa, type: 3}
+  - {fileID: 1030294203722565908, guid: d52fc1dfc00311e4097c2441835792d7, type: 3}
+  - {fileID: 3985278352377472350, guid: d158f0b549b1fe64c852745ff590f721, type: 3}
+  - {fileID: 934919952181876825, guid: 9cde70c83b8880d4cb951764e6fbd462, type: 3}
+  - {fileID: 4319404540979330528, guid: e7a593a30607dbf43a97bc0b1b3f35ea, type: 3}
+  currentSkinIndex: 0

@@ -31,6 +31,9 @@ public class BirdAppearanceUI : MonoBehaviour
     [Header("Highscore text")]
     public TMP_Text highscoreText;
 
+    [Header("Skins")]
+    private int selectedSkinIndex;
+
     public enum BirdPart
     {
         body,
@@ -161,6 +164,17 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         selectedPart = (BirdPart)index;
         RefreshSlidersWithoutNotify();
+    }
+
+    public void SelectSkin(int index)
+    {
+        selectedSkinIndex = index;
+        data.currentSkinIndex = index;
+    }
+
+    public void ConfirmSkinSelection()
+    {
+        birdAppearance.ChangeSkin();
     }
 
     public void AddPreset()

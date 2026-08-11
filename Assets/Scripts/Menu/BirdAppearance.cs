@@ -12,11 +12,14 @@ public class BirdAppearance : MonoBehaviour
 
     [Header("Preview Settings")]
 
+    private Animator birdAnimator;
     private SpriteRenderer spriteRenderer;
+    private RuntimeAnimatorController animatorController;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        birdAnimator = GetComponent<Animator>();
 
         if (spriteRenderer != null && materialInstance == null)
         {
@@ -58,5 +61,21 @@ public class BirdAppearance : MonoBehaviour
         materialInstance.SetColor("_RedColor", data.bodyColor);
         materialInstance.SetColor("_GreenColor", data.wingColor);
         materialInstance.SetColor("_BlueColor", data.featherColor);
+    }
+
+    public void ChangeSkin()
+    {
+        birdAnimator.runtimeAnimatorController = data.skins[data.currentSkinIndex].GetComponent<Animator>().runtimeAnimatorController;
+        spriteRenderer.sprite = data.skins[data.currentSkinIndex].GetComponent<SpriteRenderer>().sprite;
+        materialInstance = new Material(data.skins[data.currentSkinIndex].GetComponent<SpriteRenderer>().sharedMaterial);
+        spriteRenderer.sharedMaterial = materialInstance;
+
+        if (maskTexture != null)
+            materialInstance.SetTexture("_MaskTex", maskTexture);
+
+        if (data.currentSkinIndex == 0)
+        {
+            ApplyColors();
+        }
     }
 }

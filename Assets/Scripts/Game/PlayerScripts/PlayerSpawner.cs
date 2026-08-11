@@ -5,11 +5,25 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private BirdAppearanceData data;
+    private SpriteRenderer playerRenderer;
+    private BirdAppearance playerAppearance;
 
     private void Start()
     {
         if (PhotonNetwork.InRoom)
         {
+            playerRenderer = playerPrefab.GetComponent<SpriteRenderer>();
+            playerAppearance = playerPrefab.GetComponent<BirdAppearance>();
+
+            playerRenderer.sprite = data.skins[data.currentSkinIndex].GetComponent<SpriteRenderer>().sprite;
+            playerPrefab.GetComponent<Animator>().runtimeAnimatorController = data.skins[data.currentSkinIndex].GetComponent<Animator>().runtimeAnimatorController;
+            playerAppearance.materialInstance = new Material(data.skins[data.currentSkinIndex].GetComponent<SpriteRenderer>().sharedMaterial);
+            playerRenderer.sharedMaterial = playerAppearance.materialInstance;
+
+            if (playerAppearance.maskTexture != null)
+                playerAppearance.materialInstance.SetTexture("_MaskTex", playerAppearance.maskTexture);
+
             SpawnPlayer();
         }
     }

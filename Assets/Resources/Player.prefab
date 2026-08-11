@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 5690884759419381426}
   - component: {fileID: 7405981102368525423}
   - component: {fileID: -5477457633631842027}
+  - component: {fileID: -1958066409035861490}
+  - component: {fileID: 360693616858899772}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -89,7 +91,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: bf26aeb7289954e49a0f96abf431b045, type: 3}
+  m_Sprite: {fileID: 4689240166119133576, guid: 23e1758959ca64f45a622b8c054dd37a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -312,3 +314,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSetup
   birdRenderer: {fileID: 7902207015526318345}
+--- !u!114 &-1958066409035861490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332251408567357732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92886d29b790c4f40819326f28ff74f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BirdAppearance
+  materialInstance: {fileID: 0}
+  maskTexture: {fileID: 0}
+  data: {fileID: 11400000, guid: ca9831060571d9d4dade4d7166e059a5, type: 2}
+--- !u!95 &360693616858899772
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332251408567357732}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e5d48b66da1968b42a6c2e9ac7f4d1a4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
