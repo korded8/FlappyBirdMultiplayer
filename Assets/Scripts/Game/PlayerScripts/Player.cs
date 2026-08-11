@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviourPun
 {
     [Header("Settings")]
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpForce = 6f;
 
     private Rigidbody2D rb;
     private readonly float maxRotation = 45f;

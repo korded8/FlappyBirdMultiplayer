@@ -170,10 +170,6 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         selectedSkinIndex = index;
         data.currentSkinIndex = index;
-    }
-
-    public void ConfirmSkinSelection()
-    {
         birdAppearance.ChangeSkin();
     }
 
