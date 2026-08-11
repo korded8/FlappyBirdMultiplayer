@@ -3,29 +3,26 @@ using Photon.Pun;
 
 public class SegmentMovement : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
-    private float moveSpeed;
+    private float initialSpeed;
     private double spawnTime;
     private Vector3 startPosition;
+    private SegmentController segmentController;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
-        object[] data = info.photonView.InstantiationData;
+        object[] data = photonView.InstantiationData;
 
-        moveSpeed = (float)data[0];
+        initialSpeed = (float)data[0];
         spawnTime = (double)data[1];
 
         startPosition = transform.position;
+        segmentController = FindObjectOfType<SegmentController>();
     }
 
     private void Update()
     {
-        if (moveSpeed <= 0f)
-            return;
+        double speed = segmentController.moveSpeed;
 
-        double elapsed = PhotonNetwork.Time - spawnTime;
-
-        transform.position =
-            startPosition +
-            Vector3.left * (moveSpeed * (float)elapsed);
+        transform.position += Vector3.left * (float)speed * Time.deltaTime;
     }
 }

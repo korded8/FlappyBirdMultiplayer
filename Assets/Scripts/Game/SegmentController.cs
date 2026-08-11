@@ -8,6 +8,7 @@ public class SegmentController : MonoBehaviourPun
     private GameObject[] segmentPrefabs;
 
     public float moveSpeed = 2f;
+    public float acceleration = 0.07f;
     private readonly float spawnX = 20f;
     private readonly float cleanupX = -20f;
 
@@ -16,6 +17,7 @@ public class SegmentController : MonoBehaviourPun
 
     private bool isFirstSegment;
     private readonly List<GameObject> segmentPool = new();
+    private double gameStartTime = -1;
 
     private void Start()
     {
@@ -26,15 +28,25 @@ public class SegmentController : MonoBehaviourPun
     [System.Obsolete]
     private void Update()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-
         if (gameController == null)
         {
             gameController = FindObjectOfType<GameController>();
             if (gameController == null) return;
         }
+
         if (!gameController.IsGameStarted()) return;
-        
+
+        if (gameStartTime == -1)
+            gameStartTime = PhotonNetwork.Time;
+
+        double elapsed = PhotonNetwork.Time - gameStartTime;
+        if (elapsed > 30)
+        {
+            moveSpeed += acceleration * Time.deltaTime;
+        }
+
+        if (!PhotonNetwork.IsMasterClient) return;
+
         SpawnSegments();
         DestroySegments();
     }
