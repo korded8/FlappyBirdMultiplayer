@@ -12,15 +12,18 @@
 - [x] Przycisk usuwania presetów
 - [x] Ekran ładowania
 - [x] Odliczanie przed startem
+- [x] przyspieszanie segmentów wraz z upływem czasu
+    - [ ] maksymalna prędkość segmentów
+    - [ ] zmienić naliczanie wyniku
 - [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
-- [ ] nerf dla ghost obstacle
+- [ ] nerf dla ghost obstacle ?
 
 ## UI
 - [x] Ogarnąć kolory ptaka
 - [x] Naprawić przycisk Randomize
 - [ ] losować kolor przycisku Randomize
 - [ ] Zmienić layout menu
-- [ ] W menu w tle poruszające się przeszkody
+- [ ] W menu w tle poruszające się przeszkody ?
 - [ ] zmienić system wybierania kolorów ?
 - [ ] dodać ustawienia
 
@@ -45,7 +48,7 @@
     - [x] Animacje dla skinów
 
 - [x] Animacja lotu
-- [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
+- [ ] W jakiś sposób ułatwić rozpoznawanie fake obstacle
 - [ ] Grafiki przeszkód
 - [ ] Animacja duchowych przeszkód
 - [ ] zmienić tło sceny Menu
@@ -61,8 +64,8 @@
 - [x] Countdown przed rozpoczęciem gry
 - [x] Dołączenie do gry po starcie
 - [x] Zmiana kolorów Classic
-- [ ] synchronizacja graczy
-- [ ] synchronizacja przeszkód
+- [x] synchronizacja graczy
+- [x] synchronizacja przeszkód
 - [x] Opuszczanie gry
 - [x] nie działają polskie znaki czcionki
 
