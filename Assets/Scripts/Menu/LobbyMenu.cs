@@ -70,10 +70,22 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 
+    private void SavePlayerSkin(int currentSkinIndex)
+    {
+        ExitGames.Client.Photon.Hashtable skin = new()
+        {
+            ["skinIndex"] = currentSkinIndex
+        };
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(skin);
+    }
+
     public void CreateRoom()
     {
         if (!joinedLobby) return;
+
         SavePlayerColors(data.bodyColor, data.wingColor, data.featherColor);
+        SavePlayerSkin(data.currentSkinIndex);
 
         string code = GetRoomCode();
         if (string.IsNullOrEmpty(code)) return;
@@ -91,7 +103,9 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
     public void JoinRoom()
     {
         if (!joinedLobby) return;
+
         SavePlayerColors(data.bodyColor, data.wingColor, data.featherColor);
+        SavePlayerSkin(data.currentSkinIndex);
 
         string code = GetRoomCode();
         if (string.IsNullOrEmpty(code)) return;

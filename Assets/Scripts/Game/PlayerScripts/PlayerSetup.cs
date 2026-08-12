@@ -5,8 +5,11 @@ using Photon.Pun;
 public class PlayerSetup : MonoBehaviourPunCallbacks
 {
     public SpriteRenderer birdRenderer;
+    public Texture2D maskTexture;
+    public BirdAppearanceData data;
     private Rigidbody2D rb;
     Material materialInstance;
+    private Animator playerAnimator;
 
     [System.Obsolete]
     private void Awake()
@@ -23,11 +26,14 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         {
             rb.simulated = false;
         }
+
+        playerAnimator = GetComponent<Animator>();
     }
 
     private void Start()
     {
         materialInstance = birdRenderer.material;
+        ApplySkin(photonView.Owner);
         ApplyColors(photonView.Owner);
     }
 
@@ -47,8 +53,27 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         }
     }
 
+    private void ApplySkin(Photon.Realtime.Player player)
+    {
+        if (player.CustomProperties.TryGetValue("skinIndex", out object obj))
+        {
+            int skin = (int)obj;
+            int skinIndex = skin;
+            playerAnimator.runtimeAnimatorController = data.skins[skinIndex].GetComponent<Animator>().runtimeAnimatorController;
+            birdRenderer.sprite = data.skins[skinIndex].GetComponent<SpriteRenderer>().sprite;
+            materialInstance = new Material(data.skins[skinIndex].GetComponent<SpriteRenderer>().sharedMaterial);
+            birdRenderer.sharedMaterial = materialInstance;
+            if (maskTexture != null)
+                materialInstance.SetTexture("_MaskTex", maskTexture);
+        }
+    }
+
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
+        if (targetPlayer == photonView.Owner && changedProps.ContainsKey("skinIndex"))
+        {
+            ApplySkin(targetPlayer);
+        }
         if (targetPlayer == photonView.Owner && changedProps.ContainsKey("colors"))
         {
             ApplyColors(targetPlayer);
