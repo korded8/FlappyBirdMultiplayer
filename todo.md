@@ -68,6 +68,7 @@
 - [x] synchronizacja przeszkód
 - [x] Opuszczanie gry
 - [x] nie działają polskie znaki czcionki
+- [ ] pozycja segmentów może się różnić w zależności od momentu wywołania funkcji update w SegmentController.cs przez klientów
 
 # Random ideas
 - [ ] Jajko
