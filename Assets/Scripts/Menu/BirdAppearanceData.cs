@@ -12,7 +12,6 @@ public class BirdAppearanceData : ScriptableObject
         public Color bodyColor;
         public Color wingColor;
         public Color featherColor;
-        public string presetName;
     }
     [Header("Current Colors")]
     public Color bodyColor = Color.white;
@@ -43,15 +42,14 @@ public class BirdAppearanceData : ScriptableObject
         if (save) SavePresets();
     }
 
-    public void AddPreset(Color body, Color wing, Color feather, string presetName)
+    public void AddPreset(Color body, Color wing, Color feather)
     {
         if (presets.Count == 6) return;
         Preset newPreset = new()
         {
             bodyColor = body,
             wingColor = wing,
-            featherColor = feather,
-            presetName = presetName
+            featherColor = feather
         };
 
         presets.Add(newPreset);
