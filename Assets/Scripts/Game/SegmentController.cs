@@ -11,18 +11,18 @@ public class SegmentController : MonoBehaviourPun
     public float acceleration = 0.07f;
     private readonly float spawnX = 20f;
     private readonly float cleanupX = -20f;
+    private readonly int MAX_SEGMENTS = 4;
 
     [Header("GameController Reference")]
     [SerializeField] private GameController gameController;
 
-    private bool isFirstSegment;
     private readonly List<GameObject> segmentPool = new();
     private double gameStartTime = -1;
+    private GameObject lastSegment = null;
 
     private void Start()
     {
         segmentPrefabs = Resources.LoadAll<GameObject>("Segments");
-        isFirstSegment = true;
     }
 
     [System.Obsolete]
@@ -53,45 +53,33 @@ public class SegmentController : MonoBehaviourPun
 
     private void SpawnSegments()
     {
-        GameObject segmentToSpawn;
+        int existingSegments = segmentPool.Count;
 
-        if (isFirstSegment)
-        {
-            segmentToSpawn = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
-            isFirstSegment = false;
-        }
-        else
-        {
-            float xLast = segmentPool[^1].transform.position.x;
-            float scaleLast = segmentPool[^1].transform.localScale.x / 2;
+        if (existingSegments >= MAX_SEGMENTS)
+            return;
 
-            segmentToSpawn = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
+        GameObject nextSegment = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
+        float nextSegmentPosition = spawnX;
 
-            float distance = spawnX - xLast;
-            if (distance <= scaleLast + segmentToSpawn.transform.localScale.x / 2)
-                return;
-        }
+        if (lastSegment != null)
+            nextSegmentPosition = lastSegment.transform.position.x + (lastSegment.transform.localScale.x + nextSegment.transform.localScale.x) / 2;
 
         double spawnTime = PhotonNetwork.Time;
 
         GameObject segmentInstance = PhotonNetwork.Instantiate(
-            $"Segments/{segmentToSpawn.name}",
-            new Vector3(spawnX, 0, 0),
+            $"Segments/{nextSegment.name}",
+            new Vector3(nextSegmentPosition, 0, 0),
             Quaternion.identity,
-            0,
-            new object[] { moveSpeed, spawnTime }
+            0
         );
 
         segmentPool.Add(segmentInstance);
+        lastSegment = segmentInstance;
 
         GhostObstacle[] obstacles = segmentInstance.GetComponentsInChildren<GhostObstacle>();
         foreach (GhostObstacle obstacle in obstacles)
-        {
             if (obstacle != null)
-            {
                 gameController.AssignPlayerToGhostObstacle(obstacle);
-            }
-        }
     }
 
     private void DestroySegments()

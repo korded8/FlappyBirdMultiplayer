@@ -213,11 +213,11 @@ public class BirdAppearanceUI : MonoBehaviour
 
     public void SelectPreset(int index)
     {
-        if (index < 0 || index > data.presets.Count || index == currentPreset) return;
+        if (index < 0 || index == currentPreset) return;
 
         ShowWarning(null);
 
-        if (index > data.presets.Count)
+        if (index > data.presets.Count - 1)
         {
             AddPreset();
             return;
