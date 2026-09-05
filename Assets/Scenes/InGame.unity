@@ -2863,7 +2863,10 @@ MonoBehaviour:
   lossText: {fileID: 1421817745}
   countdownText: {fileID: 317732586}
   victoryDelay: 3
+  background: {fileID: 0}
+  maxSpeed: 2
   localPlayerIsDead: 0
+  currDiffLvl: 0
 --- !u!4 &2077214053
 Transform:
   m_ObjectHideFlags: 0
@@ -2914,6 +2917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SegmentSpawner
   moveSpeed: 2
+  acceleration: 0.07
   gameController: {fileID: 2077214052}
 --- !u!1 &2102859877
 GameObject:

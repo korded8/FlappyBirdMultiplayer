@@ -5,14 +5,16 @@ using System.Collections.Generic;
 public class SegmentController : MonoBehaviourPun
 {
     [Header("Segment Settings")]
-    private GameObject[] segmentPrefabs;
+    private GameObject[] easySegmentPrefabs;
+    private GameObject[] acceleratedSegmentPrefabs;
+    private GameObject[] mediumSegmentPrefabs;
+    private GameObject[] hardSegmentPrefabs;
 
     public float moveSpeed = 2f;
     public float acceleration = 0.07f;
     private readonly float spawnX = 20f;
     private readonly float cleanupX = -20f;
     private readonly int MAX_SEGMENTS = 4;
-    private readonly int MAX_SPEED = 4;
 
     [Header("GameController Reference")]
     [SerializeField] private GameController gameController;
@@ -23,7 +25,10 @@ public class SegmentController : MonoBehaviourPun
 
     private void Start()
     {
-        segmentPrefabs = Resources.LoadAll<GameObject>("Segments");
+        easySegmentPrefabs = Resources.LoadAll<GameObject>("Segments/Easy");
+        acceleratedSegmentPrefabs = Resources.LoadAll<GameObject>("Segments/Accelerated");
+        mediumSegmentPrefabs = Resources.LoadAll<GameObject>("Segments/Medium");
+        hardSegmentPrefabs = Resources.LoadAll<GameObject>("Segments/Hard");
     }
 
     [System.Obsolete]
@@ -40,12 +45,10 @@ public class SegmentController : MonoBehaviourPun
         if (gameStartTime == -1)
             gameStartTime = PhotonNetwork.Time;
 
-        double elapsed = PhotonNetwork.Time - gameStartTime;
-
-        if (elapsed > 30 && moveSpeed <= MAX_SPEED)
+        if (moveSpeed < gameController.maxSpeed)
             moveSpeed += acceleration * Time.deltaTime;
-
-        if (moveSpeed > MAX_SPEED) moveSpeed = MAX_SPEED;
+        else
+            moveSpeed = gameController.maxSpeed;
 
         if (!PhotonNetwork.IsMasterClient) return;
 
@@ -60,7 +63,24 @@ public class SegmentController : MonoBehaviourPun
         if (existingSegments >= MAX_SEGMENTS)
             return;
 
-        GameObject nextSegment = segmentPrefabs[Random.Range(0, segmentPrefabs.Length)];
+        GameObject nextSegment = null;
+
+        switch (gameController.currDiffLvl)
+        {
+            case GameController.DifficultyLevel.Easy:
+                nextSegment = easySegmentPrefabs[Random.Range(0, easySegmentPrefabs.Length)];
+                break;
+            case GameController.DifficultyLevel.Accelerated:
+                nextSegment = acceleratedSegmentPrefabs[Random.Range(0, acceleratedSegmentPrefabs.Length)];
+                break;
+            case GameController.DifficultyLevel.Medium:
+                nextSegment = mediumSegmentPrefabs[Random.Range(0, mediumSegmentPrefabs.Length)];
+                break;
+            case GameController.DifficultyLevel.Hard:
+                nextSegment = hardSegmentPrefabs[Random.Range(0, hardSegmentPrefabs.Length)];
+                break;
+
+        }
         float nextSegmentPosition = spawnX;
 
         if (lastSegment != null)
@@ -69,10 +89,9 @@ public class SegmentController : MonoBehaviourPun
         double spawnTime = PhotonNetwork.Time;
 
         GameObject segmentInstance = PhotonNetwork.Instantiate(
-            $"Segments/{nextSegment.name}",
+            "Segments/" + gameController.currDiffLvl + "/" + nextSegment.name,
             new Vector3(nextSegmentPosition, 0, 0),
-            Quaternion.identity,
-            0
+            Quaternion.identity
         );
 
         segmentPool.Add(segmentInstance);

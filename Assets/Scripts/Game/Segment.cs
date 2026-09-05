@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 
-public class SegmentMovement : MonoBehaviourPun, IPunInstantiateMagicCallback
+public class Segment : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
     private SegmentController segmentController;
 

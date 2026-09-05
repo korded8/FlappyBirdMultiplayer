@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class GhostObstacle : MonoBehaviourPun
 {
@@ -10,6 +11,7 @@ public class GhostObstacle : MonoBehaviourPun
     private Vector3 direction;
 
     private GameController gameController;
+    private Animator animator;
     private GameObject upArrow;
     private GameObject downArrow;
 
@@ -37,6 +39,7 @@ public class GhostObstacle : MonoBehaviourPun
     private void Awake()
     {
         gameController = FindObjectOfType<GameController>();
+        animator = GetComponent<Animator>();
         upArrow = transform.Find("UpArrow").gameObject;
         downArrow = transform.Find("DownArrow").gameObject;
 
@@ -87,10 +90,23 @@ public class GhostObstacle : MonoBehaviourPun
     }
 
     [PunRPC]
-    void MoveObstacle()
+    private void MoveObstacle()
     {
+        StartCoroutine(MoveObstacleCoroutine());
+    }
+
+    private IEnumerator MoveObstacleCoroutine()
+    {
+        animator.Play("GhostLeaving");
+
+        yield return null;
+
+        yield return new WaitForSeconds(0.5f);
+
         transform.position += direction * moveDistance;
         obstacleUsed = true;
+
+        animator.Play("GhostReturning");
     }
 
     private void OnDrawGizmos()

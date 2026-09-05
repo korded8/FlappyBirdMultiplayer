@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
@@ -14,14 +15,26 @@ public class GameController : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text lossText;
     [SerializeField] private TMP_Text countdownText;
     [SerializeField] private float victoryDelay = 3f;
+    [SerializeField] private GameObject background;
 
     private bool gameStarted = false;
     private bool victoryShown = false;
+    private double gameStartTime = 0;
+    public float maxSpeed = 2f;
+    private Color currentBackgroundColor;
+    private int transisionTime = 3;
 
     private readonly HashSet<Photon.Realtime.Player> deadPlayersHashSet = new();
     public bool localPlayerIsDead = false;
 
     private int secondsUntilStart = 3;
+
+    public enum DifficultyLevel
+    {
+        Easy, Accelerated, Medium, Hard
+    }
+    public DifficultyLevel currDiffLvl = DifficultyLevel.Easy;
+    private DifficultyLevel previousDiffLvl;
 
     public bool IsGameStarted()
     {
@@ -36,10 +49,95 @@ public class GameController : MonoBehaviourPunCallbacks
         lossText.gameObject.SetActive(false);
         countdownText.gameObject.SetActive(false);
 
+        currentBackgroundColor = new Color(0.1882353f, 0.4901961f, 0.9333334f);
+        Camera.main.backgroundColor = currentBackgroundColor;
+
         if (!PhotonNetwork.IsMasterClient)
             startButton.SetActive(false);
+        else
+        {
+            currDiffLvl = DifficultyLevel.Easy;
+            maxSpeed = 2f;
+        }
 
-        UpdatePlayerCount();
+            UpdatePlayerCount();
+    }
+
+    private void Update()
+    {
+        if (!PhotonNetwork.IsMasterClient || !gameStarted) return;
+
+        double elapsed = PhotonNetwork.Time - gameStartTime;
+
+        if (elapsed < 30)
+        {
+            currDiffLvl = DifficultyLevel.Easy;
+            maxSpeed = 2f;
+        }
+        else if (elapsed < 60)
+        {
+            currDiffLvl = DifficultyLevel.Accelerated;
+            maxSpeed = 3f;
+        }
+        else if (elapsed < 90)
+        {
+            currDiffLvl = DifficultyLevel.Medium;
+            maxSpeed = 3.5f;
+        }
+        else
+        {
+            currDiffLvl = DifficultyLevel.Hard;
+            maxSpeed = 4f;
+        }
+
+        if (currDiffLvl != previousDiffLvl)
+        {
+            previousDiffLvl = currDiffLvl;
+
+            switch (currDiffLvl)
+            {
+                case DifficultyLevel.Accelerated:
+                    StartCoroutine(TransitionColor(
+                        new Color(0.09803922f, 0.09803922f, 0.723f)
+                    ));
+                    break;
+
+                case DifficultyLevel.Medium:
+                    StartCoroutine(TransitionColor(
+                        new Color(0.735849f, 0.3328245f, 0f)
+                    ));
+                    break;
+
+                case DifficultyLevel.Hard:
+                    StartCoroutine(TransitionColor(
+                        new Color(0.04313726f, 0.04313726f, 0.04313726f)
+                    ));
+                    break;
+            }
+        }
+    }
+
+    IEnumerator TransitionColor(Color nextColor)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < transisionTime)
+        {
+            elapsed += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsed / transisionTime);
+
+            Camera.main.backgroundColor = Color.Lerp(
+                currentBackgroundColor,
+                nextColor,
+                t
+            );
+
+            yield return null;
+        }
+
+        currentBackgroundColor = nextColor;
+        //Camera.main.backgroundColor = nextColor;
     }
 
     [PunRPC]
@@ -55,6 +153,8 @@ public class GameController : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         if (!PhotonNetwork.IsMasterClient) return;
+
+        gameStartTime = PhotonNetwork.Time;
 
         PhotonNetwork.CurrentRoom.IsOpen = false;
         startButton.SetActive(false);
