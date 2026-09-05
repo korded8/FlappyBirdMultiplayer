@@ -6,6 +6,7 @@
     - [x] fake’owe
     - [x] ruszające się
     - [x] zmieniające kolor
+    - [ ] broken pipe
 - [x] Pokazywanie wyniku
 - [x] Obserwowanie gry po śmierci, powrót do menu i wyjście z gry
 - [x] Zapisywanie presetów do pliku
@@ -13,15 +14,15 @@
 - [x] Ekran ładowania
 - [x] Odliczanie przed startem
 - [x] przyspieszanie segmentów wraz z upływem czasu
-    - [ ] maksymalna prędkość segmentów
-    - [ ] zmienić naliczanie wyniku
-- [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
+    - [x] maksymalna prędkość segmentów
+    - [x] zmienić naliczanie wyniku
+- [x] zmieniający się kolor tła
 - [ ] nerf dla ghost obstacle ?
 
 ## UI
 - [x] Ogarnąć kolory ptaka
 - [x] Naprawić przycisk Randomize
-- [ ] losować kolor przycisku Randomize
+- [ ] zmieniający się kolor przycisku Randomize
 - [ ] Zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody ?
 - [ ] zmienić system wybierania kolorów ?
@@ -44,15 +45,15 @@
     - [x] Phoenix
     - [x] William/The Eye
     - [x] Złoty znicz
-    - [x] Amongusus
+    - [ ] Amongusus
     - [x] Animacje dla skinów
 
 - [x] Animacja lotu
 - [ ] W jakiś sposób ułatwić rozpoznawanie fake obstacle
 - [ ] Grafiki przeszkód
 - [ ] Animacja duchowych przeszkód
-- [ ] zmienić tło sceny Menu
-- [ ] dodać tło sceny InGame
+- [ ] zmienić tło sceny Menu ?
+- [ ] chmury
 
 ## Misc
 - [ ] Język polski, angielski
