@@ -49,7 +49,7 @@ public class UI : MonoBehaviour
     {
         if ((scoreTimer += Time.deltaTime) >= 1)
         {
-            score++;
+            score += (int)(sc.moveSpeed - 1);
             scoreTimer = 0;
         }
     }

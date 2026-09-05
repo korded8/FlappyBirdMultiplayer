@@ -12,6 +12,7 @@ public class SegmentController : MonoBehaviourPun
     private readonly float spawnX = 20f;
     private readonly float cleanupX = -20f;
     private readonly int MAX_SEGMENTS = 4;
+    private readonly int MAX_SPEED = 4;
 
     [Header("GameController Reference")]
     [SerializeField] private GameController gameController;
@@ -40,10 +41,11 @@ public class SegmentController : MonoBehaviourPun
             gameStartTime = PhotonNetwork.Time;
 
         double elapsed = PhotonNetwork.Time - gameStartTime;
-        if (elapsed > 30)
-        {
+
+        if (elapsed > 30 && moveSpeed <= MAX_SPEED)
             moveSpeed += acceleration * Time.deltaTime;
-        }
+
+        if (moveSpeed > MAX_SPEED) moveSpeed = MAX_SPEED;
 
         if (!PhotonNetwork.IsMasterClient) return;
 
