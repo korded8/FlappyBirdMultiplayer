@@ -26,20 +26,6 @@ public class BirdAppearanceUI : MonoBehaviour
     [SerializeField] private TMP_Text classicEditWarning;
     [SerializeField] private Button randomizeButton;
     [SerializeField] private float transitionDuration = 1.5f;
-    private int currentColorIndex = 0;
-
-    private readonly Color[] colors =
-    {
-        Color.red,
-        Color.green,
-        Color.blue
-    };
-
-    [Header("Highscore text")]
-    [SerializeField] private TMP_Text highscoreText;
-
-    [Header("Skins")]
-    private int selectedSkinIndex;
 
     public enum BirdPart
     {
@@ -49,6 +35,9 @@ public class BirdAppearanceUI : MonoBehaviour
     }
     private BirdPart selectedPart = BirdPart.body;
     private int currentPreset = 0;
+
+    [Header("Highscore text")]
+    [SerializeField] private TMP_Text highscoreText;
 
     private void Start()
     {
@@ -71,34 +60,10 @@ public class BirdAppearanceUI : MonoBehaviour
         data.OnAppearanceChanged?.Invoke();
     }
 
-    private int GetClosestColorIndex(Color color)
-    {
-        float redDistance = Vector3.Distance(
-            new Vector3(color.r, color.g, color.b),
-            new Vector3(1f, 0f, 0f));
-
-        float greenDistance = Vector3.Distance(
-            new Vector3(color.r, color.g, color.b),
-            new Vector3(0f, 1f, 0f));
-
-        float blueDistance = Vector3.Distance(
-            new Vector3(color.r, color.g, color.b),
-            new Vector3(0f, 0f, 1f));
-
-        if (redDistance <= greenDistance && redDistance <= blueDistance)
-            return 0;
-
-        if (greenDistance <= blueDistance)
-            return 1;
-
-        return 2;
-    }
-
     private IEnumerator TransitionFirstColor()
     {
         randomizeButton.GetComponent<Image>().color = RandomizeColor();
         yield return new WaitForSeconds(transitionDuration);
-        currentColorIndex = GetClosestColorIndex(randomizeButton.GetComponent<Image>().color);
         StartCoroutine(nameof(CycleColors));
     }
 
@@ -107,7 +72,7 @@ public class BirdAppearanceUI : MonoBehaviour
         while (true)
         {
             Color startColor = randomizeButton.GetComponent<Image>().color;
-            Color targetColor = colors[currentColorIndex];
+            Color targetColor = RandomizeColor();
 
             float elapsed = 0f;
 
@@ -122,8 +87,6 @@ public class BirdAppearanceUI : MonoBehaviour
 
                 yield return null;
             }
-
-            currentColorIndex = (currentColorIndex + 1) % colors.Length;
         }
     }
 
@@ -218,7 +181,6 @@ public class BirdAppearanceUI : MonoBehaviour
 
     public void SelectSkin(int index)
     {
-        selectedSkinIndex = index;
         data.currentSkinIndex = index;
         birdAppearance.ApplySkin(index);
     }
