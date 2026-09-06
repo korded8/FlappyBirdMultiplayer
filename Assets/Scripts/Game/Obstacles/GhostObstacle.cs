@@ -1,17 +1,18 @@
-using UnityEngine;
 using Photon.Pun;
-using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using static System.TimeZoneInfo;
 
 public class GhostObstacle : MonoBehaviourPun
 {
+    [SerializeField] private float tpTime = 0.5f;
     public float moveDistance = 2f;
     private Photon.Realtime.Player player;
     private bool obstacleUsed;
     private Vector3 direction;
 
     private GameController gameController;
-    private Animator animator;
     private GameObject upArrow;
     private GameObject downArrow;
 
@@ -39,7 +40,6 @@ public class GhostObstacle : MonoBehaviourPun
     private void Awake()
     {
         gameController = FindObjectOfType<GameController>();
-        animator = GetComponent<Animator>();
         upArrow = transform.Find("UpArrow").gameObject;
         downArrow = transform.Find("DownArrow").gameObject;
 
@@ -97,16 +97,32 @@ public class GhostObstacle : MonoBehaviourPun
 
     private IEnumerator MoveObstacleCoroutine()
     {
-        animator.Play("GhostLeaving");
+        float elapsed = 0f;
+        Vector3 originalScale = transform.localScale;
 
-        yield return null;
+        while (elapsed < tpTime)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / tpTime);
 
-        yield return new WaitForSeconds(0.5f);
+            transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, t);
 
+            yield return null;
+        }
+
+        elapsed = 0f;
         transform.position += direction * moveDistance;
         obstacleUsed = true;
 
-        animator.Play("GhostReturning");
+        while (elapsed < tpTime)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / tpTime);
+
+            transform.localScale = Vector3.Lerp(Vector3.zero, originalScale, t);
+
+            yield return null;
+        }
     }
 
     private void OnDrawGizmos()

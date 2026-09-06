@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,29 +8,35 @@ using UnityEngine.UI;
 public class BirdAppearanceUI : MonoBehaviour
 {
     [Header("Sliders")]
-    public Slider redSlider;
-    public Slider greenSlider;
-    public Slider blueSlider;
-
+    [SerializeField] private Slider redSlider;
+    [SerializeField] private Slider greenSlider;
+    [SerializeField] private Slider blueSlider;
+    
     [Header("Color texts")]
-    public TMP_InputField redColorInput;
-    public TMP_InputField greenColorInput;
-    public TMP_InputField blueColorInput;
-
+    [SerializeField] private TMP_InputField redColorInput;
+    [SerializeField] private TMP_InputField greenColorInput;
+    [SerializeField] private TMP_InputField blueColorInput;
+     
     [Header("Appearance Scripts")]
-    public BirdAppearanceData data;
-    public BirdAppearance birdAppearance;
-
+    [SerializeField] private BirdAppearanceData data;
+    [SerializeField] private BirdAppearance birdAppearance;
+     
     [Header("Presets")]
-    //public TMP_Dropdown presetsDropdown;
-    //public TMP_InputField presetNameInput;
-    //public TMP_Text emptyPresetNameWarning;
-    //public TMP_Text duplicatePresetNameWarning;
-    public TMP_Text deletingClassicPresetWarning;
-    public TMP_Text classicEditWarning;
+    [SerializeField] private TMP_Text deletingClassicPresetWarning;
+    [SerializeField] private TMP_Text classicEditWarning;
+    [SerializeField] private Button randomizeButton;
+    [SerializeField] private float transitionDuration = 1.5f;
+    private int currentColorIndex = 0;
+
+    private readonly Color[] colors =
+    {
+        Color.red,
+        Color.green,
+        Color.blue
+    };
 
     [Header("Highscore text")]
-    public TMP_Text highscoreText;
+    [SerializeField] private TMP_Text highscoreText;
 
     [Header("Skins")]
     private int selectedSkinIndex;
@@ -47,16 +54,14 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         ShowWarning(null);
 
-        //presetNameInput.characterLimit = 8;
-
         redSlider.onValueChanged.AddListener(OnSliderChanged);
         greenSlider.onValueChanged.AddListener(OnSliderChanged);
         blueSlider.onValueChanged.AddListener(OnSliderChanged);
 
-        //presetsDropdown.onValueChanged.AddListener(OnDropdownChanged);
-
         int highscore = PlayerPrefs.GetInt("Highscore", 0);
         highscoreText.text = "Highscore: " + highscore.ToString();
+
+        StartCoroutine(nameof(TransitionFirstColor));
 
         data.LoadPresets();
         currentPreset = data.currentPresetIndex;
@@ -66,12 +71,67 @@ public class BirdAppearanceUI : MonoBehaviour
         data.OnAppearanceChanged?.Invoke();
     }
 
+    private int GetClosestColorIndex(Color color)
+    {
+        float redDistance = Vector3.Distance(
+            new Vector3(color.r, color.g, color.b),
+            new Vector3(1f, 0f, 0f));
+
+        float greenDistance = Vector3.Distance(
+            new Vector3(color.r, color.g, color.b),
+            new Vector3(0f, 1f, 0f));
+
+        float blueDistance = Vector3.Distance(
+            new Vector3(color.r, color.g, color.b),
+            new Vector3(0f, 0f, 1f));
+
+        if (redDistance <= greenDistance && redDistance <= blueDistance)
+            return 0;
+
+        if (greenDistance <= blueDistance)
+            return 1;
+
+        return 2;
+    }
+
+    private IEnumerator TransitionFirstColor()
+    {
+        randomizeButton.GetComponent<Image>().color = RandomizeColor();
+        yield return new WaitForSeconds(transitionDuration);
+        currentColorIndex = GetClosestColorIndex(randomizeButton.GetComponent<Image>().color);
+        StartCoroutine(nameof(CycleColors));
+    }
+
+    private IEnumerator CycleColors()
+    {
+        while (true)
+        {
+            Color startColor = randomizeButton.GetComponent<Image>().color;
+            Color targetColor = colors[currentColorIndex];
+
+            float elapsed = 0f;
+
+            while (elapsed < transitionDuration)
+            {
+                elapsed += Time.deltaTime;
+
+                float t = Mathf.Clamp01(elapsed / transitionDuration);
+                t = Mathf.SmoothStep(0f, 1f, t);
+
+                randomizeButton.GetComponent<Image>().color = Color.Lerp(startColor, targetColor, t);
+
+                yield return null;
+            }
+
+            currentColorIndex = (currentColorIndex + 1) % colors.Length;
+        }
+    }
+
     private void OnDestroy()
     {
         redSlider.onValueChanged.RemoveListener(OnSliderChanged);
         greenSlider.onValueChanged.RemoveListener(OnSliderChanged);
         blueSlider.onValueChanged.RemoveListener(OnSliderChanged);
-        //presetsDropdown.onValueChanged.RemoveListener(OnDropdownChanged);
     }
 
     private void RefreshSlidersWithoutNotify()
@@ -134,13 +194,19 @@ public class BirdAppearanceUI : MonoBehaviour
         RefreshSlidersWithoutNotify();
     }
 
-    public void Randomize(BirdPart birdPart)
+    private Color RandomizeColor()
     {
         float r = UnityEngine.Random.Range(0, 1f);
         float g = UnityEngine.Random.Range(0, 1f);
         float b = UnityEngine.Random.Range(0, 1f);
-        Color newColor = new(r, g, b);
 
+        Color newColor = new Color(r, g, b);
+        return newColor;
+    }
+
+    public void Randomize(BirdPart birdPart)
+    {
+        Color newColor = RandomizeColor();
         data.SetColor(birdPart, newColor);
     }
 
@@ -159,8 +225,6 @@ public class BirdAppearanceUI : MonoBehaviour
 
     public void AddPreset()
     {
-        //string newPresetName = presetNameInput.text.Trim();
-
         Color bodyColor = data.bodyColor;
         Color wingColor = data.wingColor;
         Color featherColor = data.featherColor;

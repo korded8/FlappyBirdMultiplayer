@@ -137,7 +137,6 @@ public class GameController : MonoBehaviourPunCallbacks
         }
 
         currentBackgroundColor = nextColor;
-        //Camera.main.backgroundColor = nextColor;
     }
 
     [PunRPC]
@@ -248,7 +247,7 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(victoryDelay);
 
-        PhotonNetwork.LeaveRoom();
+        //PhotonNetwork.LeaveRoom();
     }
 
     [System.Obsolete]
