@@ -17,12 +17,14 @@
     - [x] maksymalna prędkość segmentów
     - [x] zmienić naliczanie wyniku
 - [x] zmieniający się kolor tła
-- [ ] nerf dla ghost obstacle ?
+- [x] nerf dla ghost obstacle ?
+- [ ] wiatr ?
+- [ ] więcej segmentów
 
 ## UI
 - [x] Ogarnąć kolory ptaka
 - [x] Naprawić przycisk Randomize
-- [ ] zmieniający się kolor przycisku Randomize
+- [x] zmieniający się kolor przycisku Randomize
 - [ ] Zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody ?
 - [ ] zmienić system wybierania kolorów ?
@@ -49,11 +51,12 @@
     - [x] Animacje dla skinów
 
 - [x] Animacja lotu
-- [ ] W jakiś sposób ułatwić rozpoznawanie fake obstacle
-- [ ] Grafiki przeszkód
-- [ ] Animacja duchowych przeszkód
+- [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
+- [x] Grafiki przeszkód
+- [x] Animacja duchowych przeszkód
 - [ ] zmienić tło sceny Menu ?
-- [ ] chmury
+- [x] chmury
+- [ ] jakoś wyróżnić gracza
 
 ## Misc
 - [ ] Język polski, angielski
