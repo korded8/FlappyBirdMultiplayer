@@ -10,8 +10,6 @@ public class SegmentController : MonoBehaviourPun
     private GameObject[] mediumSegmentPrefabs;
     private GameObject[] hardSegmentPrefabs;
 
-    public float moveSpeed = 2f;
-    public float acceleration = 0.07f;
     private readonly float spawnX = 20f;
     private readonly float cleanupX = -20f;
     private readonly int MAX_SEGMENTS = 4;
@@ -44,11 +42,6 @@ public class SegmentController : MonoBehaviourPun
 
         if (gameStartTime == -1)
             gameStartTime = PhotonNetwork.Time;
-
-        if (moveSpeed < gameController.maxSpeed)
-            moveSpeed += acceleration * Time.deltaTime;
-        else
-            moveSpeed = gameController.maxSpeed;
 
         if (!PhotonNetwork.IsMasterClient) return;
 

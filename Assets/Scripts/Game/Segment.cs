@@ -3,16 +3,17 @@ using Photon.Pun;
 
 public class Segment : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
-    private SegmentController segmentController;
+    private GameController gameController;
 
+    [System.Obsolete]
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
-        segmentController = FindObjectOfType<SegmentController>();
+        gameController = FindObjectOfType<GameController>();
     }
 
     private void Update()
     {
-        double speed = segmentController.moveSpeed;
+        double speed = gameController.moveSpeed;
 
         transform.position += Vector3.left * (float)speed * Time.deltaTime;
     }

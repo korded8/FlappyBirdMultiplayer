@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 0000000013274531
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2863,8 +2863,9 @@ MonoBehaviour:
   lossText: {fileID: 1421817745}
   countdownText: {fileID: 317732586}
   victoryDelay: 3
-  background: {fileID: 0}
   maxSpeed: 2
+  moveSpeed: 2
+  acceleration: 0.07
   localPlayerIsDead: 0
   currDiffLvl: 0
 --- !u!4 &2077214053
@@ -2916,8 +2917,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ff92c5387af6c43b5eb36ccbcc9b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SegmentSpawner
-  moveSpeed: 2
-  acceleration: 0.07
   gameController: {fileID: 2077214052}
 --- !u!1 &2102859877
 GameObject:

@@ -15,14 +15,21 @@ public class GameController : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text lossText;
     [SerializeField] private TMP_Text countdownText;
     [SerializeField] private float victoryDelay = 3f;
-    [SerializeField] private GameObject background;
 
     private bool gameStarted = false;
     private bool victoryShown = false;
     private double gameStartTime = 0;
     public float maxSpeed = 2f;
+    public float moveSpeed = 2f;
+    public float acceleration = 0.07f;
     private Color currentBackgroundColor;
-    private int transisionTime = 3;
+    private int transitionTime = 3;
+    private float cloudSpawnX = 15f;
+    private float cloudCleanupX = -15f;
+    private float cloudCooldown = 5f;
+    private float cloudTimer = 5f;
+    private readonly int MAX_CLOUDS = 5;
+    private List<GameObject> cloudsPool = new();
 
     private readonly HashSet<Photon.Realtime.Player> deadPlayersHashSet = new();
     public bool localPlayerIsDead = false;
@@ -67,65 +74,25 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient || !gameStarted) return;
 
-        double elapsed = PhotonNetwork.Time - gameStartTime;
+        CloudLogic();
 
-        if (elapsed < 30)
-        {
-            currDiffLvl = DifficultyLevel.Easy;
-            maxSpeed = 2f;
-        }
-        else if (elapsed < 60)
-        {
-            currDiffLvl = DifficultyLevel.Accelerated;
-            maxSpeed = 3f;
-        }
-        else if (elapsed < 90)
-        {
-            currDiffLvl = DifficultyLevel.Medium;
-            maxSpeed = 3.5f;
-        }
+        if (moveSpeed < maxSpeed)
+            moveSpeed += acceleration * Time.deltaTime;
         else
-        {
-            currDiffLvl = DifficultyLevel.Hard;
-            maxSpeed = 4f;
-        }
+            moveSpeed = maxSpeed;
 
-        if (currDiffLvl != previousDiffLvl)
-        {
-            previousDiffLvl = currDiffLvl;
-
-            switch (currDiffLvl)
-            {
-                case DifficultyLevel.Accelerated:
-                    StartCoroutine(TransitionColor(
-                        new Color(0.09803922f, 0.09803922f, 0.723f)
-                    ));
-                    break;
-
-                case DifficultyLevel.Medium:
-                    StartCoroutine(TransitionColor(
-                        new Color(0.735849f, 0.3328245f, 0f)
-                    ));
-                    break;
-
-                case DifficultyLevel.Hard:
-                    StartCoroutine(TransitionColor(
-                        new Color(0.04313726f, 0.04313726f, 0.04313726f)
-                    ));
-                    break;
-            }
-        }
+        DifficultyLevelLogic();
     }
 
     IEnumerator TransitionColor(Color nextColor)
     {
         float elapsed = 0f;
 
-        while (elapsed < transisionTime)
+        while (elapsed < transitionTime)
         {
             elapsed += Time.deltaTime;
 
-            float t = Mathf.Clamp01(elapsed / transisionTime);
+            float t = Mathf.Clamp01(elapsed / transitionTime);
 
             Camera.main.backgroundColor = Color.Lerp(
                 currentBackgroundColor,
@@ -247,7 +214,7 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(victoryDelay);
 
-        //PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveRoom();
     }
 
     [System.Obsolete]
@@ -322,5 +289,114 @@ public class GameController : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+    }
+
+    private void CloudLogic()
+    {
+        if (cloudTimer < cloudCooldown)
+            cloudTimer += Time.deltaTime;
+        else
+        {
+            if (cloudsPool.Count < MAX_CLOUDS)
+                SpawnClouds();
+            cloudTimer = 0f;
+        }
+
+        for (int i = cloudsPool.Count - 1; i >= 0; i--)
+        {
+            GameObject c = cloudsPool[i];
+            if (c != null) 
+                if (c.transform.position.x <= cloudCleanupX)
+                {
+                    PhotonNetwork.Destroy(c);
+                    cloudsPool.RemoveAt(i);
+                }
+        }
+    }
+
+    private void SpawnClouds()
+    {
+        float cloudSpawnY = Random.Range(3, 5);
+        cloudSpawnY += Random.Range(0f, 1f) > 0.5f ? 0.5f : 0f;
+
+        float dis = Random.Range(0, 3);
+        float len = Random.Range(1, 4);
+        if (len != 1)
+            len = Random.Range(1, 4);
+
+        Cloud.Distance distance = Cloud.Distance.Far;
+
+        switch (dis)
+        {
+            case 0:
+                distance = Cloud.Distance.Close;
+                break;
+            case 1:
+                distance = Cloud.Distance.Medium;
+                break;
+            case 2:
+                distance = Cloud.Distance.Far;
+                break;
+        }
+        GameObject cloudInstance = PhotonNetwork.Instantiate(
+            "Cloud", 
+            new Vector3(cloudSpawnX, cloudSpawnY, 0), 
+            Quaternion.identity,
+            0,
+            new object[] { distance, len }
+        );
+        cloudsPool.Add(cloudInstance);
+    }
+
+    private void DifficultyLevelLogic()
+    {
+        double elapsed = PhotonNetwork.Time - gameStartTime;
+
+        if (elapsed < 45)
+        {
+            currDiffLvl = DifficultyLevel.Easy;
+            maxSpeed = 2f;
+        }
+        else if (elapsed < 90)
+        {
+            currDiffLvl = DifficultyLevel.Accelerated;
+            maxSpeed = 3f;
+        }
+        else if (elapsed < 135)
+        {
+            currDiffLvl = DifficultyLevel.Medium;
+            maxSpeed = 3.5f;
+        }
+        else
+        {
+            currDiffLvl = DifficultyLevel.Hard;
+            maxSpeed = 4f;
+        }
+
+        if (currDiffLvl != previousDiffLvl)
+        {
+            previousDiffLvl = currDiffLvl;
+
+            switch (currDiffLvl)
+            {
+                case DifficultyLevel.Accelerated:
+                    StartCoroutine(TransitionColor(
+                        new Color(0.09803922f, 0.09803922f, 0.723f)
+                    ));
+                    break;
+
+                case DifficultyLevel.Medium:
+                    StartCoroutine(TransitionColor(
+                        new Color(0.735849f, 0.3328245f, 0f)
+                    ));
+                    break;
+
+                case DifficultyLevel.Hard:
+                    StartCoroutine(TransitionColor(
+                        new Color(0.04313726f, 0.04313726f, 0.04313726f)
+                    ));
+                    break;
+            }
+        }
     }
 }
