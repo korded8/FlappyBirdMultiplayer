@@ -20,6 +20,7 @@
 - [x] nerf dla ghost obstacle ?
 - [ ] wiatr ?
 - [ ] więcej segmentów
+- [ ] play again button
 
 ## UI
 - [x] Ogarnąć kolory ptaka
@@ -73,6 +74,8 @@
 - [x] Opuszczanie gry
 - [x] nie działają polskie znaki czcionki
 - [ ] pozycja segmentów może się różnić w zależności od momentu wywołania funkcji update w SegmentController.cs przez klientów
+- [ ] nie wyświetla się poprany skin po powrocie do lobby
+- [ ] zmiana kolory nie aktualizuje się poprawnie
 
 # Random ideas
 - [ ] Jajko
