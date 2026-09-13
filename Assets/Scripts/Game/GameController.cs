@@ -14,10 +14,11 @@ public class GameController : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text victoryText;
     [SerializeField] private TMP_Text lossText;
     [SerializeField] private TMP_Text countdownText;
-    [SerializeField] private float victoryDelay = 3f;
 
+    private float victoryDelay = 1f;
     private bool gameStarted = false;
     private bool victoryShown = false;
+    public bool isLeaving = false;
     private double gameStartTime = 0;
     public float maxSpeed = 2f;
     public float moveSpeed = 2f;
@@ -67,12 +68,12 @@ public class GameController : MonoBehaviourPunCallbacks
             maxSpeed = 2f;
         }
 
-            UpdatePlayerCount();
+        UpdatePlayerCount();
     }
 
     private void Update()
     {
-        if (!PhotonNetwork.IsMasterClient || !gameStarted) return;
+        if (!PhotonNetwork.IsMasterClient || !gameStarted || isLeaving || !PhotonNetwork.InRoom) return;
 
         CloudLogic();
 
@@ -109,6 +110,8 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SetCountdownRPC(int secondsUntilStart)
     {
+        if (!PhotonNetwork.InRoom || isLeaving) return;
+
         countdownText.gameObject.SetActive(true);
         if (secondsUntilStart > 0)
             countdownText.text = secondsUntilStart.ToString();
@@ -133,16 +136,20 @@ public class GameController : MonoBehaviourPunCallbacks
 
         while (secondsUntilStart >= 0)
         {
+            if (!PhotonNetwork.InRoom || isLeaving) yield break;
+
             photonView.RPC(nameof(SetCountdownRPC), RpcTarget.All, secondsUntilStart);
             secondsUntilStart--;
 
-            WaitForSeconds wait = new(1);
-            yield return wait;
+            yield return new WaitForSeconds(1);
         }
 
         gameStarted = true;
 
         countdownText.gameObject.SetActive(false);
+
+        if (!PhotonNetwork.InRoom || isLeaving) yield break;
+
         photonView.RPC(nameof(OnGameStartedRPC), RpcTarget.All);
         yield return null;
     }
@@ -150,6 +157,8 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void OnGameStartedRPC()
     {
+        if (!PhotonNetwork.InRoom || isLeaving) return;
+
         EnablePhysics();
         countdownText.enabled = false;
     }
@@ -170,20 +179,25 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         UpdatePlayerCount();
 
-        if (!PhotonNetwork.IsMasterClient || !gameStarted || victoryShown)
+        if (!PhotonNetwork.IsMasterClient || !gameStarted || victoryShown || isLeaving)
             return;
 
+        isLeaving = true;
         CheckForWinners();
     }
 
     private void UpdatePlayerCount()
     {
+        if (!PhotonNetwork.InRoom || isLeaving) return;
+
         playersText.text = $"Gracze: {PhotonNetwork.CurrentRoom.PlayerCount}/{PhotonNetwork.CurrentRoom.MaxPlayers}";
     }
 
     [PunRPC]
     private void ShowVictoryRPC(int winnerActorNumber)
     {
+        if (!PhotonNetwork.InRoom || isLeaving) return;
+
         victoryShown = true;
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == winnerActorNumber)
@@ -204,7 +218,7 @@ public class GameController : MonoBehaviourPunCallbacks
     [System.Obsolete]
     public void LocalPlayerDied()
     {
-        if (!PhotonNetwork.InRoom) return;
+        if (!PhotonNetwork.InRoom || isLeaving) return;
 
         if (FindObjectOfType<UI>() != null)
             FindObjectOfType<UI>().OnPlayerDied();
@@ -216,6 +230,8 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void UpdateDeadPlayersRPC(int actorNumber)
     {
+        if (!PhotonNetwork.InRoom || isLeaving) return;
+
         Photon.Realtime.Player player = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
         if (player != null)
             deadPlayersHashSet.Add(player);
@@ -226,6 +242,7 @@ public class GameController : MonoBehaviourPunCallbacks
     private void CheckForWinners()
     {
         if (victoryShown) return;
+        if (!PhotonNetwork.InRoom || isLeaving) return;
 
         Photon.Realtime.Player winner = null;
         foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
@@ -236,6 +253,8 @@ public class GameController : MonoBehaviourPunCallbacks
                 winner = player;
             }
         }
+
+        if (!PhotonNetwork.InRoom || isLeaving) return;
 
         photonView.RPC(
             nameof(ShowVictoryRPC),
@@ -262,6 +281,8 @@ public class GameController : MonoBehaviourPunCallbacks
     public void GhostObstacleDestroyed(Photon.Realtime.Player player)
     {
         if (player == null) return;
+        if (!PhotonNetwork.InRoom || isLeaving) return;
+
         photonView.RPC(nameof(UpdateDeadPlayersRPC), RpcTarget.MasterClient, player.ActorNumber);
     }
 
@@ -269,8 +290,6 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
             PhotonNetwork.LeaveRoom();
-
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 
     public override void OnLeftRoom()
@@ -280,6 +299,8 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void CloudLogic()
     {
+        if (!PhotonNetwork.InRoom || isLeaving) return;
+
         if (cloudTimer < cloudCooldown)
             cloudTimer += Time.deltaTime;
         else
@@ -292,17 +313,25 @@ public class GameController : MonoBehaviourPunCallbacks
         for (int i = cloudsPool.Count - 1; i >= 0; i--)
         {
             GameObject c = cloudsPool[i];
-            if (c != null) 
+            if (c != null)
+            {
                 if (c.transform.position.x <= cloudCleanupX)
                 {
-                    PhotonNetwork.Destroy(c);
+                    if (PhotonNetwork.InRoom)
+                        PhotonNetwork.Destroy(c);
+                    else
+                        Destroy(c);
+
                     cloudsPool.RemoveAt(i);
                 }
+            }
         }
     }
 
     private void SpawnClouds()
     {
+        if (!PhotonNetwork.InRoom || isLeaving) return;
+
         float cloudSpawnY = Random.Range(3, 5);
         cloudSpawnY += Random.Range(0f, 1f) > 0.5f ? 0.5f : 0f;
 
@@ -326,8 +355,8 @@ public class GameController : MonoBehaviourPunCallbacks
                 break;
         }
         GameObject cloudInstance = PhotonNetwork.Instantiate(
-            "Cloud", 
-            new Vector3(cloudSpawnX, cloudSpawnY, 0), 
+            "Cloud",
+            new Vector3(cloudSpawnX, cloudSpawnY, 0),
             Quaternion.identity,
             0,
             new object[] { distance, len }

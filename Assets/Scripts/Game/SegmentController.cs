@@ -38,7 +38,7 @@ public class SegmentController : MonoBehaviourPun
             if (gameController == null) return;
         }
 
-        if (!gameController.IsGameStarted()) return;
+        if (!gameController.IsGameStarted() || !PhotonNetwork.InRoom || gameController.isLeaving) return;
 
         if (gameStartTime == -1)
             gameStartTime = PhotonNetwork.Time;

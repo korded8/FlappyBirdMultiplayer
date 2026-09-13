@@ -11,6 +11,7 @@ public class FadingObstacle : MonoBehaviourPun
     private readonly float waitTime = 4f;
 
     private SpriteRenderer sr;
+    private GameController gameController;
 
     private float currentAlpha;
     private float timer = 0f;
@@ -24,9 +25,11 @@ public class FadingObstacle : MonoBehaviourPun
 
     private FadeState state = FadeState.FadingOut;
 
+    [System.Obsolete]
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        gameController = FindObjectOfType<GameController>();
         currentAlpha = maxAlpha;
         ApplyAlpha(currentAlpha);
     }
@@ -40,6 +43,8 @@ public class FadingObstacle : MonoBehaviourPun
 
     private void UpdateFade()
     {
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving) return;
+
         float delta = fadeSpeed * Time.deltaTime;
 
         switch (state)
@@ -77,6 +82,7 @@ public class FadingObstacle : MonoBehaviourPun
 
     void ApplyAlpha(float alpha)
     {
+        if (sr == null) return;
         Color c = sr.color;
         c.a = alpha;
         sr.color = c;
@@ -85,6 +91,8 @@ public class FadingObstacle : MonoBehaviourPun
     [PunRPC]
     void SyncAlpha(float alpha)
     {
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving) return;
+
         ApplyAlpha(alpha);
     }
 }

@@ -18,7 +18,14 @@ public class GhostObstacle : MonoBehaviourPun
 
     public void AssignPlayer(Photon.Realtime.Player p)
     {
-        Vector3 dir = new(0, Random.value < 0.5f ? 1f : -1f);
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving)
+        {
+            player = p;
+            obstacleUsed = true;
+            return;
+        }
+
+        Vector3 dir = new Vector3(0f, Random.value < 0.5f ? 1f : -1f);
         photonView.RPC(nameof(SyncObstacle), RpcTarget.All, p.ActorNumber, dir);
     }
 
@@ -31,6 +38,8 @@ public class GhostObstacle : MonoBehaviourPun
     [PunRPC]
     void SyncObstacle(int actorNumber, Vector3 dir)
     {
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving) return;
+
         player = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
         direction = dir;
         obstacleUsed = false;
@@ -40,16 +49,16 @@ public class GhostObstacle : MonoBehaviourPun
     private void Awake()
     {
         gameController = FindObjectOfType<GameController>();
-        upArrow = transform.Find("UpArrow").gameObject;
-        downArrow = transform.Find("DownArrow").gameObject;
+        upArrow = transform.Find("UpArrow")?.gameObject;
+        downArrow = transform.Find("DownArrow")?.gameObject;
 
-        upArrow.SetActive(false);
-        downArrow.SetActive(false);
+        if (upArrow != null) upArrow.SetActive(false);
+        if (downArrow != null) downArrow.SetActive(false);
     }
 
     private void OnDestroy()
     {
-        gameController.GhostObstacleDestroyed(player);
+        gameController?.GhostObstacleDestroyed(player);
     }
 
     private void Update()
@@ -59,28 +68,30 @@ public class GhostObstacle : MonoBehaviourPun
             TryMove();
         }
 
-        if (gameController.localPlayerIsDead && player == PhotonNetwork.LocalPlayer && !obstacleUsed)
+        if (gameController != null && gameController.localPlayerIsDead && player == PhotonNetwork.LocalPlayer && !obstacleUsed)
         {
             if (direction == Vector3.up)
             {
-                upArrow.SetActive(true);
-                downArrow.SetActive(false);
+                if (upArrow != null) upArrow.SetActive(true);
+                if (downArrow != null) downArrow.SetActive(false);
             }
             else
             {
-                upArrow.SetActive(false);
-                downArrow.SetActive(true);
+                if (upArrow != null) upArrow.SetActive(false);
+                if (downArrow != null) downArrow.SetActive(true);
             }
         }
         else
         {
-            upArrow.SetActive(false);
-            downArrow.SetActive(false);
+            if (upArrow != null) upArrow.SetActive(false);
+            if (downArrow != null) downArrow.SetActive(false);
         }
     }
 
     private void TryMove()
     {
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving) return;
+
         int myID = PhotonNetwork.LocalPlayer.ActorNumber;
 
         if (player != null && myID == player.ActorNumber && !obstacleUsed && gameController.localPlayerIsDead)
@@ -92,6 +103,8 @@ public class GhostObstacle : MonoBehaviourPun
     [PunRPC]
     private void MoveObstacle()
     {
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving) return;
+
         StartCoroutine(MoveObstacleCoroutine());
     }
 
@@ -129,8 +142,8 @@ public class GhostObstacle : MonoBehaviourPun
     {
         Gizmos.color = Color.green;
 
-        Vector3 maxPoint = new(transform.position.x, transform.position.y + moveDistance);
-        Vector3 minPoint = new(transform.position.x, transform.position.y - moveDistance);
+        Vector3 maxPoint = new Vector3(transform.position.x, transform.position.y + moveDistance);
+        Vector3 minPoint = new Vector3(transform.position.x, transform.position.y - moveDistance);
 
         Gizmos.DrawSphere(maxPoint, 0.2f);
         Gizmos.DrawSphere(minPoint, 0.2f);

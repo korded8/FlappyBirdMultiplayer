@@ -30,6 +30,7 @@ public class PresetPreview : MonoBehaviour
 
     public void UpdatePreview()
     {
+        if (renderedImage == null) return;
         if (viewedPresetIndex > data.presets.Count - 1)
         {
             renderedImage.enabled = false;
