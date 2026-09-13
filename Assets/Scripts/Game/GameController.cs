@@ -184,7 +184,6 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ShowVictoryRPC(int winnerActorNumber)
     {
-
         victoryShown = true;
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == winnerActorNumber)
@@ -197,24 +196,21 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private IEnumerator ReturnToMenuAfterWin()
     {
-        if (!localPlayerIsDead)
-        {
-            yield return new WaitUntil(LocalPlayerDied);
-        }
         yield return new WaitForSeconds(victoryDelay);
 
         PhotonNetwork.LeaveRoom();
     }
 
     [System.Obsolete]
-    public bool LocalPlayerDied()
+    public void LocalPlayerDied()
     {
+        if (!PhotonNetwork.InRoom) return;
+
         if (FindObjectOfType<UI>() != null)
             FindObjectOfType<UI>().OnPlayerDied();
 
         photonView.RPC(nameof(UpdateDeadPlayersRPC), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
         localPlayerIsDead = true;
-        return localPlayerIsDead;
     }
 
     [PunRPC]
