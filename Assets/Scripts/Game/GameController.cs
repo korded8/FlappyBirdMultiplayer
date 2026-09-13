@@ -173,23 +173,7 @@ public class GameController : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient || !gameStarted || victoryShown)
             return;
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-        {
-            victoryShown = true;
-            int winnerActorNumber = -1;
-
-            foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-            {
-                winnerActorNumber = player.ActorNumber;
-                break;
-            }
-
-            photonView.RPC(
-                nameof(ShowVictoryRPC),
-                RpcTarget.AllBuffered,
-                winnerActorNumber
-            );
-        }
+        CheckForWinners();
     }
 
     private void UpdatePlayerCount()
@@ -200,6 +184,7 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ShowVictoryRPC(int winnerActorNumber)
     {
+
         victoryShown = true;
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == winnerActorNumber)
@@ -212,18 +197,24 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private IEnumerator ReturnToMenuAfterWin()
     {
+        if (!localPlayerIsDead)
+        {
+            yield return new WaitUntil(LocalPlayerDied);
+        }
         yield return new WaitForSeconds(victoryDelay);
 
         PhotonNetwork.LeaveRoom();
     }
 
     [System.Obsolete]
-    public void LocalPlayerDied()
+    public bool LocalPlayerDied()
     {
-        photonView.RPC(nameof(UpdateDeadPlayersRPC), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
         if (FindObjectOfType<UI>() != null)
             FindObjectOfType<UI>().OnPlayerDied();
+
+        photonView.RPC(nameof(UpdateDeadPlayersRPC), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
         localPlayerIsDead = true;
+        return localPlayerIsDead;
     }
 
     [PunRPC]
@@ -283,7 +274,7 @@ public class GameController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom)
             PhotonNetwork.LeaveRoom();
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 
     public override void OnLeftRoom()

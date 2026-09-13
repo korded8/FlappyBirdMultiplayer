@@ -239,7 +239,7 @@ public class BirdAppearanceUI : MonoBehaviour
 
     public void SelectPreset(int index)
     {
-        if (index < 0 || index == currentPreset) return;
+        if (index < 0) return;
 
         ShowWarning(null);
 

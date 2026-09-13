@@ -48,9 +48,5 @@ public class Cloud : MonoBehaviourPun, IPunInstantiateMagicCallback
             Time.deltaTime * 
             gameController.moveSpeed) / 
             (float)distance;
-        if (transform.position.x <= -15f)
-        {
-            Destroy(gameObject);
-        }
     }
 }
