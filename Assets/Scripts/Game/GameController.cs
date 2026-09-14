@@ -18,7 +18,7 @@ public class GameController : MonoBehaviourPunCallbacks
     private float victoryDelay = 1f;
     private bool gameStarted = false;
     private bool victoryShown = false;
-    public bool isLeaving = false;
+    public bool isLeavingRoom = false;
     private double gameStartTime = 0;
     public float maxSpeed = 2f;
     public float moveSpeed = 2f;
@@ -32,6 +32,7 @@ public class GameController : MonoBehaviourPunCallbacks
     private readonly int MAX_CLOUDS = 5;
     private List<GameObject> cloudsPool = new();
 
+    private readonly HashSet<Photon.Realtime.Player> ghostPlayersHashSet = new();
     private readonly HashSet<Photon.Realtime.Player> deadPlayersHashSet = new();
     public bool localPlayerIsDead = false;
 
@@ -73,7 +74,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (!PhotonNetwork.IsMasterClient || !gameStarted || isLeaving || !PhotonNetwork.InRoom) return;
+        if (!PhotonNetwork.IsMasterClient || !gameStarted || isLeavingRoom || !PhotonNetwork.InRoom) return;
 
         CloudLogic();
 
@@ -110,7 +111,7 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SetCountdownRPC(int secondsUntilStart)
     {
-        if (!PhotonNetwork.InRoom || isLeaving) return;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         countdownText.gameObject.SetActive(true);
         if (secondsUntilStart > 0)
@@ -136,7 +137,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
         while (secondsUntilStart >= 0)
         {
-            if (!PhotonNetwork.InRoom || isLeaving) yield break;
+            if (!PhotonNetwork.InRoom || isLeavingRoom) yield break;
 
             photonView.RPC(nameof(SetCountdownRPC), RpcTarget.All, secondsUntilStart);
             secondsUntilStart--;
@@ -148,7 +149,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
         countdownText.gameObject.SetActive(false);
 
-        if (!PhotonNetwork.InRoom || isLeaving) yield break;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) yield break;
 
         photonView.RPC(nameof(OnGameStartedRPC), RpcTarget.All);
         yield return null;
@@ -157,7 +158,7 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void OnGameStartedRPC()
     {
-        if (!PhotonNetwork.InRoom || isLeaving) return;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         EnablePhysics();
         countdownText.enabled = false;
@@ -179,16 +180,15 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         UpdatePlayerCount();
 
-        if (!PhotonNetwork.IsMasterClient || !gameStarted || victoryShown || isLeaving)
+        if (!PhotonNetwork.IsMasterClient || !gameStarted || victoryShown || isLeavingRoom)
             return;
 
-        isLeaving = true;
         CheckForWinners();
     }
 
     private void UpdatePlayerCount()
     {
-        if (!PhotonNetwork.InRoom || isLeaving) return;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         playersText.text = $"Gracze: {PhotonNetwork.CurrentRoom.PlayerCount}/{PhotonNetwork.CurrentRoom.MaxPlayers}";
     }
@@ -196,7 +196,7 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ShowVictoryRPC(int winnerActorNumber)
     {
-        if (!PhotonNetwork.InRoom || isLeaving) return;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         victoryShown = true;
 
@@ -212,13 +212,14 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(victoryDelay);
 
+        isLeavingRoom = true;
         PhotonNetwork.LeaveRoom();
     }
 
     [System.Obsolete]
     public void LocalPlayerDied()
     {
-        if (!PhotonNetwork.InRoom || isLeaving) return;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         if (FindObjectOfType<UI>() != null)
             FindObjectOfType<UI>().OnPlayerDied();
@@ -230,11 +231,13 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void UpdateDeadPlayersRPC(int actorNumber)
     {
-        if (!PhotonNetwork.InRoom || isLeaving) return;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         Photon.Realtime.Player player = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
-        if (player != null)
-            deadPlayersHashSet.Add(player);
+        if (player == null) return;
+
+        deadPlayersHashSet.Add(player);
+        ghostPlayersHashSet.Add(player);
 
         CheckForWinners();
     }
@@ -242,7 +245,7 @@ public class GameController : MonoBehaviourPunCallbacks
     private void CheckForWinners()
     {
         if (victoryShown) return;
-        if (!PhotonNetwork.InRoom || isLeaving) return;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         Photon.Realtime.Player winner = null;
         foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
@@ -253,8 +256,6 @@ public class GameController : MonoBehaviourPunCallbacks
                 winner = player;
             }
         }
-
-        if (!PhotonNetwork.InRoom || isLeaving) return;
 
         photonView.RPC(
             nameof(ShowVictoryRPC),
@@ -267,11 +268,11 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        Photon.Realtime.Player player = deadPlayersHashSet.FirstOrDefault();
+        Photon.Realtime.Player player = ghostPlayersHashSet.FirstOrDefault();
 
         if (player != null)
         {
-            deadPlayersHashSet.Remove(player);
+            ghostPlayersHashSet.Remove(player);
             obstacle.AssignPlayer(player);
         }
         else
@@ -281,15 +282,20 @@ public class GameController : MonoBehaviourPunCallbacks
     public void GhostObstacleDestroyed(Photon.Realtime.Player player)
     {
         if (player == null) return;
-        if (!PhotonNetwork.InRoom || isLeaving) return;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         photonView.RPC(nameof(UpdateDeadPlayersRPC), RpcTarget.MasterClient, player.ActorNumber);
     }
 
     public void LeaveRoom()
     {
-        if (PhotonNetwork.InRoom)
-            PhotonNetwork.LeaveRoom();
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
+
+        var player = PhotonNetwork.LocalPlayer;
+        PhotonNetwork.DestroyPlayerObjects(player);
+
+        isLeavingRoom = true;
+        PhotonNetwork.LeaveRoom();
     }
 
     public override void OnLeftRoom()
@@ -299,7 +305,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void CloudLogic()
     {
-        if (!PhotonNetwork.InRoom || isLeaving) return;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         if (cloudTimer < cloudCooldown)
             cloudTimer += Time.deltaTime;
@@ -330,7 +336,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void SpawnClouds()
     {
-        if (!PhotonNetwork.InRoom || isLeaving) return;
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         float cloudSpawnY = Random.Range(3, 5);
         cloudSpawnY += Random.Range(0f, 1f) > 0.5f ? 0.5f : 0f;

@@ -14,7 +14,6 @@ public class UI : MonoBehaviour
     private bool isAlive = true;
     private bool timerStarted = false;
     private bool isEscapePanelActive = false;
-    private bool isLeavingGame = false;
     private float scoreTimer = 0;
     private int score;
 
@@ -27,7 +26,7 @@ public class UI : MonoBehaviour
     {
         if (!isAlive
                 || !gc.IsGameStarted()
-                || isLeavingGame
+                || gc.isLeavingRoom
                 || (PhotonNetwork.PlayerList.Length == 1 && isEscapePanelActive))
             return;
 
@@ -101,7 +100,6 @@ public class UI : MonoBehaviour
     public void LeaveGame()
     {
         UpdateHighscore();
-        isLeavingGame = true;
         ToggleEscapePanel();
         gc.LeaveRoom();
     }

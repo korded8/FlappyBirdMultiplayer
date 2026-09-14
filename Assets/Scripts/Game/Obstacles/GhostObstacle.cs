@@ -18,7 +18,7 @@ public class GhostObstacle : MonoBehaviourPun
 
     public void AssignPlayer(Photon.Realtime.Player p)
     {
-        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving)
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeavingRoom)
         {
             player = p;
             obstacleUsed = true;
@@ -38,7 +38,7 @@ public class GhostObstacle : MonoBehaviourPun
     [PunRPC]
     void SyncObstacle(int actorNumber, Vector3 dir)
     {
-        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving) return;
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeavingRoom) return;
 
         player = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
         direction = dir;
@@ -90,7 +90,7 @@ public class GhostObstacle : MonoBehaviourPun
 
     private void TryMove()
     {
-        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving) return;
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeavingRoom) return;
 
         int myID = PhotonNetwork.LocalPlayer.ActorNumber;
 
@@ -103,7 +103,7 @@ public class GhostObstacle : MonoBehaviourPun
     [PunRPC]
     private void MoveObstacle()
     {
-        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving) return;
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeavingRoom) return;
 
         StartCoroutine(MoveObstacleCoroutine());
     }

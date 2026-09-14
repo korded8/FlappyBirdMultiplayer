@@ -43,7 +43,7 @@ public class FadingObstacle : MonoBehaviourPun
 
     private void UpdateFade()
     {
-        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving) return;
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeavingRoom) return;
 
         float delta = fadeSpeed * Time.deltaTime;
 
@@ -91,7 +91,7 @@ public class FadingObstacle : MonoBehaviourPun
     [PunRPC]
     void SyncAlpha(float alpha)
     {
-        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeaving) return;
+        if (!PhotonNetwork.InRoom || gameController == null || gameController.isLeavingRoom) return;
 
         ApplyAlpha(alpha);
     }
