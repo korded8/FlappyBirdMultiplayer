@@ -29,7 +29,9 @@
 - [ ] Zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody ?
 - [ ] zmienić system wybierania kolorów ?
-- [ ] dodać ustawienia
+- [ ] ustawienia
+- [ ] credits
+- [ ] link do repo
 
 ## Audio
 - [x] Lobby music
