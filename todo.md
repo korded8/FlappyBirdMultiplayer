@@ -65,6 +65,7 @@
 - [ ] Donacje
 
 # Known bugs
+    DON'T TEST EDITOR + BUILD (build + build only)
 - [x] RPC zwycięstwa
 - [x] Countdown przed rozpoczęciem gry
 - [x] Dołączenie do gry po starcie
@@ -74,8 +75,11 @@
 - [x] Opuszczanie gry
 - [x] nie działają polskie znaki czcionki
 - [ ] pozycja segmentów może się różnić w zależności od momentu wywołania funkcji update w SegmentController.cs przez klientów
-- [ ] nie wyświetla się poprany skin po powrocie do lobby
-- [ ] zmiana kolory nie aktualizuje się poprawnie
+- [x] nie wyświetla się poprawny skin po powrocie do lobby
+- [x] zmiana koloru nie aktualizuje się poprawnie
+- [x] usuwanie chmur
+- [x] deadPlayersHashSet in GameController.cs
+- [ ] player spawning
 
 # Random ideas
 - [ ] Jajko
