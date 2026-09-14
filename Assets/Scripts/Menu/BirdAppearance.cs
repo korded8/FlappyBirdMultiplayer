@@ -15,7 +15,6 @@ public class BirdAppearance : MonoBehaviourPunCallbacks
 
     private Animator birdAnimator;
     private SpriteRenderer spriteRenderer;
-    private RuntimeAnimatorController animatorController;
 
     private void Awake()
     {

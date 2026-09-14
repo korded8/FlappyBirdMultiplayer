@@ -47,7 +47,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             return;
         }
 
-        int index = (PhotonNetwork.LocalPlayer.ActorNumber - 1) % spawnPoints.Length;
+        int index = (PhotonNetwork.CurrentRoom.PlayerCount - 1) % spawnPoints.Length;
         Vector3 spawnPos = spawnPoints[index].position;
         PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
     }
