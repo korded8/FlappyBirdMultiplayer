@@ -62,9 +62,9 @@
 - [ ] jakoś wyróżnić gracza
 
 ## Misc
-- [ ] Język polski, angielski
-- [ ] Matchmaking
-- [ ] Donacje
+- [ ] Język polski, angielski ?
+- [ ] Matchmaking ?
+- [ ] Donacje ?
 
 # Known bugs
     DO NOT TEST EDITOR + BUILD (build + build only)
