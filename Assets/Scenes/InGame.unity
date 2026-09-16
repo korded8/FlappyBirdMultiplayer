@@ -1221,6 +1221,7 @@ MonoBehaviour:
   escapePanel: {fileID: 121047288}
   sc: {fileID: 2077214055}
   gc: {fileID: 2077214052}
+  ps: {fileID: 2077214056}
 --- !u!1 &867300991
 GameObject:
   m_ObjectHideFlags: 0
@@ -2369,69 +2370,6 @@ Transform:
   - {fileID: 878134937}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1842776055
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1842776057}
-  - component: {fileID: 1842776058}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1842776057
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1842776055}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1842776058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1842776055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6081e6a41cebe364286ef395f3d3848c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
-  playerPrefab: {fileID: 3332251408567357732, guid: 73bf9f487544fc144b69302ea9e02025, type: 3}
-  spawnPoints:
-  - {fileID: 1425956015}
-  - {fileID: 1890661744}
-  - {fileID: 895522711}
-  - {fileID: 1860947260}
-  - {fileID: 1850299484}
-  - {fileID: 2102859878}
-  - {fileID: 573521912}
-  - {fileID: 382918160}
-  - {fileID: 1266355915}
-  - {fileID: 2001017940}
-  - {fileID: 2140760585}
-  - {fileID: 1029440792}
-  - {fileID: 867300992}
-  - {fileID: 1752962326}
-  - {fileID: 263829468}
-  - {fileID: 878134937}
-  data: {fileID: 11400000, guid: ca9831060571d9d4dade4d7166e059a5, type: 2}
 --- !u!1 &1850299483
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,6 +2776,7 @@ GameObject:
   - component: {fileID: 2077214052}
   - component: {fileID: 2077214054}
   - component: {fileID: 2077214055}
+  - component: {fileID: 2077214056}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2862,7 +2801,7 @@ MonoBehaviour:
   victoryText: {fileID: 1116163548}
   lossText: {fileID: 1421817745}
   countdownText: {fileID: 317732586}
-  victoryDelay: 3
+  isLeavingRoom: 0
   maxSpeed: 2
   moveSpeed: 2
   acceleration: 0.07
@@ -2918,6 +2857,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SegmentSpawner
   gameController: {fileID: 2077214052}
+--- !u!114 &2077214056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077214051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6081e6a41cebe364286ef395f3d3848c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
+  playerPrefab: {fileID: 3332251408567357732, guid: 73bf9f487544fc144b69302ea9e02025, type: 3}
+  spawnPoints:
+  - {fileID: 1425956015}
+  - {fileID: 1890661744}
+  - {fileID: 895522711}
+  - {fileID: 1860947260}
+  - {fileID: 1850299484}
+  - {fileID: 2102859878}
+  - {fileID: 573521912}
+  - {fileID: 382918160}
+  - {fileID: 1266355915}
+  - {fileID: 2001017940}
+  - {fileID: 2140760585}
+  - {fileID: 1029440792}
+  - {fileID: 867300992}
+  - {fileID: 1752962326}
+  - {fileID: 263829468}
+  - {fileID: 878134937}
+  data: {fileID: 11400000, guid: ca9831060571d9d4dade4d7166e059a5, type: 2}
 --- !u!1 &2102859877
 GameObject:
   m_ObjectHideFlags: 0
@@ -2986,7 +2956,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
-  - {fileID: 1842776057}
   - {fileID: 1804992526}
   - {fileID: 761804396}
   - {fileID: 302367771}

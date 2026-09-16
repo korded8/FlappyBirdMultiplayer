@@ -1,5 +1,9 @@
-using UnityEngine;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
+using System;
+using System.Collections;
+using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
@@ -8,6 +12,9 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     [SerializeField] private BirdAppearanceData data;
     private SpriteRenderer playerRenderer;
     private BirdAppearance playerAppearance;
+
+    private bool[] isOccupied = new bool[16];
+    private readonly static byte eventCode = 0;
 
     private void Start()
     {
@@ -23,13 +30,8 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
             if (playerAppearance.maskTexture != null)
                 playerAppearance.materialInstance.SetTexture("_MaskTex", playerAppearance.maskTexture);
-
-            SpawnPlayer();
         }
-    }
 
-    public override void OnJoinedRoom()
-    {
         SpawnPlayer();
     }
 
@@ -38,17 +40,56 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         if (playerPrefab == null)
         {
             Debug.LogError("Brak prefab gracza w PlayerSpawner!");
-            return;
         }
 
         if (spawnPoints == null || spawnPoints.Length == 0)
         {
             Debug.LogError("Brak spawn pointów w PlayerSpawner!");
-            return;
         }
 
-        int index = (PhotonNetwork.CurrentRoom.PlayerCount - 1) % spawnPoints.Length;
-        Vector3 spawnPos = spawnPoints[index].position;
+        photonView.RPC(nameof(OccupySpawnPoints), RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    private void OccupySpawnPoints(PhotonMessageInfo info)
+    {
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            if (isOccupied[i])
+                continue;
+            else
+            {
+                isOccupied[i] = true;
+                photonView.RPC(nameof(SetSpawn), info.Sender, i);
+                return;
+            }
+        }
+    }
+
+    [PunRPC]
+    private void ReleaseSpawnPoints(int i)
+    {
+        isOccupied[i] = false;
+    }
+
+    [PunRPC]
+    private void SetSpawn(int i)
+    {
+        isOccupied[i] = true;
+        Vector3 spawnPos = spawnPoints[i].position;
         PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
+    }
+
+    public void PlayerLeftRoom()
+    {
+        int index = -1;
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            if (isOccupied[i])
+            {
+                index = i;
+            }
+        }
+        photonView.RPC(nameof(ReleaseSpawnPoints), RpcTarget.MasterClient, index);
     }
 }

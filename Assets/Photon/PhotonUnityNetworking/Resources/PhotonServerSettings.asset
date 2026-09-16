@@ -56,6 +56,11 @@ MonoBehaviour:
   - OnGameStartedRPC
   - UpdateDeadPlayersRPC
   - UpdateSpeed
+  - ManageSpawnPoints
+  - SetIndex
+  - SetSpawn
+  - OccupySpawnPoints
+  - ReleaseSpawnPoints
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

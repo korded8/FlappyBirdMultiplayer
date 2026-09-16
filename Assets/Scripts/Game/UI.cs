@@ -10,6 +10,7 @@ public class UI : MonoBehaviour
 
     public SegmentController sc;
     public GameController gc;
+    public PlayerSpawner ps;
 
     private bool isAlive = true;
     private bool timerStarted = false;
@@ -101,6 +102,7 @@ public class UI : MonoBehaviour
     {
         UpdateHighscore();
         ToggleEscapePanel();
+        ps.PlayerLeftRoom();
         gc.LeaveRoom();
     }
 }
