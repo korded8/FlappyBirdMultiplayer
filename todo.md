@@ -81,7 +81,8 @@
 - [x] zmiana koloru nie aktualizuje się poprawnie
 - [x] usuwanie chmur
 - [x] deadPlayersHashSet in GameController.cs
-- [ ] player spawning
+- [x] player spawning
+- [ ] GameMaster leaving the room
 
 # Random ideas
 - [ ] Jajko
