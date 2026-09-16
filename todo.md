@@ -67,7 +67,7 @@
 - [ ] Donacje
 
 # Known bugs
-    DON'T TEST EDITOR + BUILD (build + build only)
+    DO NOT TEST EDITOR + BUILD (build + build only)
 - [x] RPC zwycięstwa
 - [x] Countdown przed rozpoczęciem gry
 - [x] Dołączenie do gry po starcie
