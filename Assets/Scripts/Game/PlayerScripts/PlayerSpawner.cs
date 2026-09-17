@@ -1,8 +1,5 @@
-using ExitGames.Client.Photon;
 using Photon.Pun;
-using Photon.Realtime;
-using System;
-using System.Collections;
+using RematchManaging;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
@@ -14,7 +11,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     private BirdAppearance playerAppearance;
 
     private bool[] isOccupied = new bool[16];
-    private readonly static byte eventCode = 0;
 
     private void Start()
     {
@@ -78,6 +74,12 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         isOccupied[i] = true;
         Vector3 spawnPos = spawnPoints[i].position;
         PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
+
+        if (Rematch.PreferMaster)
+            PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+
+        if (Rematch.PendingRematch)
+            Rematch.Clear();
     }
 
     public void PlayerLeftRoom()

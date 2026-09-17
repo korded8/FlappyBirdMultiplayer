@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using RematchManaging;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
     [Header("UI")]
     [SerializeField] private GameObject startButton;
+    [SerializeField] private GameObject playAgainButton;
     [SerializeField] private TMP_Text playersText;
     [SerializeField] private TMP_Text victoryText;
     [SerializeField] private TMP_Text lossText;
     [SerializeField] private TMP_Text countdownText;
 
-    private float victoryDelay = 1f;
+    private float victoryDelay = 2f;
     private bool gameStarted = false;
     private bool victoryShown = false;
     public bool isLeavingRoom = false;
@@ -57,6 +58,7 @@ public class GameController : MonoBehaviourPunCallbacks
         victoryText.gameObject.SetActive(false);
         lossText.gameObject.SetActive(false);
         countdownText.gameObject.SetActive(false);
+        playAgainButton.gameObject.SetActive(false);
 
         currentBackgroundColor = new Color(0.1882353f, 0.4901961f, 0.9333334f);
         Camera.main.backgroundColor = currentBackgroundColor;
@@ -199,17 +201,20 @@ public class GameController : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         victoryShown = true;
+        playAgainButton.SetActive(true);
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == winnerActorNumber)
             victoryText.gameObject.SetActive(true);
         else
             lossText.gameObject.SetActive(true);
 
-        StartCoroutine(ReturnToMenuAfterWin());
+        //StartCoroutine(ReturnToMenuAfterWin());
     }
 
     private IEnumerator ReturnToMenuAfterWin()
     {
+        if (!PhotonNetwork.InRoom || isLeavingRoom) yield return null;
+
         yield return new WaitForSeconds(victoryDelay);
 
         isLeavingRoom = true;
@@ -301,6 +306,20 @@ public class GameController : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+    }
+
+    public void PlayAgain()
+    {
+        if (!PhotonNetwork.InRoom || isLeavingRoom) return;
+
+        Rematch.PendingRematch = true;
+        string roomName = PhotonNetwork.CurrentRoom.GetHashCode().ToString() ?? "ROOM";
+        Rematch.RoomCode = roomName;
+
+        if (PhotonNetwork.IsMasterClient)
+            Rematch.PreferMaster = true;
+
+        LeaveRoom();
     }
 
     private void CloudLogic()

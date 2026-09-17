@@ -2,6 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using RematchManaging;
 
 public class LobbyMenu : MonoBehaviourPunCallbacks
 {
@@ -15,6 +16,8 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
     public BirdAppearanceData data;
 
     private bool joinedLobby = false;
+    private int rematchRetryAttempts = 0;
+    private const int MAX_REMATCH_RETRIES = 3;
 
     private void Start()
     {
@@ -37,6 +40,21 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
         createRoomButton.SetActive(true);
         joinRoomButton.SetActive(true);
         statusText.text = "Połączono z lobby";
+
+        if (Rematch.PendingRematch)
+        {
+            rematchRetryAttempts = 0;
+
+            string code = Rematch.RoomCode;
+            RoomOptions options = new()
+            {
+                MaxPlayers = 16,
+                IsOpen = true,
+                IsVisible = false
+            };
+            statusText.text = "Tworzenie / dołączanie do pokoju...";
+            PhotonNetwork.JoinOrCreateRoom(code, options, TypedLobby.Default);
+        }
     }
 
     public void OnRoomCodeChanged(string value)
@@ -123,16 +141,46 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        rematchRetryAttempts = 0;
+
         PhotonNetwork.LoadLevel(2);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        statusText.text = "Nie można dołączyć do pokoju: " + message;
+        RetryRoomCreation();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        statusText.text = "Nie można stworzyć pokoju: " + message;
+        RetryRoomCreation();
+    }
+
+    private void RetryRoomCreation()
+    {
+        if (Rematch.PendingRematch)
+        {
+            rematchRetryAttempts++;
+
+            if (rematchRetryAttempts <= MAX_REMATCH_RETRIES)
+            {
+                RoomOptions options = new()
+                {
+                    MaxPlayers = 16,
+                    IsOpen = true,
+                    IsVisible = false
+                };
+
+                statusText.text = $"Stary pokój był zamknięty — tworzenie nowego pokoju ({rematchRetryAttempts}/{MAX_REMATCH_RETRIES})...";
+                PhotonNetwork.CreateRoom(Rematch.RoomCode, options);
+                return;
+            }
+            else
+            {
+                statusText.text = "Nie udało się automatycznie utworzyć nowego pokoju dla rematchu.";
+            }
+        }
+
+        statusText.text = "Nie można dołączyć do pokoju.";
     }
 }

@@ -105,4 +105,9 @@ public class UI : MonoBehaviour
         ps.PlayerLeftRoom();
         gc.LeaveRoom();
     }
+
+    public void PlayAgain()
+    {
+        gc.PlayAgain();
+    }
 }
