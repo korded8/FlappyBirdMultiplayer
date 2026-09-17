@@ -10,28 +10,32 @@ public class GameController : MonoBehaviourPunCallbacks
 {
     [Header("UI")]
     [SerializeField] private GameObject startButton;
-    [SerializeField] private GameObject playAgainButton;
+    [SerializeField] private GameObject rematchPanel;
+    [SerializeField] private GameObject confirmButton;
     [SerializeField] private TMP_Text playersText;
     [SerializeField] private TMP_Text victoryText;
     [SerializeField] private TMP_Text lossText;
     [SerializeField] private TMP_Text countdownText;
+    [SerializeField] private TMP_Text rematchPlayersText;
 
-    private float victoryDelay = 2f;
     private bool gameStarted = false;
     private bool victoryShown = false;
+    private bool wantsRematch = false;
     public bool isLeavingRoom = false;
     private double gameStartTime = 0;
+    private float victoryDelay = 2f;
     public float maxSpeed = 2f;
     public float moveSpeed = 2f;
     public float acceleration = 0.07f;
-    private Color currentBackgroundColor;
-    private int transitionTime = 3;
     private float cloudSpawnX = 15f;
     private float cloudCleanupX = -15f;
     private float cloudCooldown = 5f;
     private float cloudTimer = 5f;
-    private readonly int MAX_CLOUDS = 5;
+    private Color currentBackgroundColor;
     private List<GameObject> cloudsPool = new();
+    private readonly int MAX_CLOUDS = 5;
+    private int transitionTime = 3;
+    private int rematchPlayers = 0;
 
     private readonly HashSet<Photon.Realtime.Player> ghostPlayersHashSet = new();
     private readonly HashSet<Photon.Realtime.Player> deadPlayersHashSet = new();
@@ -53,12 +57,11 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.SerializationRate = 15;
-
         victoryText.gameObject.SetActive(false);
         lossText.gameObject.SetActive(false);
         countdownText.gameObject.SetActive(false);
-        playAgainButton.gameObject.SetActive(false);
+        rematchPanel.gameObject.SetActive(false);
+        confirmButton.gameObject.SetActive(false);
 
         currentBackgroundColor = new Color(0.1882353f, 0.4901961f, 0.9333334f);
         Camera.main.backgroundColor = currentBackgroundColor;
@@ -147,10 +150,6 @@ public class GameController : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(1);
         }
 
-        gameStarted = true;
-
-        countdownText.gameObject.SetActive(false);
-
         if (!PhotonNetwork.InRoom || isLeavingRoom) yield break;
 
         photonView.RPC(nameof(OnGameStartedRPC), RpcTarget.All);
@@ -162,15 +161,8 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
-        EnablePhysics();
+        gameStarted = true;
         countdownText.enabled = false;
-    }
-
-    private void EnablePhysics()
-    {
-        Rigidbody2D[] bodies = FindObjectsByType<Rigidbody2D>();
-        foreach (var rb in bodies)
-            rb.simulated = true;
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
@@ -201,7 +193,13 @@ public class GameController : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
         victoryShown = true;
-        playAgainButton.SetActive(true);
+        rematchPanel.SetActive(true);
+
+        if (PhotonNetwork.IsMasterClient)
+        { 
+            confirmButton.SetActive(true);
+            photonView.RPC(nameof(UpdateRematchPlayersText), RpcTarget.All, rematchPlayers);
+        }
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == winnerActorNumber)
             victoryText.gameObject.SetActive(true);
@@ -308,18 +306,44 @@ public class GameController : MonoBehaviourPunCallbacks
         UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 
-    public void PlayAgain()
+    public void ManageRematch(bool playAgain)
     {
         if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
-        Rematch.PendingRematch = true;
-        string roomName = PhotonNetwork.CurrentRoom.GetHashCode().ToString() ?? "ROOM";
+        if (!wantsRematch || (wantsRematch && !playAgain))
+            photonView.RPC(nameof(ChangeRematchPlayers), RpcTarget.MasterClient, playAgain);
+
+        wantsRematch = true;
+        Rematch.PendingRematch = playAgain;
+
+        if (!playAgain) LeaveRoom();
+    }
+
+    public void ConfirmRematch()
+    {
+        photonView.RPC(nameof(ConfirmRematchRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void ConfirmRematchRPC()
+    {
+        string roomName = PhotonNetwork.CurrentRoom.Name;
         Rematch.RoomCode = roomName;
-
-        if (PhotonNetwork.IsMasterClient)
-            Rematch.PreferMaster = true;
-
         LeaveRoom();
+    }
+
+    [PunRPC]
+    private void ChangeRematchPlayers(bool add)
+    {
+        if (add) rematchPlayers += 1;
+        else rematchPlayers -= 1;
+        photonView.RPC(nameof(UpdateRematchPlayersText), RpcTarget.All, rematchPlayers);
+    }
+
+    [PunRPC]
+    private void UpdateRematchPlayersText(int number)
+    {
+        rematchPlayersText.text = $"Gracze chêtni do rewan¿u: \n {number} / {PhotonNetwork.CurrentRoom.MaxPlayers}";
     }
 
     private void CloudLogic()

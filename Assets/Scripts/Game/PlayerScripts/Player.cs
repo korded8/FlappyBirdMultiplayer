@@ -1,14 +1,16 @@
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviourPun
 {
-    [Header("Settings")]
-    [SerializeField] private float jumpForce = 6f;
+    [SerializeField] private PhotonTransformViewClassic photonTransformView;
 
     private Rigidbody2D rb;
+    private GameController gc;
+    private float jumpForce = 4f;
     private readonly float maxRotation = 45f;
 
     [System.Obsolete]
@@ -16,7 +18,7 @@ public class Player : MonoBehaviourPun
     {
         rb = GetComponent<Rigidbody2D>();
 
-        GameController gc = FindObjectOfType<GameController>();
+        gc = FindObjectOfType<GameController>();
         if (gc != null && !gc.IsGameStarted())
         {
             rb.simulated = false;
@@ -28,18 +30,11 @@ public class Player : MonoBehaviourPun
         }
     }
 
-    private void Start()
-    {
-        if (!photonView.IsMine)
-        {
-            rb.bodyType = RigidbodyType2D.Kinematic;
-        }
-    }
-
     private void Update()
     {
         if (!photonView.IsMine) return;
 
+        if (gc.IsGameStarted()) rb.simulated = true;
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             Jump();
@@ -53,11 +48,10 @@ public class Player : MonoBehaviourPun
         float targetZ = Mathf.Clamp(rb.linearVelocity.y * 15f, -maxRotation, maxRotation);
         float smoothZ = Mathf.LerpAngle(rb.rotation, targetZ, Time.fixedDeltaTime * 10f);
         rb.MoveRotation(smoothZ);
-    }
-    public void EnablePhysics()
-    {
-        if (rb != null)
-            rb.simulated = true;
+
+        //photonTransformView.SetSynchronizedValues(
+        //    rb.linearVelocity,
+        //    rb.angularVelocity);
     }
 
     private void Jump()

@@ -27,6 +27,9 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
         statusText.text = "Łączenie z Photon...";
         if (!PhotonNetwork.IsConnected)
             PhotonNetwork.ConnectUsingSettings();
+
+        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.SendRate = 30;
     }
 
     public override void OnConnectedToMaster()

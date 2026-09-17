@@ -75,9 +75,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         Vector3 spawnPos = spawnPoints[i].position;
         PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
 
-        if (Rematch.PreferMaster)
-            PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
-
         if (Rematch.PendingRematch)
             Rematch.Clear();
     }

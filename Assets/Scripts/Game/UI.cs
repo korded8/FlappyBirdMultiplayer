@@ -106,8 +106,13 @@ public class UI : MonoBehaviour
         gc.LeaveRoom();
     }
 
-    public void PlayAgain()
+    public void RematchButton(bool playAgain)
     {
-        gc.PlayAgain();
+        gc.ManageRematch(playAgain);
+    }
+
+    public void ConfirmButton()
+    {
+        gc.ConfirmRematch();
     }
 }

@@ -61,6 +61,10 @@ MonoBehaviour:
   - SetSpawn
   - OccupySpawnPoints
   - ReleaseSpawnPoints
+  - IncrementRematchPlayers
+  - ChangeRematchPlayers
+  - UpdateRematchPlayersText
+  - ConfirmRematchRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
