@@ -20,7 +20,7 @@
 - [x] nerf dla ghost obstacle ?
 - [ ] wiatr ?
 - [ ] więcej segmentów
-- [ ] play again button
+- [x] rematch system
 
 ## UI
 - [x] Ogarnąć kolory ptaka
@@ -29,6 +29,7 @@
 - [ ] Zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody ?
 - [ ] zmienić system wybierania kolorów ?
+- [ ] capslock dla roomCode
 - [ ] ustawienia
 - [ ] credits
 - [ ] link do repo
