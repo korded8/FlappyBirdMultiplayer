@@ -82,7 +82,7 @@
 - [x] usuwanie chmur
 - [x] deadPlayersHashSet in GameController.cs
 - [x] player spawning
-- [ ] GameMaster leaving the room
+- [ ] MasterClient leaving the room
 
 # Random ideas
 - [ ] Jajko
