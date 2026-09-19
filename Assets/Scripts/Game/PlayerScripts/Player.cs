@@ -34,11 +34,6 @@ public class Player : MonoBehaviourPun
         float smoothZ = Mathf.LerpAngle(rb.rotation, targetZ, Time.fixedDeltaTime * 10f);
         rb.MoveRotation(smoothZ);
     }
-    public void EnablePhysics()
-    {
-        if (rb != null)
-            rb.simulated = true;
-    }
 
     [PunRPC]
     private void Jump()
