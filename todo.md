@@ -29,10 +29,10 @@
 - [ ] Zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody ?
 - [ ] zmienić system wybierania kolorów ?
-- [ ] capslock dla roomCode
+- [x] capslock dla roomCode
 - [ ] ustawienia
 - [ ] credits
-- [ ] link do repo
+- [x] link do repo
 
 ## Audio
 - [x] Lobby music
