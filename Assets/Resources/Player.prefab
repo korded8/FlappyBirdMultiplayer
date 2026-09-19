@@ -138,12 +138,12 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 2
-    InterpolateOption: 2
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 20
+    InterpolateLerpSpeed: 30
     ExtrapolateOption: 0
-    ExtrapolateSpeed: 30
+    ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
   m_RotationModel:
@@ -179,9 +179,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!61 &5568285735123365366
 BoxCollider2D:
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0d68cfe02f37c43b6782257deb3a08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  photonTransformView: {fileID: 6479749945963689604}
+  jumpForce: 3
 --- !u!114 &5690884759419381426
 MonoBehaviour:
   m_ObjectHideFlags: 0
