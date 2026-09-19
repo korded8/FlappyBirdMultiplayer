@@ -57,10 +57,9 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
         }
     }
 
-    public void OnRoomCodeChanged(string value)
+    public void OnRoomCodeChanged()
     {
-        if (value.Length > 8)
-            roomCodeInput.text = value[..8];
+        roomCodeInput.text = roomCodeInput.text.ToUpper();
     }
 
     public void SavePlayerColors(Color body, Color wing, Color feather)
