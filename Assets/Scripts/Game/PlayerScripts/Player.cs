@@ -5,35 +5,15 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviourPun
 {
-    [Header("Settings")]
-    [SerializeField] private float jumpForce = 6f;
-
     private Rigidbody2D rb;
+    private float jumpForce = 3f;
     private readonly float maxRotation = 45f;
 
     [System.Obsolete]
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        GameController gc = FindObjectOfType<GameController>();
-        if (gc != null && !gc.IsGameStarted())
-        {
-            rb.simulated = false;
-        }
-
-        if (!photonView.IsMine)
-        {
-            rb.simulated = false;
-        }
-    }
-
-    private void Start()
-    {
-        if (!photonView.IsMine)
-        {
-            rb.bodyType = RigidbodyType2D.Kinematic;
-        }
+        rb.simulated = false;
     }
 
     private void Update()
@@ -42,7 +22,7 @@ public class Player : MonoBehaviourPun
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            Jump();
+            photonView.RPC(nameof(Jump), RpcTarget.All);
         }
     }
 
@@ -60,6 +40,7 @@ public class Player : MonoBehaviourPun
             rb.simulated = true;
     }
 
+    [PunRPC]
     private void Jump()
     {
         rb.linearVelocity = Vector2.up * jumpForce;

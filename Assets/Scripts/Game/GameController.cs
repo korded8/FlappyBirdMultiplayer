@@ -161,8 +161,16 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
+        EnablePhysics();
         gameStarted = true;
         countdownText.enabled = false;
+    }
+
+    private void EnablePhysics()
+    {
+        Rigidbody2D[] bodies = FindObjectsByType<Rigidbody2D>();
+        foreach (var rb in bodies)
+            rb.simulated = true;
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
