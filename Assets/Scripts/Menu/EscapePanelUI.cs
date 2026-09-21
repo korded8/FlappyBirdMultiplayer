@@ -29,4 +29,9 @@ public class EscapePanelUI : MonoBehaviour
     {
         SceneManager.LoadScene("Credits");
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
