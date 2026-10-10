@@ -27,6 +27,10 @@ public class BirdAppearanceUI : MonoBehaviour
     [SerializeField] private Button randomizeButton;
     [SerializeField] private float transitionDuration = 1.5f;
 
+    [Header("Groups")]
+    [SerializeField] private GameObject playGroup;
+    [SerializeField] private GameObject mainGroup;
+
     public enum BirdPart
     {
         body,
@@ -42,6 +46,8 @@ public class BirdAppearanceUI : MonoBehaviour
     private void Start()
     {
         ShowWarning(null);
+
+        playGroup.SetActive(false);
 
         redSlider.onValueChanged.AddListener(OnSliderChanged);
         greenSlider.onValueChanged.AddListener(OnSliderChanged);
@@ -264,5 +270,11 @@ public class BirdAppearanceUI : MonoBehaviour
         classicEditWarning.enabled = false;
 
         if (warning != null) warning.enabled = true;
+    }
+
+    public void TogglePlayGroup(bool show)
+    {
+        mainGroup.SetActive(!show);
+        playGroup.SetActive(show);
     }
 }
