@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class BirdAppearance : MonoBehaviourPunCallbacks
 {
     [Header("Material & Mask")]
@@ -15,16 +15,27 @@ public class BirdAppearance : MonoBehaviourPunCallbacks
 
     private Animator birdAnimator;
     private SpriteRenderer spriteRenderer;
+    private Image image;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         birdAnimator = GetComponent<Animator>();
 
+        if (spriteRenderer == null)
+        {
+            image = GetComponent<Image>();
+        }
+
         if (spriteRenderer != null && materialInstance == null)
         {
             materialInstance = new Material(spriteRenderer.sharedMaterial);
             spriteRenderer.material = materialInstance;
+        }
+        else if (spriteRenderer == null)
+        {
+            materialInstance = new Material(image.material);
+            image.material = materialInstance;
         }
 
         if (maskTexture != null)
@@ -64,7 +75,7 @@ public class BirdAppearance : MonoBehaviourPunCallbacks
 
     public void ApplyColors()
     {
-        if (spriteRenderer == null || materialInstance == null || data == null) return;
+        if ((spriteRenderer == null && image == null) || materialInstance == null || data == null) return;
 
         materialInstance.SetColor("_RedColor", data.bodyColor);
         materialInstance.SetColor("_GreenColor", data.wingColor);
@@ -74,9 +85,18 @@ public class BirdAppearance : MonoBehaviourPunCallbacks
     public void ApplySkin(int index, bool applyColors = true)
     {
         birdAnimator.runtimeAnimatorController = data.skins[index].GetComponent<Animator>().runtimeAnimatorController;
-        spriteRenderer.sprite = data.skins[index].GetComponent<SpriteRenderer>().sprite;
-        materialInstance = new Material(data.skins[index].GetComponent<SpriteRenderer>().sharedMaterial);
-        spriteRenderer.sharedMaterial = materialInstance;
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = data.skins[index].GetComponent<SpriteRenderer>().sprite;
+            materialInstance = new Material(data.skins[index].GetComponent<SpriteRenderer>().sharedMaterial);
+            spriteRenderer.sharedMaterial = materialInstance;
+        }
+        else
+        {
+            image.sprite = data.skins[index].GetComponent<SpriteRenderer>().sprite;
+            materialInstance = new Material(data.skins[index].GetComponent<SpriteRenderer>().sharedMaterial);
+            image.material = materialInstance;
+        }
 
         if (maskTexture != null)
             materialInstance.SetTexture("_MaskTex", maskTexture);

@@ -74,24 +74,24 @@ public class BirdAppearanceData : ScriptableObject
         SavePresets();
     }
 
-    public void SetColor(BirdAppearanceUI.BirdPart part, Color color)
+    public void SetColor(ColorPickerController.BirdPart part, Color color)
     {
         switch (part)
         {
-            case BirdAppearanceUI.BirdPart.body: bodyColor = color; break;
-            case BirdAppearanceUI.BirdPart.wings: wingColor = color; break;
-            case BirdAppearanceUI.BirdPart.feather: featherColor = color; break;
+            case ColorPickerController.BirdPart.body: bodyColor = color; break;
+            case ColorPickerController.BirdPart.wings: wingColor = color; break;
+            case ColorPickerController.BirdPart.feather: featherColor = color; break;
         }
 
         OnAppearanceChanged?.Invoke();
     }
-    public Color GetColor(BirdAppearanceUI.BirdPart part)
+    public Color GetColor(ColorPickerController.BirdPart part)
     {
         return part switch
         {
-            BirdAppearanceUI.BirdPart.body => bodyColor,
-            BirdAppearanceUI.BirdPart.wings => wingColor,
-            BirdAppearanceUI.BirdPart.feather => featherColor,
+            ColorPickerController.BirdPart.body => bodyColor,
+            ColorPickerController.BirdPart.wings => wingColor,
+            ColorPickerController.BirdPart.feather => featherColor,
             _ => Color.white,
         };
     }

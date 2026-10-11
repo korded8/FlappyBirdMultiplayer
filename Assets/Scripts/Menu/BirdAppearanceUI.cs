@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static ColorPickerController;
 
 public class BirdAppearanceUI : MonoBehaviour
 {
@@ -31,14 +32,8 @@ public class BirdAppearanceUI : MonoBehaviour
     [SerializeField] private GameObject playGroup;
     [SerializeField] private GameObject mainGroup;
 
-    public enum BirdPart
-    {
-        body,
-        wings,
-        feather
-    }
-    private BirdPart selectedPart = BirdPart.body;
-    private int currentPreset = 0;
+    public int currentPreset = 0;
+    public Action OnCurrentPresetChanged;
 
     [Header("Highscore text")]
     [SerializeField] private TMP_Text highscoreText;
@@ -49,10 +44,6 @@ public class BirdAppearanceUI : MonoBehaviour
 
         playGroup.SetActive(false);
 
-        redSlider.onValueChanged.AddListener(OnSliderChanged);
-        greenSlider.onValueChanged.AddListener(OnSliderChanged);
-        blueSlider.onValueChanged.AddListener(OnSliderChanged);
-
         int highscore = PlayerPrefs.GetInt("Highscore", 0);
         highscoreText.text = "Highscore: " + highscore.ToString();
 
@@ -62,7 +53,7 @@ public class BirdAppearanceUI : MonoBehaviour
         currentPreset = data.currentPresetIndex;
         birdAppearance.ApplySkin(data.currentSkinIndex);
 
-        RefreshSlidersWithoutNotify();
+        OnCurrentPresetChanged?.Invoke();
         data.OnAppearanceChanged?.Invoke();
     }
 
@@ -96,53 +87,6 @@ public class BirdAppearanceUI : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        redSlider.onValueChanged.RemoveListener(OnSliderChanged);
-        greenSlider.onValueChanged.RemoveListener(OnSliderChanged);
-        blueSlider.onValueChanged.RemoveListener(OnSliderChanged);
-    }
-
-    private void RefreshSlidersWithoutNotify()
-    {
-        Color currentColor = data.GetColor(selectedPart);
-
-        redSlider.SetValueWithoutNotify(currentColor.r);
-        greenSlider.SetValueWithoutNotify(currentColor.g);
-        blueSlider.SetValueWithoutNotify(currentColor.b);
-
-        redColorInput.SetTextWithoutNotify(Math.Round(redSlider.value * 255).ToString());
-        greenColorInput.SetTextWithoutNotify(Math.Round(greenSlider.value * 255).ToString());
-        blueColorInput.SetTextWithoutNotify(Math.Round(blueSlider.value * 255).ToString());
-    }
-
-    public void OnSliderChanged(float value)
-    {
-        Color currentColor = new(redSlider.value, greenSlider.value, blueSlider.value);
-
-        redColorInput.text = Math.Round(redSlider.value * 255).ToString();
-        greenColorInput.text = Math.Round(greenSlider.value * 255).ToString();
-        blueColorInput.text = Math.Round(blueSlider.value * 255).ToString();
-
-        data.SetColor(selectedPart, currentColor);
-        data.OnAppearanceChanged?.Invoke();
-    }
-
-    public void OnRGBInputChanged()
-    {
-        float r = ParseInputToFloat(redColorInput.text);
-        float g = ParseInputToFloat(greenColorInput.text);
-        float b = ParseInputToFloat(blueColorInput.text);
-
-        Color newColor = new(r, g, b, 1f);
-
-        data.SetColor(selectedPart, newColor);
-
-        redSlider.SetValueWithoutNotify(r);
-        greenSlider.SetValueWithoutNotify(g);
-        blueSlider.SetValueWithoutNotify(b);
-    }
-
     private float ParseInputToFloat(string text)
     {
         if (int.TryParse(text, out int result))
@@ -159,8 +103,6 @@ public class BirdAppearanceUI : MonoBehaviour
         Randomize(BirdPart.body);
         Randomize(BirdPart.wings);
         Randomize(BirdPart.feather);
-
-        RefreshSlidersWithoutNotify();
     }
 
     private Color RandomizeColor()
@@ -179,12 +121,6 @@ public class BirdAppearanceUI : MonoBehaviour
         data.SetColor(birdPart, newColor);
     }
 
-    public void SelectPart(int index)
-    {
-        selectedPart = (BirdPart)index;
-        RefreshSlidersWithoutNotify();
-    }
-
     public void SelectSkin(int index)
     {
         data.currentSkinIndex = index;
@@ -201,7 +137,7 @@ public class BirdAppearanceUI : MonoBehaviour
         currentPreset = data.presets.Count - 1;
         data.ApplyPreset(currentPreset);
 
-        RefreshSlidersWithoutNotify();
+        OnCurrentPresetChanged?.Invoke();
         data.OnAppearanceChanged?.Invoke();
     }
 
@@ -220,7 +156,6 @@ public class BirdAppearanceUI : MonoBehaviour
         data.UpdatePreset(bodyColor, wingColor, featherColor, currentPreset);
         data.ApplyPreset(currentPreset);
 
-        RefreshSlidersWithoutNotify();
         data.OnAppearanceChanged?.Invoke();
     }
 
@@ -238,8 +173,8 @@ public class BirdAppearanceUI : MonoBehaviour
 
         data.DeletePreset(currentPreset);
         currentPreset = 0;
-        
-        RefreshSlidersWithoutNotify();
+
+        OnCurrentPresetChanged?.Invoke();
         data.OnAppearanceChanged?.Invoke();
     }
 
@@ -259,8 +194,7 @@ public class BirdAppearanceUI : MonoBehaviour
         data.ApplyPreset(currentPreset);
         birdAppearance.ApplyColors();
 
-
-        RefreshSlidersWithoutNotify();
+        OnCurrentPresetChanged?.Invoke();
         data.OnAppearanceChanged?.Invoke();
     }
 
