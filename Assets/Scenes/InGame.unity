@@ -1397,7 +1397,7 @@ MonoBehaviour:
   audioSource: {fileID: 887509594}
   isClipLoop: 1
   loopedClipIndex: 1
-  gc: {fileID: 0}
+  gc: {fileID: 2077214052}
   clipList:
   - {fileID: 8300000, guid: d883f449201e3962b95eb737a775fc23, type: 3}
   - {fileID: 8300000, guid: efa89afd8fbfb866f8b967accf17a428, type: 3}

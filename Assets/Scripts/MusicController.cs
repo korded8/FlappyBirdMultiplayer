@@ -20,7 +20,11 @@ public class MusicController : MonoBehaviour
 
     void Update()
     {
-        if (gc == null) return;
+        if (gc == null) 
+            {
+                StartCoroutine(PlayMusic());
+                return;
+            }
         if (gc.IsGameStarted())
             StartCoroutine(PlayMusic());
     }
