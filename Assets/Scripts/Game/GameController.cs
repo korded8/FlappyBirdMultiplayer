@@ -95,6 +95,7 @@ public class GameController : MonoBehaviourPunCallbacks
         interval = 12f / maxSpeed;
 
         DifficultyLevelLogic();
+        photonView.RPC(nameof(SyncDifficultyLevel), RpcTarget.All, currDiffLvl);
     }
 
     IEnumerator TransitionColor(Color nextColor)
@@ -477,5 +478,11 @@ public class GameController : MonoBehaviourPunCallbacks
                     break;
             }
         }
+    }
+
+    [PunRPC]
+    private void SyncDifficultyLevel(DifficultyLevel diffLvl)
+    {
+        currDiffLvl = diffLvl;
     }
 }
