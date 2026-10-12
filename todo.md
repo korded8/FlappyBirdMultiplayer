@@ -6,23 +6,33 @@
     - [x] fake’owe
     - [x] ruszające się
     - [x] zmieniające kolor
+    - [ ] broken pipe
 - [x] Pokazywanie wyniku
 - [x] Obserwowanie gry po śmierci, powrót do menu i wyjście z gry
 - [x] Zapisywanie presetów do pliku
 - [x] Przycisk usuwania presetów
 - [x] Ekran ładowania
 - [x] Odliczanie przed startem
-- [ ] Różne kolory tła i przeszkód w zależności od typu przeszkód
-- [ ] nerf dla ghost obstacle
+- [x] przyspieszanie segmentów wraz z upływem czasu
+    - [x] maksymalna prędkość segmentów
+    - [x] zmienić naliczanie wyniku
+- [x] zmieniający się kolor tła
+- [x] nerf dla ghost obstacle ?
+- [ ] wiatr ?
+- [ ] więcej segmentów
+- [x] rematch system
 
 ## UI
 - [x] Ogarnąć kolory ptaka
 - [x] Naprawić przycisk Randomize
-- [ ] losować kolor przycisku Randomize
+- [x] zmieniający się kolor przycisku Randomize
 - [ ] Zmienić layout menu
-- [ ] W menu w tle poruszające się przeszkody
+- [ ] W menu w tle poruszające się przeszkody ?
 - [ ] zmienić system wybierania kolorów ?
-- [ ] dodać ustawienia
+- [x] capslock dla roomCode
+- [ ] ustawienia
+- [ ] credits
+- [x] link do repo
 
 ## Audio
 - [x] Lobby music
@@ -41,30 +51,39 @@
     - [x] Phoenix
     - [x] William/The Eye
     - [x] Złoty znicz
-    - [x] Amongusus
+    - [ ] Amongusus
     - [x] Animacje dla skinów
 
 - [x] Animacja lotu
 - [x] W jakiś sposób ułatwić rozpoznawanie fake obstacle
-- [ ] Grafiki przeszkód
-- [ ] Animacja duchowych przeszkód
-- [ ] zmienić tło sceny Menu
-- [ ] dodać tło sceny InGame
+- [x] Grafiki przeszkód
+- [x] Animacja duchowych przeszkód
+- [ ] zmienić tło sceny Menu ?
+- [x] chmury
+- [ ] jakoś wyróżnić gracza
 
 ## Misc
-- [ ] Język polski, angielski
-- [ ] Matchmaking
-- [ ] Donacje
+- [ ] Język polski, angielski ?
+- [ ] Matchmaking ?
+- [ ] Donacje ?
 
 # Known bugs
+    DO NOT TEST EDITOR + BUILD (build + build only)
 - [x] RPC zwycięstwa
 - [x] Countdown przed rozpoczęciem gry
 - [x] Dołączenie do gry po starcie
 - [x] Zmiana kolorów Classic
-- [ ] synchronizacja graczy
-- [ ] synchronizacja przeszkód
+- [x] synchronizacja graczy
+- [x] synchronizacja przeszkód
 - [x] Opuszczanie gry
 - [x] nie działają polskie znaki czcionki
+- [ ] pozycja segmentów może się różnić w zależności od momentu wywołania funkcji update w SegmentController.cs przez klientów
+- [x] nie wyświetla się poprawny skin po powrocie do lobby
+- [x] zmiana koloru nie aktualizuje się poprawnie
+- [x] usuwanie chmur
+- [x] deadPlayersHashSet in GameController.cs
+- [x] player spawning
+- [ ] MasterClient leaving the room
 
 # Random ideas
 - [ ] Jajko
