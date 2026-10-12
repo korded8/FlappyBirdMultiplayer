@@ -18,6 +18,9 @@ public class GameController : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text countdownText;
     [SerializeField] private TMP_Text rematchPlayersText;
 
+    [Header("Music Controller")]
+    [SerializeField] private MusicController musicController;
+
     private bool gameStarted = false;
     private bool victoryShown = false;
     private bool wantsRematch = false;

@@ -8,6 +8,7 @@ public class MusicController : MonoBehaviour
     public bool isClipLoop = false;
     [Tooltip("The number that corresponds to the AudioClip in the Clip List that should be looped.")]
     public int loopedClipIndex = -1;
+    [SerializeField] private GameController gc;
 
     public List<AudioClip> clipList = new();
     private int index = 0;
@@ -19,7 +20,9 @@ public class MusicController : MonoBehaviour
 
     void Update()
     {
-        StartCoroutine(PlayMusic());
+        if (gc == null) return;
+        if (gc.IsGameStarted())
+            StartCoroutine(PlayMusic());
     }
 
     IEnumerator PlayMusic()

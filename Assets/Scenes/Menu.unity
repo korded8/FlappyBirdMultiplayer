@@ -3941,7 +3941,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 842df5eeeea9a53d69bedb94349314b3, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
@@ -4056,6 +4056,7 @@ MonoBehaviour:
   audioSource: {fileID: 547150996}
   isClipLoop: 1
   loopedClipIndex: 1
+  gc: {fileID: 0}
   clipList:
   - {fileID: 8300000, guid: 842df5eeeea9a53d69bedb94349314b3, type: 3}
   - {fileID: 8300000, guid: 1f16c9b2683061c298eb35a81a50ae8b, type: 3}
