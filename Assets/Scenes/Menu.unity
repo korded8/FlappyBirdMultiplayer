@@ -355,7 +355,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectPart
         m_Mode: 3
@@ -528,7 +528,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: TogglePlayGroup
         m_Mode: 6
@@ -737,13 +737,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 912228996}
-  m_Father: {fileID: 443151390}
+  m_Father: {fileID: 636094629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 13.5, y: 110.57999}
-  m_SizeDelta: {x: 150, y: 30}
-  m_Pivot: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -188}
+  m_SizeDelta: {x: 240, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &63876303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -788,7 +788,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: RandomizeColors
         m_Mode: 1
@@ -1260,7 +1260,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: OnSliderChanged
         m_Mode: 4
@@ -2540,7 +2540,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -2794,7 +2794,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: OnSliderChanged
         m_Mode: 4
@@ -2967,7 +2967,6 @@ GameObject:
   - component: {fileID: 443151390}
   - component: {fileID: 443151392}
   - component: {fileID: 443151391}
-  - component: {fileID: 443151393}
   m_Layer: 5
   m_Name: AppearancePanel
   m_TagString: Untagged
@@ -2989,7 +2988,6 @@ RectTransform:
   m_Children:
   - {fileID: 1870186006}
   - {fileID: 2055999716}
-  - {fileID: 63876302}
   - {fileID: 1856189973}
   - {fileID: 37826915}
   - {fileID: 1988317438}
@@ -3038,36 +3036,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 443151389}
   m_CullTransparentMesh: 1
---- !u!114 &443151393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 443151389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d403ca5c59d9b469e68c471acbbc89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BirdAppearanceUI
-  redSlider: {fileID: 172193259}
-  greenSlider: {fileID: 1761180071}
-  blueSlider: {fileID: 390512986}
-  redColorInput: {fileID: 1909725121}
-  greenColorInput: {fileID: 1125581221}
-  blueColorInput: {fileID: 1280414848}
-  data: {fileID: 11400000, guid: ca9831060571d9d4dade4d7166e059a5, type: 2}
-  birdAppearance: {fileID: 244932134}
-  deletingClassicPresetWarning: {fileID: 2106779880}
-  classicEditWarning: {fileID: 1763688483}
-  randomizeButton: {fileID: 63876303}
-  transitionDuration: 1.5
-  mainGroup: {fileID: 711032480}
-  playGroup: {fileID: 984596497}
-  customizeGroup: {fileID: 735692135}
-  additionalInfoGroup: {fileID: 1409203411}
-  currentPreset: 0
-  highscoreText: {fileID: 835193075}
 --- !u!1 &461067708
 GameObject:
   m_ObjectHideFlags: 0
@@ -3081,6 +3049,7 @@ GameObject:
   - component: {fileID: 461067710}
   - component: {fileID: 461067709}
   - component: {fileID: 461067713}
+  - component: {fileID: 461067714}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3193,6 +3162,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EscapePanelUI
   escapePanel: {fileID: 649137264}
+--- !u!114 &461067714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461067708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d403ca5c59d9b469e68c471acbbc89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BirdAppearanceUI
+  redSlider: {fileID: 172193259}
+  greenSlider: {fileID: 1761180071}
+  blueSlider: {fileID: 390512986}
+  redColorInput: {fileID: 1909725121}
+  greenColorInput: {fileID: 1125581221}
+  blueColorInput: {fileID: 1280414848}
+  data: {fileID: 11400000, guid: ca9831060571d9d4dade4d7166e059a5, type: 2}
+  birdAppearance: {fileID: 244932134}
+  deletingClassicPresetWarning: {fileID: 2106779880}
+  classicEditWarning: {fileID: 1763688483}
+  randomizeButton: {fileID: 63876303}
+  transitionDuration: 1.5
+  mainGroup: {fileID: 711032480}
+  playGroup: {fileID: 984596497}
+  customizeGroup: {fileID: 735692135}
+  additionalInfoGroup: {fileID: 1409203411}
+  currentPreset: 0
+  highscoreText: {fileID: 835193075}
 --- !u!1 &490933898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3862,7 +3861,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -4316,7 +4315,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -4630,6 +4629,7 @@ RectTransform:
   m_Children:
   - {fileID: 884194704}
   - {fileID: 2096365355}
+  - {fileID: 63876302}
   - {fileID: 375954504}
   - {fileID: 495916276}
   - {fileID: 629655902}
@@ -4638,7 +4638,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -260, y: 0}
+  m_AnchoredPosition: {x: -260, y: 40}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &636094630
@@ -4662,7 +4662,7 @@ MonoBehaviour:
   hexLabel: {fileID: 0}
   textureSize: 128
   data: {fileID: 11400000, guid: ca9831060571d9d4dade4d7166e059a5, type: 2}
-  birdAppearanceUI: {fileID: 443151393}
+  birdAppearanceUI: {fileID: 0}
   bodyToggle: {fileID: 1862527225}
   wingsToggle: {fileID: 1653624489}
   featherToggle: {fileID: 292027694}
@@ -5138,7 +5138,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectPart
         m_Mode: 3
@@ -6637,7 +6637,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -7201,7 +7201,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -212}
+  m_AnchoredPosition: {x: 0, y: -252}
   m_SizeDelta: {x: 180, y: 24}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1019986424
@@ -7248,7 +7248,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: ToggleCustomizeGroup
         m_Mode: 6
@@ -7961,7 +7961,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -8166,7 +8166,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: OnRGBInputChanged
         m_Mode: 1
@@ -8506,7 +8506,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: OnRGBInputChanged
         m_Mode: 1
@@ -9046,7 +9046,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: TogglePlayGroup
         m_Mode: 6
@@ -9255,7 +9255,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -9482,7 +9482,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectPreset
         m_Mode: 3
@@ -9712,7 +9712,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectPreset
         m_Mode: 3
@@ -10392,7 +10392,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectPart
         m_Mode: 3
@@ -11093,7 +11093,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: OnSliderChanged
         m_Mode: 4
@@ -11885,7 +11885,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: UpdatePreset
         m_Mode: 1
@@ -12230,7 +12230,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: ToggleCustomizeGroup
         m_Mode: 6
@@ -12552,7 +12552,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: OnRGBInputChanged
         m_Mode: 1
@@ -13087,7 +13087,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: DeletePreset
         m_Mode: 1
@@ -13942,7 +13942,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443151393}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectPreset
         m_Mode: 3
@@ -14027,7 +14027,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 140}
-  m_SizeDelta: {x: 280, y: 320}
+  m_SizeDelta: {x: 280, y: 360}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2096365356
 MonoBehaviour:
