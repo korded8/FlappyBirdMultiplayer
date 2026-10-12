@@ -105,6 +105,7 @@ public class BirdAppearanceUI : MonoBehaviour
         Randomize(BirdPart.body);
         Randomize(BirdPart.wings);
         Randomize(BirdPart.feather);
+        OnCurrentPresetChanged?.Invoke();
     }
 
     private Color RandomizeColor()

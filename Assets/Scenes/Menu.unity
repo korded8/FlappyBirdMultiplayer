@@ -152,7 +152,7 @@ RectTransform:
   m_Father: {fileID: 1715196280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -788,7 +788,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: RandomizeColors
         m_Mode: 1
@@ -1011,6 +1011,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96120337}
   m_CullTransparentMesh: 1
+--- !u!1 &127347996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 127347997}
+  m_Layer: 5
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &127347997
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127347996}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1856189973}
+  - {fileID: 1988317438}
+  m_Father: {fileID: 378634567}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -56}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &145227522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,7 +1548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121.33, y: 0}
+  m_AnchoredPosition: {x: 121.33, y: 16}
   m_SizeDelta: {x: 0.5, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &244932131
@@ -2540,7 +2577,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -2621,11 +2658,12 @@ RectTransform:
   - {fileID: 2092346819}
   - {fileID: 1492415465}
   - {fileID: 1571032204}
+  - {fileID: 127347997}
   m_Father: {fileID: 735692136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121.33, y: -195.08}
+  m_AnchoredPosition: {x: 121.33, y: -160}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &379940321
@@ -2661,7 +2699,7 @@ RectTransform:
   m_Father: {fileID: 76098567}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 16, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2988,9 +3026,7 @@ RectTransform:
   m_Children:
   - {fileID: 1870186006}
   - {fileID: 2055999716}
-  - {fileID: 1856189973}
   - {fileID: 37826915}
-  - {fileID: 1988317438}
   m_Father: {fileID: 461067712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -3861,7 +3897,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -3941,7 +3977,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 842df5eeeea9a53d69bedb94349314b3, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
@@ -4316,7 +4352,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -4663,7 +4699,7 @@ MonoBehaviour:
   hexLabel: {fileID: 0}
   textureSize: 128
   data: {fileID: 11400000, guid: ca9831060571d9d4dade4d7166e059a5, type: 2}
-  birdAppearanceUI: {fileID: 0}
+  birdAppearanceUI: {fileID: 461067714}
   bodyToggle: {fileID: 1862527225}
   wingsToggle: {fileID: 1653624489}
   featherToggle: {fileID: 292027694}
@@ -5167,7 +5203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &735692136
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6638,7 +6674,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -7529,7 +7565,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DELETE PRESET
+  m_text: DELETE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e158a951898f1e94faa3c1b3b1101b30, type: 2}
   m_sharedMaterial: {fileID: 1162260188748715508, guid: e158a951898f1e94faa3c1b3b1101b30, type: 2}
@@ -7962,7 +7998,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -8867,7 +8903,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1409203412
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9256,7 +9292,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectSkin
         m_Mode: 3
@@ -9483,7 +9519,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectPreset
         m_Mode: 3
@@ -9713,7 +9749,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectPreset
         m_Mode: 3
@@ -11300,7 +11336,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: UPDATE PRESET
+  m_text: UPDATE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e158a951898f1e94faa3c1b3b1101b30, type: 2}
   m_sharedMaterial: {fileID: 1162260188748715508, guid: e158a951898f1e94faa3c1b3b1101b30, type: 2}
@@ -11835,13 +11871,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1764189807}
-  m_Father: {fileID: 443151390}
+  m_Father: {fileID: 127347997}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 13.500037, y: 75.58}
-  m_SizeDelta: {x: 150, y: 30}
-  m_Pivot: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: -4, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1856189974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11886,7 +11922,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: UpdatePreset
         m_Mode: 1
@@ -13031,18 +13067,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988317437}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1023239832}
-  m_Father: {fileID: 443151390}
+  m_Father: {fileID: 127347997}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 13.500037, y: -40.900005}
-  m_SizeDelta: {x: 150, y: 30}
+  m_AnchoredPosition: {x: 4, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1988317439
 MonoBehaviour:
@@ -13088,7 +13124,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: DeletePreset
         m_Mode: 1
@@ -13943,7 +13979,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 461067714}
         m_TargetAssemblyTypeName: BirdAppearanceUI, Assembly-CSharp
         m_MethodName: SelectPreset
         m_Mode: 3
