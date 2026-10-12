@@ -29,8 +29,10 @@ public class BirdAppearanceUI : MonoBehaviour
     [SerializeField] private float transitionDuration = 1.5f;
 
     [Header("Groups")]
-    [SerializeField] private GameObject playGroup;
     [SerializeField] private GameObject mainGroup;
+    [SerializeField] private GameObject playGroup;
+    [SerializeField] private GameObject customizeGroup;
+    [SerializeField] private GameObject statusText;
 
     public int currentPreset = 0;
     public Action OnCurrentPresetChanged;
@@ -210,5 +212,12 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         mainGroup.SetActive(!show);
         playGroup.SetActive(show);
+    }
+
+    public void ToggleCustomizeGroup(bool show)
+    {
+        mainGroup.SetActive(!show);
+        customizeGroup.SetActive(show);
+        statusText.SetActive(!show);
     }
 }
