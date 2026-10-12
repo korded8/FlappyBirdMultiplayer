@@ -1397,6 +1397,7 @@ MonoBehaviour:
   audioSource: {fileID: 887509594}
   isClipLoop: 1
   loopedClipIndex: 1
+  gc: {fileID: 0}
   clipList:
   - {fileID: 8300000, guid: d883f449201e3962b95eb737a775fc23, type: 3}
   - {fileID: 8300000, guid: efa89afd8fbfb866f8b967accf17a428, type: 3}
@@ -1412,7 +1413,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: d883f449201e3962b95eb737a775fc23, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
@@ -3979,6 +3980,7 @@ MonoBehaviour:
   lossText: {fileID: 1421817745}
   countdownText: {fileID: 317732586}
   rematchPlayersText: {fileID: 1033254012}
+  musicController: {fileID: 0}
   isLeavingRoom: 0
   maxSpeed: 2
   moveSpeed: 2
