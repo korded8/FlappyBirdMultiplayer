@@ -27,6 +27,7 @@ public class GameController : MonoBehaviourPunCallbacks
     public float maxSpeed = 2f;
     public float moveSpeed = 2f;
     public float acceleration = 0.07f;
+    public float interval = 1f;
     private float cloudSpawnX = 15f;
     private float cloudCleanupX = -15f;
     private float cloudCooldown = 5f;
@@ -87,6 +88,8 @@ public class GameController : MonoBehaviourPunCallbacks
             moveSpeed += acceleration * Time.deltaTime;
         else
             moveSpeed = maxSpeed;
+
+        interval = 12f / maxSpeed;
 
         DifficultyLevelLogic();
     }

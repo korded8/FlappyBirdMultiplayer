@@ -3835,6 +3835,7 @@ MonoBehaviour:
   maxSpeed: 2
   moveSpeed: 2
   acceleration: 0.07
+  interval: 1
   localPlayerIsDead: 0
   currDiffLvl: 0
 --- !u!4 &2077214053
