@@ -77,7 +77,7 @@ public class SegmentController : MonoBehaviourPun
         float nextSegmentPosition = spawnX;
 
         if (lastSegment != null)
-            nextSegmentPosition = lastSegment.transform.position.x + (lastSegment.transform.localScale.x + nextSegment.transform.localScale.x) / 2;
+            nextSegmentPosition = lastSegment.transform.position.x + (lastSegment.transform.localScale.x + nextSegment.transform.localScale.x) / 2 + gameController.interval;
 
         double spawnTime = PhotonNetwork.Time;
 
