@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 public class EscapePanelUI : MonoBehaviour
 {
     public GameObject escapePanel;
-    public GameObject escapePanelButton;
 
     private bool isEscapePanelActive = false;
 
