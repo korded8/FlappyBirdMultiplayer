@@ -1,9 +1,6 @@
-using NUnit.Framework.Constraints;
 using TMPro;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.UI;
-using static BirdAppearanceUI;
 
 public class ColorPickerController : MonoBehaviour
 {
