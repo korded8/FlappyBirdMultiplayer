@@ -4091,8 +4091,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicController
   audioSource: {fileID: 547150996}
   isClipLoop: 1
-  loopedClipIndex: 1
   gc: {fileID: 0}
+  loopedClipIndexList: 01000000
   clipList:
   - {fileID: 8300000, guid: 842df5eeeea9a53d69bedb94349314b3, type: 3}
   - {fileID: 8300000, guid: 1f16c9b2683061c298eb35a81a50ae8b, type: 3}

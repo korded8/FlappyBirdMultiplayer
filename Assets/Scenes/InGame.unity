@@ -1396,11 +1396,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicController
   audioSource: {fileID: 887509594}
   isClipLoop: 1
-  loopedClipIndex: 1
   gc: {fileID: 2077214052}
   clipList:
+  - {fileID: 8300000, guid: 842df5eeeea9a53d69bedb94349314b3, type: 3}
+  - {fileID: 8300000, guid: 1f16c9b2683061c298eb35a81a50ae8b, type: 3}
   - {fileID: 8300000, guid: d883f449201e3962b95eb737a775fc23, type: 3}
   - {fileID: 8300000, guid: efa89afd8fbfb866f8b967accf17a428, type: 3}
+  loopedClipIndexList: 0100000003000000
 --- !u!82 &887509594
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3980,7 +3982,6 @@ MonoBehaviour:
   lossText: {fileID: 1421817745}
   countdownText: {fileID: 317732586}
   rematchPlayersText: {fileID: 1033254012}
-  musicController: {fileID: 0}
   isLeavingRoom: 0
   maxSpeed: 2
   moveSpeed: 2

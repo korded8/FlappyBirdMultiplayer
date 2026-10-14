@@ -6,9 +6,9 @@ public class FadingObstacle : MonoBehaviourPun
 {
     [Header("Fade settings")]
     private readonly float fadeSpeed = 1f;
-    private readonly float minAlpha = 0.01f;
+    private readonly float minAlpha = 0.02f;
     private readonly float maxAlpha = 1f;
-    private readonly float waitTime = 4f;
+    private readonly float waitTime = 3f;
 
     private SpriteRenderer sr;
     private GameController gameController;

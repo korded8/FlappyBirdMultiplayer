@@ -18,9 +18,6 @@ public class GameController : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text countdownText;
     [SerializeField] private TMP_Text rematchPlayersText;
 
-    [Header("Music Controller")]
-    [SerializeField] private MusicController musicController;
-
     private bool gameStarted = false;
     private bool victoryShown = false;
     private bool wantsRematch = false;
@@ -83,9 +80,20 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (!PhotonNetwork.IsMasterClient || !gameStarted || isLeavingRoom || !PhotonNetwork.InRoom) return;
+        if (isLeavingRoom || !PhotonNetwork.InRoom) return;
 
         CloudLogic();
+
+        if (!gameStarted) return;
+
+        if (currDiffLvl != previousDiffLvl)
+        {
+            if (!PhotonNetwork.IsMasterClient)
+                photonView.RPC(nameof(SyncDifficultyLevel), RpcTarget.All, currDiffLvl);
+
+            previousDiffLvl = currDiffLvl;
+            BackgroundColorChangeLogic();
+        }
 
         if (moveSpeed < maxSpeed)
             moveSpeed += acceleration * Time.deltaTime;
@@ -94,8 +102,8 @@ public class GameController : MonoBehaviourPunCallbacks
 
         interval = 12f / maxSpeed;
 
-        DifficultyLevelLogic();
-        photonView.RPC(nameof(SyncDifficultyLevel), RpcTarget.All, currDiffLvl);
+        if (PhotonNetwork.IsMasterClient)
+            DifficultyLevelLogic();
     }
 
     IEnumerator TransitionColor(Color nextColor)
@@ -452,31 +460,29 @@ public class GameController : MonoBehaviourPunCallbacks
             currDiffLvl = DifficultyLevel.Hard;
             maxSpeed = 4f;
         }
+    }
 
-        if (currDiffLvl != previousDiffLvl)
+    private void BackgroundColorChangeLogic()
+    {
+        switch (currDiffLvl)
         {
-            previousDiffLvl = currDiffLvl;
+            case DifficultyLevel.Accelerated:
+                StartCoroutine(TransitionColor(
+                    new Color(0.09803922f, 0.09803922f, 0.723f)
+                ));
+                break;
 
-            switch (currDiffLvl)
-            {
-                case DifficultyLevel.Accelerated:
-                    StartCoroutine(TransitionColor(
-                        new Color(0.09803922f, 0.09803922f, 0.723f)
-                    ));
-                    break;
+            case DifficultyLevel.Medium:
+                StartCoroutine(TransitionColor(
+                    new Color(0.735849f, 0.3328245f, 0f)
+                ));
+                break;
 
-                case DifficultyLevel.Medium:
-                    StartCoroutine(TransitionColor(
-                        new Color(0.735849f, 0.3328245f, 0f)
-                    ));
-                    break;
-
-                case DifficultyLevel.Hard:
-                    StartCoroutine(TransitionColor(
-                        new Color(0.04313726f, 0.04313726f, 0.04313726f)
-                    ));
-                    break;
-            }
+            case DifficultyLevel.Hard:
+                StartCoroutine(TransitionColor(
+                    new Color(0.04313726f, 0.04313726f, 0.04313726f)
+                ));
+                break;
         }
     }
 
