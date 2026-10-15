@@ -28,16 +28,16 @@
 - [x] zmieniający się kolor przycisku Randomize
 - [ ] Zmienić layout menu
 - [ ] W menu w tle poruszające się przeszkody ?
-- [ ] zmienić system wybierania kolorów ?
+- [x] zmienić system wybierania kolorów ?
 - [x] capslock dla roomCode
 - [ ] ustawienia
-- [ ] credits
+- [x] credits
 - [x] link do repo
 
 ## Audio
 - [x] Lobby music
 - [ ] SFX przycisków
-- [ ] Ingame music
+- [x] Ingame music
 - [ ] Last one standing theme
 - [ ] SFX śmierci
 - [ ] SFX skoku
@@ -83,7 +83,7 @@
 - [x] usuwanie chmur
 - [x] deadPlayersHashSet in GameController.cs
 - [x] player spawning
-- [ ] MasterClient leaving the room
+- [ ] MasterClient leaving the room ?
 
 # Random ideas
 - [ ] Jajko
