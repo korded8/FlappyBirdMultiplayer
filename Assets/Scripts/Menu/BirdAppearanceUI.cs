@@ -8,16 +8,6 @@ using static ColorPickerController;
 
 public class BirdAppearanceUI : MonoBehaviour
 {
-    [Header("Sliders")]
-    [SerializeField] private Slider redSlider;
-    [SerializeField] private Slider greenSlider;
-    [SerializeField] private Slider blueSlider;
-    
-    [Header("Color texts")]
-    [SerializeField] private TMP_InputField redColorInput;
-    [SerializeField] private TMP_InputField greenColorInput;
-    [SerializeField] private TMP_InputField blueColorInput;
-     
     [Header("Appearance Scripts")]
     [SerializeField] private BirdAppearanceData data;
     [SerializeField] private BirdAppearance birdAppearance;
@@ -89,17 +79,6 @@ public class BirdAppearanceUI : MonoBehaviour
         }
     }
 
-    private float ParseInputToFloat(string text)
-    {
-        if (int.TryParse(text, out int result))
-        {
-            result = Mathf.Clamp(result, 0, 255);
-            return result / 255f;
-        }
-
-        return 0f;
-    }
-
     public void RandomizeColors()
     {
         Randomize(BirdPart.body);
@@ -148,7 +127,7 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         if (currentPreset == 0)
         {
-            ShowWarning(classicEditWarning);
+            //ShowWarning(classicEditWarning);
             return;
         }
 
@@ -166,7 +145,7 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         if (currentPreset == 0)
         {
-            ShowWarning(deletingClassicPresetWarning);
+            //ShowWarning(deletingClassicPresetWarning);
             return;
         }
         else
@@ -203,8 +182,8 @@ public class BirdAppearanceUI : MonoBehaviour
 
     private void ShowWarning(TMP_Text warning)
     {
-        deletingClassicPresetWarning.enabled = false;
-        classicEditWarning.enabled = false;
+        //deletingClassicPresetWarning.enabled = false;
+        //classicEditWarning.enabled = false;
 
         if (warning != null) warning.enabled = true;
     }

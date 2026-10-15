@@ -10,11 +10,6 @@ public class ColorPickerController : MonoBehaviour
     [SerializeField] private Image hueSliderBackground;
     [SerializeField] private RectTransform selector;
 
-    [Header("Color Output")]
-    [SerializeField] private Image targetImage;
-    [SerializeField] private Image previewImage;
-    [SerializeField] private TMP_Text hexLabel;
-
     [Header("Texture Settings")]
     [SerializeField, Range(32, 512)]
     private int textureSize = 128;
@@ -170,12 +165,6 @@ public class ColorPickerController : MonoBehaviour
 
         SelectedColor = Color.HSVToRGB(
         hue, saturation, brightness);
-
-        if (targetImage != null)
-            targetImage.color = SelectedColor;
-
-        if (previewImage != null)
-            previewImage.color = SelectedColor;
 
         if (selector != null)
             selector.GetComponent<Image>().color = SelectedColor;

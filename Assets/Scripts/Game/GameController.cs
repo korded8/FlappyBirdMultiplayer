@@ -69,11 +69,6 @@ public class GameController : MonoBehaviourPunCallbacks
 
         if (!PhotonNetwork.IsMasterClient)
             startButton.SetActive(false);
-        else
-        {
-            currDiffLvl = DifficultyLevel.Easy;
-            maxSpeed = 2f;
-        }
 
         UpdatePlayerCount();
     }
@@ -89,7 +84,7 @@ public class GameController : MonoBehaviourPunCallbacks
         if (currDiffLvl != previousDiffLvl)
         {
             if (!PhotonNetwork.IsMasterClient)
-                photonView.RPC(nameof(SyncDifficultyLevel), RpcTarget.All, currDiffLvl);
+                photonView.RPC(nameof(SyncDifficultyLevel), RpcTarget.All, currDiffLvl, maxSpeed);
 
             previousDiffLvl = currDiffLvl;
             BackgroundColorChangeLogic();
@@ -487,8 +482,9 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void SyncDifficultyLevel(DifficultyLevel diffLvl)
+    private void SyncDifficultyLevel(DifficultyLevel diffLvl, float speed)
     {
         currDiffLvl = diffLvl;
+        maxSpeed = speed;
     }
 }
