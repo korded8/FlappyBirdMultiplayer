@@ -20,7 +20,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private bool gameStarted = false;
     private bool victoryShown = false;
-    private bool wantsRematch = false;
+    private bool wantedRematch = false;
     public bool isLeavingRoom = false;
     private double gameStartTime = 0;
     private float victoryDelay = 2f;
@@ -328,10 +328,10 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
-        if (!wantsRematch || (wantsRematch && !playAgain))
+        if ((!wantedRematch && playAgain) || (wantedRematch && !playAgain))
             photonView.RPC(nameof(ChangeRematchPlayers), RpcTarget.MasterClient, playAgain);
 
-        wantsRematch = true;
+        wantedRematch = true;
         Rematch.PendingRematch = playAgain;
 
         if (!playAgain) LeaveRoom();

@@ -21,6 +21,13 @@ public class LobbyMenu : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            joinedLobby = true;
+            statusText.text = "Połączono z lobby";
+            return;
+        }
+
         roomCodeInput.characterLimit = 8;
         createRoomButton.SetActive(false);
         joinRoomButton.SetActive(false);
