@@ -14,7 +14,11 @@ public class MovingObstacle : MonoBehaviourPun
         maxY = transform.position.y + distance;
         minY = transform.position.y - distance;
 
-        direction = Random.value > 0.5f ? Vector3.up : Vector3.down;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            direction = Random.value > 0.5f ? Vector3.up : Vector3.down;
+            photonView.RPC(nameof(SyncDirection), RpcTarget.All, direction);
+        }
     }
 
     private void Update()
@@ -35,6 +39,12 @@ public class MovingObstacle : MonoBehaviourPun
         }
 
         transform.position += moveSpeed * Time.deltaTime * direction;
+    }
+
+    [PunRPC]
+    private void SyncDirection(Vector3 dir)
+    {
+        direction = dir;
     }
 
     private void OnDrawGizmos()

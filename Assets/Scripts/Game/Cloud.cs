@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Photon.Pun;
 
-public class Cloud : MonoBehaviourPun, IPunInstantiateMagicCallback
+public class Cloud : MonoBehaviourPun
 {
     private GameController gameController;
     private SpriteRenderer spriteRenderer;
@@ -12,16 +12,31 @@ public class Cloud : MonoBehaviourPun, IPunInstantiateMagicCallback
         Close = 2, Medium = 3, Far = 4
     }
     private Distance distance;
-    private float lenght;
 
-    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    public void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         gameController = FindAnyObjectByType<GameController>();
 
-        object[] data = info.photonView.InstantiationData;
-        distance = (Distance)data[0];
-        lenght = (float)data[1];
+        float dis = Random.Range(0, 3);
+        float length = Random.Range(1, 4);
+        if (length != 1)
+            length = Random.Range(1, 4);
+
+        distance = Distance.Far;
+
+        switch (dis)
+        {
+            case 0:
+                distance = Distance.Close;
+                break;
+            case 1:
+                distance = Distance.Medium;
+                break;
+            case 2:
+                distance = Distance.Far;
+                break;
+        }
 
         float result = 0f;
 
@@ -38,7 +53,7 @@ public class Cloud : MonoBehaviourPun, IPunInstantiateMagicCallback
                 break;
         }
         spriteRenderer.color = new Color(1f, 1f, 1f, result);
-        spriteRenderer.size = new Vector2(lenght, 1f);
+        spriteRenderer.size = new Vector2(length, 1f);
     }
 
     private void Update()

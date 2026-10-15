@@ -83,7 +83,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
         if (currDiffLvl != previousDiffLvl)
         {
-            if (!PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
                 photonView.RPC(nameof(SyncDifficultyLevel), RpcTarget.All, currDiffLvl, maxSpeed);
 
             previousDiffLvl = currDiffLvl;
@@ -399,34 +399,13 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
+        GameObject cloud = (GameObject)Resources.Load("Cloud");
         float cloudSpawnY = Random.Range(3, 5);
         cloudSpawnY += Random.Range(0f, 1f) > 0.5f ? 0.5f : 0f;
-
-        float dis = Random.Range(0, 3);
-        float len = Random.Range(1, 4);
-        if (len != 1)
-            len = Random.Range(1, 4);
-
-        Cloud.Distance distance = Cloud.Distance.Far;
-
-        switch (dis)
-        {
-            case 0:
-                distance = Cloud.Distance.Close;
-                break;
-            case 1:
-                distance = Cloud.Distance.Medium;
-                break;
-            case 2:
-                distance = Cloud.Distance.Far;
-                break;
-        }
-        GameObject cloudInstance = PhotonNetwork.Instantiate(
-            "Cloud",
+        GameObject cloudInstance = Instantiate(
+            cloud,
             new Vector3(cloudSpawnX, cloudSpawnY, 0),
-            Quaternion.identity,
-            0,
-            new object[] { distance, len }
+            Quaternion.identity
         );
         cloudsPool.Add(cloudInstance);
     }
