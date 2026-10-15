@@ -13,7 +13,7 @@ public class CreditsController : MonoBehaviour
     private bool creditsEnded = false;
     private float skipCooldown = 3f;
     private float speed;
-    private float time = 45f;
+    private float time = 60f;
 
     private void Start()
     {
