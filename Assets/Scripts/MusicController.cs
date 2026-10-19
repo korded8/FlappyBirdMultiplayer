@@ -48,7 +48,6 @@ public class MusicController : MonoBehaviour
         {
             musicIsChanged = true;
             StartCoroutine(EndMusic());
-            index++;
         }
     }
 

@@ -384,10 +384,7 @@ public class GameController : MonoBehaviourPunCallbacks
             {
                 if (c.transform.position.x <= cloudCleanupX)
                 {
-                    if (PhotonNetwork.InRoom)
-                        PhotonNetwork.Destroy(c);
-                    else
-                        Destroy(c);
+                    Destroy(c);
 
                     cloudsPool.RemoveAt(i);
                 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7902207015526318345}
   - component: {fileID: 5905552019468349141}
   - component: {fileID: 6479749945963689604}
-  - component: {fileID: -3429078024982496518}
+  - component: {fileID: 5441389461572923084}
   - component: {fileID: 5568285735123365366}
   - component: {fileID: -466932340981943109}
   - component: {fileID: 5690884759419381426}
@@ -139,7 +139,7 @@ MonoBehaviour:
     SynchronizeEnabled: 0
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 4
+    InterpolateOption: 3
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 30
     ExtrapolateOption: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
---- !u!50 &-3429078024982496518
+--- !u!50 &5441389461572923084
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -164,11 +164,11 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3332251408567357732}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.5
+  m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
