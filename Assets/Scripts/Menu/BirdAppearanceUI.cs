@@ -24,6 +24,12 @@ public class BirdAppearanceUI : MonoBehaviour
     [SerializeField] private GameObject customizeGroup;
     [SerializeField] private GameObject additionalInfoGroup;
 
+    [Header("Customize Group")]
+    [SerializeField] private GameObject skins;
+    [SerializeField] private GameObject colorPicker;
+    [SerializeField] private GameObject presets;
+    [SerializeField] private GameObject paintButton;
+
     public int currentPreset = 0;
     public Action OnCurrentPresetChanged;
 
@@ -44,6 +50,7 @@ public class BirdAppearanceUI : MonoBehaviour
         data.LoadPresets();
         currentPreset = data.currentPresetIndex;
         birdAppearance.ApplySkin(data.currentSkinIndex);
+        if (data.currentSkinIndex != 0) paintButton.SetActive(false);
 
         OnCurrentPresetChanged?.Invoke();
         data.OnAppearanceChanged?.Invoke();
@@ -60,7 +67,7 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         while (true)
         {
-            Color startColor = randomizeButton.GetComponent<Image>().color;
+            Color startColor = paintButton.GetComponent<Image>().color;
             Color targetColor = RandomizeColor();
 
             float elapsed = 0f;
@@ -72,6 +79,7 @@ public class BirdAppearanceUI : MonoBehaviour
                 float t = Mathf.Clamp01(elapsed / transitionDuration);
                 t = Mathf.SmoothStep(0f, 1f, t);
 
+                paintButton.GetComponent<Image>().color = Color.Lerp(startColor, targetColor, t);
                 randomizeButton.GetComponent<Image>().color = Color.Lerp(startColor, targetColor, t);
 
                 yield return null;
@@ -107,6 +115,11 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         data.currentSkinIndex = index;
         birdAppearance.ApplySkin(index);
+
+        if (index == 0)
+            paintButton.SetActive(true);
+        else
+            paintButton.SetActive(false);
     }
 
     public void AddPreset()
@@ -199,5 +212,27 @@ public class BirdAppearanceUI : MonoBehaviour
         mainGroup.SetActive(!show);
         customizeGroup.SetActive(show);
         additionalInfoGroup.SetActive(!show);
+    }
+
+    public void OnPaintClick()
+    {
+        skins.SetActive(false);
+        paintButton.SetActive(false);
+
+        colorPicker.SetActive(true);
+        presets.SetActive(true);
+    }
+
+    public void OnBackClick()
+    {
+        if (colorPicker.activeInHierarchy == true || presets.activeInHierarchy == true)
+        {
+            colorPicker.SetActive(false);
+            presets.SetActive(false);
+
+            skins.SetActive(true);
+            paintButton.SetActive(true);
+        }
+        else ToggleCustomizeGroup(false);
     }
 }
