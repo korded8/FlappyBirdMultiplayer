@@ -68,6 +68,10 @@ MonoBehaviour:
   - Jump
   - SyncDifficultyLevel
   - SyncDirection
+  - JumpCoroutine
+  - Movement
+  - ManageFallCoroutine
+  - SyncIsFalling
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

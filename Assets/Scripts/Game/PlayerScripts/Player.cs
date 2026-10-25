@@ -2,124 +2,60 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System;
 
 public class Player : MonoBehaviourPun
 {
-    private float jumpForce = 3f;
+    private bool jumping = false;
+    private float jumpElapsed;
+    private float fallElapsed;
     private float gravity = 0f;
+    private float jumpForce = 4f;
 
     private const float MAX_GRAVITY = 5f;
     private const float ACCELERATION_TIME = 1f;
-    private const float JUMP_TIME = 0.5f;
+    private const float JUMP_TIME = 0.2f;
 
-    private bool isFalling = true;
-    private bool isFallCoroutineCalled = false;
-    private Coroutine fallCoroutine;
-    private Coroutine jumpCoroutine;
+    private GameController gc;
 
     private void Awake()
     {
-        fallCoroutine = StartCoroutine(FallDown());
-        isFallCoroutineCalled = true;
+        gc = FindAnyObjectByType<GameController>();
     }
+
     private void Update()
     {
-        if (!photonView.IsMine) return;
+        if (gc == null) return;
+        if (!gc.IsGameStarted()) return;
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (photonView.IsMine && Keyboard.current.spaceKey.wasPressedThisFrame)
+            photonView.RPC(nameof(Jump), RpcTarget.AllViaServer);
+
+        if (jumping)
         {
-            photonView.RPC(nameof(Movement), RpcTarget.All);
-        }
-
-        photonView.RPC(nameof(ManageFallCoroutine), RpcTarget.All, false);
-    }
-
-    [PunRPC]
-    private void Movement()
-    {
-        photonView.RPC(nameof(ManageFallCoroutine), RpcTarget.All, true);
-
-        if (jumpCoroutine != null)
-            StopCoroutine(jumpCoroutine);
-
-        jumpCoroutine = StartCoroutine(JumpCoroutine());
-    }
-
-    [PunRPC]
-    private void ManageFallCoroutine(bool stopFalling)
-    {
-        if (!stopFalling)
-        {
-            if (isFalling && !isFallCoroutineCalled)
-            {
-                fallCoroutine = StartCoroutine(FallDown());
-                isFallCoroutineCalled = true;
+            jumpElapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(jumpElapsed / JUMP_TIME);
+            float speed = Mathf.Lerp(jumpForce, 0f, t);
+            transform.position += Vector3.up * speed * Time.deltaTime;
+            if (t == 1f) 
+            { 
+                jumping = false; 
+                gravity = 0f; 
+                fallElapsed = 0f; 
             }
         }
         else
         {
-            if (jumpCoroutine != null)
-            {
-                StopCoroutine(fallCoroutine);
-                isFallCoroutineCalled = false;
-            }
+            fallElapsed += Time.deltaTime;
+            gravity = Mathf.Lerp(0f, MAX_GRAVITY, Mathf.Clamp01(fallElapsed / ACCELERATION_TIME));
+            transform.position += Vector3.down * gravity * Time.deltaTime;
         }
     }
 
     [PunRPC]
-    private void SyncIsFalling(bool fall)
+    private void Jump()
     {
-        isFalling = fall;
+        jumping = true;
+        jumpElapsed = 0f;
     }
-
-    private IEnumerator JumpCoroutine()
-    {
-        float elapsed = 0f;
-        gravity = 0f;
-        photonView.RPC(nameof(SyncIsFalling), RpcTarget.All, false);
-
-        while (elapsed < JUMP_TIME)
-        {
-            elapsed += Time.deltaTime;
-
-            transform.position += Vector3.up * jumpForce * Time.deltaTime;
-
-            yield return null;
-        }
-
-        elapsed = 0f;
-        float speed = jumpForce;
-
-        while (speed > 0f)
-        {
-            elapsed += Time.deltaTime;
-
-            float t = Mathf.Clamp01(elapsed / (JUMP_TIME / 2));
-            speed = Mathf.Lerp(jumpForce, 0f, t);
-
-            transform.position += Vector3.up * speed * Time.deltaTime;
-
-            yield return null;
-        }
-
-        photonView.RPC(nameof(SyncIsFalling), RpcTarget.All, true);
-    }
-
-    private IEnumerator FallDown()
-    {
-        float elapsed = 0f;
-
-        while (isFalling)
-        {
-            elapsed += Time.deltaTime;
-
-            float t = Mathf.Clamp01(elapsed / ACCELERATION_TIME);
-            gravity = Mathf.Lerp(0f, MAX_GRAVITY, t);
-
-            transform.position += Vector3.down * gravity * Time.deltaTime;
-
-            yield return null;
-        }
-    }
-
 }
