@@ -197,20 +197,23 @@ public class ColorPickerController : MonoBehaviour
     {
         selectedPart = (BirdPart)index;
 
-        bodyToggle.color = new Color(0.4f, 0.4f, 0.4f);
-        wingsToggle.color = new Color(0.4f, 0.4f, 0.4f);
-        featherToggle.color = new Color(0.4f, 0.4f, 0.4f);
+        Color dark = new Color(0.09411765f, 0.3411765f, 0.1529412f);
+        Color light = new Color(0.1411765f, 0.5019608f, 0.2235294f);
+
+        bodyToggle.color = dark;
+        wingsToggle.color = dark;
+        featherToggle.color = dark;
 
         switch (index)
         {
             case 0:
-                bodyToggle.color = new Color(0.5333333333f, 0.5333333333f, 0.5333333333f);
+                bodyToggle.color = light;
                 break;
             case 1:
-                wingsToggle.color = new Color(0.5333333333f, 0.5333333333f, 0.5333333333f);
+                wingsToggle.color = light;
                 break;
             case 2:
-                featherToggle.color = new Color(0.5333333333f, 0.5333333333f, 0.5333333333f);
+                featherToggle.color = light;
                 break;
         }
 

@@ -5,8 +5,6 @@ public class EscapePanelUI : MonoBehaviour
 {
     public GameObject escapePanel;
 
-    private bool isEscapePanelActive = false;
-
     private void Start()
     {
         escapePanel.SetActive(false);
@@ -14,9 +12,7 @@ public class EscapePanelUI : MonoBehaviour
 
     public void ToggleEscapePanel()
     {
-        isEscapePanelActive = !isEscapePanelActive;
-
-        escapePanel.SetActive(isEscapePanelActive);
+        escapePanel.SetActive(!escapePanel.activeInHierarchy);
     }
 
     public void RepoButton()

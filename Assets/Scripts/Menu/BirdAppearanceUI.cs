@@ -23,6 +23,7 @@ public class BirdAppearanceUI : MonoBehaviour
     [SerializeField] private GameObject playGroup;
     [SerializeField] private GameObject customizeGroup;
     [SerializeField] private GameObject additionalInfoGroup;
+    [SerializeField] private GameObject escapePanel;
 
     [Header("Customize Group")]
     [SerializeField] private GameObject skins;
@@ -205,6 +206,7 @@ public class BirdAppearanceUI : MonoBehaviour
     {
         mainGroup.SetActive(!show);
         playGroup.SetActive(show);
+        escapePanel.SetActive(false);
     }
 
     public void ToggleCustomizeGroup(bool show)
@@ -212,6 +214,7 @@ public class BirdAppearanceUI : MonoBehaviour
         mainGroup.SetActive(!show);
         customizeGroup.SetActive(show);
         additionalInfoGroup.SetActive(!show);
+        escapePanel.SetActive(false);
     }
 
     public void OnPaintClick()
