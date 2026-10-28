@@ -12,7 +12,7 @@ public class MusicController : MonoBehaviour
     [SerializeField] private List<int> loopedClipIndexList = new();
     private int index = 0;
     private float transitionTime = 2f;
-    private float defaultVolume = 0.8f;
+    private float defaultVolume = 0.5f;
     private float currentVolume = 0f;
     private bool musicIsChanged = false;
 

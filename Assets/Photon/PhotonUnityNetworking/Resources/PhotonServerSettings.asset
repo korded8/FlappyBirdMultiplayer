@@ -72,6 +72,8 @@ MonoBehaviour:
   - Movement
   - ManageFallCoroutine
   - SyncIsFalling
+  - PlaySFX
+  - PlaySFX_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -237,13 +237,12 @@ public class GameController : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
-    [System.Obsolete]
     public void LocalPlayerDied()
     {
         if (!PhotonNetwork.InRoom || isLeavingRoom) return;
 
-        if (FindObjectOfType<UI>() != null)
-            FindObjectOfType<UI>().OnPlayerDied();
+        if (FindAnyObjectByType<UI>() != null)
+            FindAnyObjectByType<UI>().OnPlayerDied();
 
         photonView.RPC(nameof(UpdateDeadPlayersRPC), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
         localPlayerIsDead = true;

@@ -4,8 +4,6 @@ using Photon.Pun;
 public class PlayerCollision : MonoBehaviourPun
 {
     private bool isDead = false;
-
-    [System.Obsolete]
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (isDead || !photonView.IsMine) return;
@@ -14,7 +12,7 @@ public class PlayerCollision : MonoBehaviourPun
         {
             isDead = true;
 
-            GameController gc = FindObjectOfType<GameController>();
+            GameController gc = FindAnyObjectByType<GameController>();
 
             if (gc != null)
                 gc.LocalPlayerDied();

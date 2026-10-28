@@ -1,12 +1,15 @@
 using Photon.Pun;
 using RematchManaging;
+using System;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject sfxPrefab;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private BirdAppearanceData data;
+    private GameController gc;
     private SpriteRenderer playerRenderer;
     private BirdAppearance playerAppearance;
 
@@ -18,6 +21,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         {
             playerRenderer = playerPrefab.GetComponent<SpriteRenderer>();
             playerAppearance = playerPrefab.GetComponent<BirdAppearance>();
+            gc = GetComponent<GameController>();
 
             playerRenderer.sprite = data.skins[data.currentSkinIndex].GetComponent<SpriteRenderer>().sprite;
             playerPrefab.GetComponent<Animator>().runtimeAnimatorController = data.skins[data.currentSkinIndex].GetComponent<Animator>().runtimeAnimatorController;

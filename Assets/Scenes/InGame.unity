@@ -1416,7 +1416,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: d883f449201e3962b95eb737a775fc23, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4052,6 +4052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
   playerPrefab: {fileID: 3332251408567357732, guid: 73bf9f487544fc144b69302ea9e02025, type: 3}
+  sfxPrefab: {fileID: 2111179025786687668, guid: 7178af62c48acbb4289f0d329220fbdb, type: 3}
   spawnPoints:
   - {fileID: 1425956015}
   - {fileID: 1890661744}
